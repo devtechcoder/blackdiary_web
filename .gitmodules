@@ -1,0 +1,3 @@
+[submodule "insave_web"]
+	path = insave_web
+	url = https://shivrajjajra@bitbucket.org/inventcoloab/insave_web.git
