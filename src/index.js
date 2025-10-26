@@ -9,7 +9,12 @@ import "react-owl-carousel2/src/owl.theme.default.css";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "./assets/styles/main.css";
+import { HelmetProvider } from "react-helmet-async";
 dayjs.extend(relativeTime);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<App />);
+root.render(
+  <HelmetProvider>
+    <App />
+  </HelmetProvider>
+);

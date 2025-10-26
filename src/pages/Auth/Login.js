@@ -10,6 +10,8 @@ import { AuthContext } from "../../context/AuthContext";
 import useRequest from "../../hooks/useRequest";
 import { EmailInputBox, EmailOrUserNameInputBox, PhoneNumberInputBox } from "../../components/InputField";
 import ShowLoginAccModal from "../../modals/ShowLoginAccModal";
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../constants/seo";
 export default function Login() {
   const { request } = useRequest();
   const [loading, setLoading] = useState(false);
@@ -64,6 +66,35 @@ export default function Login() {
   };
   return (
     <>
+      <Helmet>
+        {/* 🔹 Primary Meta Tags */}
+        <title>{SEO.login.primary.title}</title>
+        <meta name="description" content={SEO.login.primary.description} />
+        <meta name="keywords" content={SEO.login.primary.keywords} />
+
+        {/* 🔹 Open Graph (for Facebook, WhatsApp, etc.) */}
+        <meta property="og:title" content={SEO.login.openGraph.title} />
+        <meta property="og:description" content={SEO.login.openGraph.description} />
+        <meta property="og:image" content={SEO.login.openGraph.image} />
+        <meta property="og:url" content={SEO.login.openGraph.url} />
+        <meta property="og:type" content={SEO.login.openGraph.type} />
+        <meta property="og:site_name" content={SEO.login.openGraph.site_name} />
+
+        {/* 🔹 Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={SEO.login.twitter.title} />
+        <meta name="twitter:description" content={SEO.login.twitter.description} />
+        <meta name="twitter:image" content={SEO.login.twitter.image} />
+        <meta name="twitter:url" content={SEO.login.twitter.url} />
+        <meta name="twitter:type" content={SEO.login.twitter.type} />
+        <meta name="twitter:site_name" content={SEO.login.twitter.site_name} />
+
+        {/* 🔹 Canonical & Language Tags */}
+        <link rel="canonical" href={SEO.common.url} />
+        <meta name="robots" content={SEO.common.robots} />
+        <meta name="language" content={SEO.common.language} />
+        <meta name="author" content={SEO.common.author} />
+      </Helmet>
       <div className="min-h-screen bg-gradient-to-b from-black to-neutral-900 flex items-center justify-center px-4">
         <div className="bg-neutral-950 w-full max-w-md rounded-lg p-8 text-white shadow-lg">
           <div className="text-center mb-8">

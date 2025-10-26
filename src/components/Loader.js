@@ -13,18 +13,18 @@ const antIcon = (
 
 const Loader = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="relative w-32 h-32 animate-spin-slow">
-        {/* First piece (Spotify Green) */}
-        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-[#1DB954] rounded-full animate-spin piece-1"></div>
-
-        {/* Second piece (Spotify Gradient) */}
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-br from-purple-500 to-indigo-500 p-4 rounded animate-spin piece-2"></div>
-
-        {/* <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-[#191414] rounded-full animate-spin piece-2"></div> */}
-
-        {/* Third piece (Spotify Dark Gray) */}
-        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-[#535353] rounded-full animate-spin piece-3"></div>
+    <div className="flex items-center justify-center min-h-screen bg-black">
+      <div className="relative w-12 h-12">
+        {[10, 10, 10, 10].map((deg, idx) => (
+          <div
+            key={idx}
+            className="absolute w-3 h-3 bg-green-500 rounded-full animate-spin-dot"
+            style={{
+              transform: `rotate(${deg}deg) translate(2px)`, // circle chhota
+              animationDelay: `${idx * 0.1}s`, // thoda faster stagger
+            }}
+          ></div>
+        ))}
       </div>
     </div>
   );

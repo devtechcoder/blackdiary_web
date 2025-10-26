@@ -14,6 +14,8 @@ import { FormattedBgColor } from "../../constants/Constants";
 import { LikeShareActionIcon, ViewActionIcon } from "../../components/ButtonField";
 import { OccasionSlider, PoetSlider, SubCategorySlider } from "../Common/Slider";
 import { ViewSliderDairy } from "../Common/Section";
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../constants/seo";
 
 function LandingIndex() {
   const { categories } = useAppContext();
@@ -58,6 +60,35 @@ function LandingIndex() {
     <Main>
       <>
         {" "}
+        <Helmet>
+          {/* 🔹 Primary Meta Tags */}
+          <title>{SEO.home.primary.title}</title>
+          <meta name="description" content={SEO.home.primary.description} />
+          <meta name="keywords" content={SEO.home.primary.keywords} />
+
+          {/* 🔹 Open Graph (for Facebook, WhatsApp, etc.) */}
+          <meta property="og:title" content={SEO.home.openGraph.title} />
+          <meta property="og:description" content={SEO.home.openGraph.description} />
+          <meta property="og:image" content={SEO.home.openGraph.image} />
+          <meta property="og:url" content={SEO.home.openGraph.url} />
+          <meta property="og:type" content={SEO.home.openGraph.type} />
+          <meta property="og:site_name" content={SEO.home.openGraph.site_name} />
+
+          {/* 🔹 Twitter Cards */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={SEO.home.twitter.title} />
+          <meta name="twitter:description" content={SEO.home.twitter.description} />
+          <meta name="twitter:image" content={SEO.home.twitter.image} />
+          <meta name="twitter:url" content={SEO.home.twitter.url} />
+          <meta name="twitter:type" content={SEO.home.twitter.type} />
+          <meta name="twitter:site_name" content={SEO.home.twitter.site_name} />
+
+          {/* 🔹 Canonical & Language Tags */}
+          <link rel="canonical" href={SEO.common.url} />
+          <meta name="robots" content={SEO.common.robots} />
+          <meta name="language" content={SEO.common.language} />
+          <meta name="author" content={SEO.common.author} />
+        </Helmet>
         <div className="flex flex-col gap-6 p-4 text-white">
           {/* Top Filters */}
           <div className="flex gap-2">
