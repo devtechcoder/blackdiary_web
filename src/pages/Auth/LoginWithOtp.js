@@ -9,6 +9,8 @@ import Loader from "../../components/Loader";
 import { maskEmail, maskPhone } from "../../helper/functions";
 import OtpInput from "react-otp-input";
 import { useAuthContext } from "../../context/AuthContext";
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../constants/seo";
 const LoginWithOtp = () => {
   const { setIsLoggedIn, setUserProfile } = useAuthContext();
   const [otp, setOtp] = useState("");
@@ -104,6 +106,35 @@ const LoginWithOtp = () => {
   if (isLoading) return <Loader />;
   return (
     <>
+      <Helmet>
+        {/* 🔹 Primary Meta Tags */}
+        <title>{SEO.LoginWithOtp.primary.title}</title>
+        <meta name="description" content={SEO.LoginWithOtp.primary.description} />
+        <meta name="keywords" content={SEO.LoginWithOtp.primary.keywords} />
+
+        {/* 🔹 Open Graph (for Facebook, WhatsApp, etc.) */}
+        <meta property="og:title" content={SEO.LoginWithOtp.openGraph.title} />
+        <meta property="og:description" content={SEO.LoginWithOtp.openGraph.description} />
+        <meta property="og:image" content={SEO.LoginWithOtp.openGraph.image} />
+        <meta property="og:url" content={SEO.LoginWithOtp.openGraph.url} />
+        <meta property="og:type" content={SEO.LoginWithOtp.openGraph.type} />
+        <meta property="og:site_name" content={SEO.LoginWithOtp.openGraph.site_name} />
+
+        {/* 🔹 Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={SEO.LoginWithOtp.twitter.title} />
+        <meta name="twitter:description" content={SEO.LoginWithOtp.twitter.description} />
+        <meta name="twitter:image" content={SEO.LoginWithOtp.twitter.image} />
+        <meta name="twitter:url" content={SEO.LoginWithOtp.twitter.url} />
+        <meta name="twitter:type" content={SEO.LoginWithOtp.twitter.type} />
+        <meta name="twitter:site_name" content={SEO.LoginWithOtp.twitter.site_name} />
+
+        {/* 🔹 Canonical & Language Tags */}
+        <link rel="canonical" href={SEO.common.url} />
+        <meta name="robots" content={SEO.common.robots} />
+        <meta name="language" content={SEO.common.language} />
+        <meta name="author" content={SEO.common.author} />
+      </Helmet>
       <div className="min-h-screen bg-black flex items-center justify-center text-white">
         <div className="text-center space-y-6 w-full max-w-sm">
           <h2 className="text-2xl font-bold">

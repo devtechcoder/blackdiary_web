@@ -10,7 +10,8 @@ import useRequest from "../../../hooks/useRequest";
 import apiPath from "../../../constants/apiPath";
 import { Severty, ShowToast } from "../../../helper/toast";
 import { FullNameInputBox, UserNameInputBox } from "../../../components/InputField";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../../constants/seo";
 const { Title, Text } = Typography;
 
 const ManageAccount = () => {

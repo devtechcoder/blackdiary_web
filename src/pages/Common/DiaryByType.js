@@ -11,7 +11,8 @@ import Loader from "../../components/Loader";
 import { LikeShareActionIcon } from "../../components/ButtonField";
 import { BannerSection, ViewListDiary } from "./Section";
 import { PoetSlider } from "./Slider";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../constants/seo";
 const shayariCards = [
   {
     title: "Heartfelt Shayari",

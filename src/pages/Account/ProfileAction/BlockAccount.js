@@ -3,7 +3,8 @@ import { Button, Typography, Avatar } from "antd";
 import { useNavigate } from "react-router-dom";
 import Main from "../../../components/layout/Main";
 import AccountSideNav from "../AccountSideNav";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../../constants/seo";
 const { Title, Text } = Typography;
 
 const BlockedAccount = () => {

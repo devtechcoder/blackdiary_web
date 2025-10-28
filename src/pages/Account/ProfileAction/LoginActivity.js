@@ -3,7 +3,8 @@ import { Card, Collapse, Typography, Tag, Divider } from "antd";
 import { ArrowLeftOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import Main from "../../../components/layout/Main";
 import { useNavigate } from "react-router";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../../constants/seo";
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
 

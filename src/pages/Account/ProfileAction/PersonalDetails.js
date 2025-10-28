@@ -4,7 +4,8 @@ import { ArrowLeftOutlined, RightOutlined } from "@ant-design/icons";
 import AccountSideNav from "../AccountSideNav";
 import Main from "../../../components/layout/Main";
 import { useNavigate } from "react-router";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../../constants/seo";
 const { Title, Text } = Typography;
 
 const PersonalDetails = () => {

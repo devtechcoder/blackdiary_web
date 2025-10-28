@@ -4,7 +4,8 @@ import Main from "../../../components/layout/Main";
 import AccountSideNav from "../AccountSideNav";
 import { useNavigate } from "react-router";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../../constants/seo";
 const { Title, Text } = Typography;
 
 const AccountPrivacy = () => {

@@ -6,7 +6,8 @@ import { useAuthContext } from "../../context/AuthContext";
 import Prouser from "../../assets/images/user.png";
 import { useNavigate } from "react-router";
 import ProfileActionModal from "../../modals/ProfileActionModal";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../constants/seo";
 const Profile = () => {
   const { setIsLoggedIn, refreshUser, userProfile } = useAuthContext();
   const [show, setShow] = useState(false);

@@ -4,7 +4,8 @@ import html2canvas from "html2canvas";
 import { Button } from "antd";
 import Main from "../../../components/layout/Main";
 import logo from "../../../assets/images/allLogo/black_white_logo.png";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../../constants/seo";
 const QRCodeDownload = () => {
   const [selectedColor, setSelectedColor] = useState("#00B894");
   const qrRef = useRef();

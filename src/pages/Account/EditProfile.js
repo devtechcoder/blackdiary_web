@@ -13,6 +13,8 @@ import { GenderOption } from "../../constants/Constants";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import AccountSideNav from "./AccountSideNav";
 import ProfileImageUpload from "../../modals/ProfileImageUpload";
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../constants/seo";
 const { Title, Text } = Typography;
 export default function EditProfile() {
   const { setIsLoggedIn, userProfile, refreshUser } = useAuthContext();

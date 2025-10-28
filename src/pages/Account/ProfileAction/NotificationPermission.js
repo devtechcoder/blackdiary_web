@@ -4,7 +4,8 @@ import Main from "../../../components/layout/Main";
 import { ArrowLeftOutlined, BackwardOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import AccountSideNav from "../AccountSideNav";
-
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../../constants/seo";
 const { Title, Text } = Typography;
 
 const emailOptions = [

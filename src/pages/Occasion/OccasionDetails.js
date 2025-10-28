@@ -11,29 +11,9 @@ import ViewDiary from "../Common/ViewDiary";
 import Loader from "../../components/Loader";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { OccasionSlider, PoetSlider } from "../Common/Slider";
+import { Helmet } from "react-helmet-async";
+import { SEO } from "../../constants/seo";
 
-const shayariCards = [
-  {
-    title: "Heartfelt Shayari",
-    content: "Tere bina jee na paayenge hum...",
-    image: "https://i.scdn.co/image/ab67616d00001e02373b21b6dfdb6cd71e03101f",
-  },
-  {
-    title: "Romantic Lines",
-    content: "Mohabbat me har lamha intezaar hota hai...",
-    image: "https://i.scdn.co/image/ab67616d00001e02614a583a490e23b29821b2ed",
-  },
-  {
-    title: "Dard Bhari Shayari",
-    content: "Tere jaane ke baad tanha ho gaye hain hum...",
-    image: "https://i.scdn.co/image/ab67616d00001e02675b3f7dea80153c73581e5e",
-  },
-  {
-    title: "Yaadon Ki Shayari",
-    content: "Har yaad teri dil ko chhoo jaati hai...",
-    image: "https://i.scdn.co/image/ab67616d00001e02699cce11792075219c61bb2f",
-  },
-];
 const settings = {
   dots: false,
   infinite: true,
@@ -96,120 +76,152 @@ const OccasionDetails = () => {
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
-    <Main>
-      <div className="bg-black min-h-screen text-white">
-        {/* Top Profile Section */}
-        {/* New Spotify-Style Banner Section */}
-        <div className="relative bg-gradient-to-b from-blue-700 to-black min-h-[400px] flex items-center p-8 md:p-16 text-white">
-          {/* Left Side: Image */}
-          <div className="w-40 h-40 md:w-60 md:h-60 rounded-lg overflow-hidden shadow-lg">
-            <img src={occasionData?.image ?? Prouser} alt={occasionData?.name} className="object-cover w-full h-full hover:scale-105 transition-transform" />
-          </div>
+    <>
+      <Helmet>
+        {/* 🔹 Primary Meta Tags */}
+        <title>{SEO.occasionDetailsPage.primary.title}</title>
+        <meta name="description" content={SEO.occasionDetailsPage.primary.description} />
+        <meta name="keywords" content={SEO.occasionDetailsPage.primary.keywords} />
 
-          {/* Right Side: Text */}
-          <div className="ml-8 flex flex-col justify-center">
-            <p className=" text-sm font-semibold mb-2">{occasionData?.type ?? "Festival"}</p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">{occasionData?.name ?? "Occasion"}</h1>
-            <span>{occasionData?.description}</span>
+        {/* 🔹 Open Graph (for Facebook, WhatsApp, etc.) */}
+        <meta property="og:title" content={SEO.occasionDetailsPage.openGraph.title} />
+        <meta property="og:description" content={SEO.occasionDetailsPage.openGraph.description} />
+        <meta property="og:image" content={SEO.occasionDetailsPage.openGraph.image} />
+        <meta property="og:url" content={SEO.occasionDetailsPage.openGraph.url} />
+        <meta property="og:type" content={SEO.occasionDetailsPage.openGraph.type} />
+        <meta property="og:site_name" content={SEO.occasionDetailsPage.openGraph.site_name} />
 
-            <div className="flex items-center gap-2 text-gray-300 text-sm">
-              {/* <img
+        {/* 🔹 Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={SEO.occasionDetailsPage.twitter.title} />
+        <meta name="twitter:description" content={SEO.occasionDetailsPage.twitter.description} />
+        <meta name="twitter:image" content={SEO.occasionDetailsPage.twitter.image} />
+        <meta name="twitter:url" content={SEO.occasionDetailsPage.twitter.url} />
+        <meta name="twitter:type" content={SEO.occasionDetailsPage.twitter.type} />
+        <meta name="twitter:site_name" content={SEO.occasionDetailsPage.twitter.site_name} />
+
+        {/* 🔹 Canonical & Language Tags */}
+        <link rel="canonical" href={SEO.common.url} />
+        <meta name="robots" content={SEO.common.robots} />
+        <meta name="language" content={SEO.common.language} />
+        <meta name="author" content={SEO.common.author} />
+      </Helmet>
+
+      <Main>
+        <div className="bg-black min-h-screen text-white">
+          {/* Top Profile Section */}
+          {/* New Spotify-Style Banner Section */}
+          <div className="relative bg-gradient-to-b from-blue-700 to-black min-h-[400px] flex items-center p-8 md:p-16 text-white">
+            {/* Left Side: Image */}
+            <div className="w-40 h-40 md:w-60 md:h-60 rounded-lg overflow-hidden shadow-lg">
+              <img src={occasionData?.image ?? Prouser} alt={occasionData?.name} className="object-cover w-full h-full hover:scale-105 transition-transform" />
+            </div>
+
+            {/* Right Side: Text */}
+            <div className="ml-8 flex flex-col justify-center">
+              <p className=" text-sm font-semibold mb-2">{occasionData?.type ?? "Festival"}</p>
+              <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">{occasionData?.name ?? "Occasion"}</h1>
+              <span>{occasionData?.description}</span>
+
+              <div className="flex items-center gap-2 text-gray-300 text-sm">
+                {/* <img
                 src="https://rekhta.pc.cdn.bitgravity.com/Images/Cms/collectionSeries/Banner/EBC58E6A-3B42-452C-918C-DDE80D634F7D_occasions_web.jpg" // 👈 Artist image (optional)
                 alt="Artist"
                 className="w-6 h-6 rounded-full"
               /> */}
-              <span>•</span>
-              <span>2020</span>
-              <span>•</span>
-              <span>3:33</span>
-              <span>•</span>
-              <span>189,077,562 clicks</span>
+                <span>•</span>
+                <span>2020</span>
+                <span>•</span>
+                <span>3:33</span>
+                <span>•</span>
+                <span>189,077,562 clicks</span>
+              </div>
             </div>
           </div>
-        </div>
-        {/* Tabs */}
-        <div className="relative px-6 mt-6 border-b border-gray-700 pb-2">
-          {/* Scrollable category buttons */}
-          <div className="flex space-x-6 overflow-x-auto pr-12">
-            <button
-              key={"About"}
-              onClick={() => {
-                setSelectedSubCategory();
-              }}
-              className={`uppercase text-sm tracking-widest text-gray-400 pb-2 border-b-2 border-transparent hover:text-green-400 hover:border-green-500 active:border-green-500 ${
-                selectedSubCategory === undefined ? "text-green-400 border-green-500" : ""
-              }`}
-            >
-              About
-            </button>
-            {subCategories?.map((item) => (
+          {/* Tabs */}
+          <div className="relative px-6 mt-6 border-b border-gray-700 pb-2">
+            {/* Scrollable category buttons */}
+            <div className="flex space-x-6 overflow-x-auto pr-12">
               <button
-                key={item?._id}
+                key={"About"}
                 onClick={() => {
-                  setSelectedSubCategory(item?._id);
+                  setSelectedSubCategory();
                 }}
                 className={`uppercase text-sm tracking-widest text-gray-400 pb-2 border-b-2 border-transparent hover:text-green-400 hover:border-green-500 active:border-green-500 ${
-                  selectedSubCategory === item?._id ? "text-green-400 border-green-500" : ""
+                  selectedSubCategory === undefined ? "text-green-400 border-green-500" : ""
                 }`}
               >
-                {item?.name}
+                About
               </button>
-            ))}
-          </div>
-
-          {/* Dropdown icon and menu outside scroll */}
-          <div className="absolute right-6 top-2">
-            <button onClick={() => setOpen(!open)} className="text-white hover:text-green-500 focus:outline-none">
-              {open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </button>
-
-            {open && (
-              <div className={`absolute right-0 mt-2 w-48 bg-zinc-900 border border-gray-700 rounded-md shadow-lg z-50 ${selectedCategory === undefined ? "text-green-400 border-green-500" : ""}`}>
+              {subCategories?.map((item) => (
                 <button
-                  key={"All"}
+                  key={item?._id}
                   onClick={() => {
-                    setSelectedCategory();
-                    setOpen(false);
+                    setSelectedSubCategory(item?._id);
                   }}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white"
+                  className={`uppercase text-sm tracking-widest text-gray-400 pb-2 border-b-2 border-transparent hover:text-green-400 hover:border-green-500 active:border-green-500 ${
+                    selectedSubCategory === item?._id ? "text-green-400 border-green-500" : ""
+                  }`}
                 >
-                  All
+                  {item?.name}
                 </button>
+              ))}
+            </div>
 
-                {categories?.map((item, index) => (
+            {/* Dropdown icon and menu outside scroll */}
+            <div className="absolute right-6 top-2">
+              <button onClick={() => setOpen(!open)} className="text-white hover:text-green-500 focus:outline-none">
+                {open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              </button>
+
+              {open && (
+                <div className={`absolute right-0 mt-2 w-48 bg-zinc-900 border border-gray-700 rounded-md shadow-lg z-50 ${selectedCategory === undefined ? "text-green-400 border-green-500" : ""}`}>
                   <button
-                    key={index}
+                    key={"All"}
                     onClick={() => {
-                      setSelectedCategory(item?.value);
+                      setSelectedCategory();
                       setOpen(false);
                     }}
-                    className={`block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white  ${
-                      selectedCategory === item?.value ? "text-green-400 border-green-500" : ""
-                    }`}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white"
                   >
-                    {item?.name}
+                    All
                   </button>
-                ))}
-              </div>
-            )}
+
+                  {categories?.map((item, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setSelectedCategory(item?.value);
+                        setOpen(false);
+                      }}
+                      className={`block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white  ${
+                        selectedCategory === item?.value ? "text-green-400 border-green-500" : ""
+                      }`}
+                    >
+                      {item?.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+          {/* Shayari Section */}
+          {selectedSubCategory !== undefined ? (
+            <ViewDiary selectedCategory={selectedCategory} selectedSubCategory={selectedSubCategory} pageData={occasionData} pageType="occasion" />
+          ) : (
+            <OccasionPremiumPage occasionData={occasionData} />
+          )}
+          {/* More Occasion */}
+          <div className="mt-6 px-4">
+            <OccasionSlider title={"Choose More Occasion"} />
+          </div>
+          {/* More Author */}
+          <div className="mt-6 px-4">
+            <PoetSlider title={"More Artists"} />
           </div>
         </div>
-        {/* Shayari Section */}
-        {selectedSubCategory !== undefined ? (
-          <ViewDiary selectedCategory={selectedCategory} selectedSubCategory={selectedSubCategory} pageData={occasionData} pageType="occasion" />
-        ) : (
-          <OccasionPremiumPage occasionData={occasionData} />
-        )}
-        {/* More Occasion */}
-        <div className="mt-6 px-4">
-          <OccasionSlider title={"Choose More Occasion"} />
-        </div>
-        {/* More Author */}
-        <div className="mt-6 px-4">
-          <PoetSlider title={"More Artists"} />
-        </div>
-      </div>
-    </Main>
+      </Main>
+    </>
   );
 };
 
