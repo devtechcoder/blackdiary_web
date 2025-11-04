@@ -31,8 +31,8 @@ export const ViewSliderDairy = ({ data, title, viewBtnName = "Show all", type })
     <>
       <div className="mt-6 px-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-white">{title}</h2>
-          <button className="text-sm text-blue-500 hover:underline" onClick={() => navigate(`/diary-by-type/${type ?? ""}`)}>
+          <h2 className="text-lg sm:text-2xl font-bold text-white">{title}</h2>
+          <button className="text-xs sm:text-sm text-blue-500 hover:underline" onClick={() => navigate(`/diary-by-type/${type ?? ""}`)}>
             {viewBtnName}
           </button>
         </div>

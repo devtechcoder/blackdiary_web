@@ -16,6 +16,7 @@ import { OccasionSlider, PoetSlider, SubCategorySlider } from "../Common/Slider"
 import { ViewSliderDairy } from "../Common/Section";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "../../constants/seo";
+import Loader from "../../components/Loader";
 
 function LandingIndex() {
   const { categories } = useAppContext();
@@ -53,7 +54,12 @@ function LandingIndex() {
     }
   }, [data]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <Main>
+        <Loader />
+      </Main>
+    );
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
@@ -89,10 +95,14 @@ function LandingIndex() {
           <meta name="language" content={SEO.common.language} />
           <meta name="author" content={SEO.common.author} />
         </Helmet>
-        <div className="flex flex-col gap-6 p-4 text-white">
+        <div className="flex flex-col gap-6 p-2 sm:p-4 text-white">
           {/* Top Filters */}
-          <div className="flex gap-2">
-            <button key={"All"} className={`px-4 py-2 rounded-full text-sm hover:bg-zinc-600 bg-white text-black hover:bg-zinc-600 hover:text-white`} onClick={() => navigate(`/sub-category/details`)}>
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
+            <button
+              key={"All"}
+              className={`px-4 py-2 rounded-full text-sm font-semibold flex-shrink-0 hover:bg-zinc-600 bg-green-500 text-black hover:bg-zinc-600 hover:text-white`}
+              onClick={() => navigate(`/sub-category/details`)}
+            >
               All
             </button>
             {categories?.length
@@ -105,18 +115,20 @@ function LandingIndex() {
           </div>
           {/* Quick Access Section */}
           {/* conononsdfsdf */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
             {subCategories?.length
               ? subCategories?.map((item, idx) => (
                   <>
                     <div
-                      className={`p-4 rounded-lg flex items-center gap-3 hover:bg-zinc-700 ${FormattedBgColor[item.bg_color] || "bg-zinc-800"}`}
+                      className={`p-3 rounded-lg flex items-center gap-3 cursor-pointer transition-colors duration-300 hover:bg-zinc-700 ${
+                        FormattedBgColor[item.bg_color] || "bg-zinc-800"
+                      } w-64 flex-shrink-0`}
                       onClick={() => navigate(`/sub-category/details/${item?.name}/${item._id}`)}
                     >
                       <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-blue-400 rounded overflow-hidden">
                         <img src={item?.image} alt="sub category" className="w-full h-full object-cover" />
                       </div>
-                      <span className="font-semibold text-sm"> {item?.name}</span>
+                      <span className="font-semibold text-sm flex-grow"> {item?.name}</span>
                     </div>
                   </>
                 ))
@@ -138,7 +150,7 @@ function LandingIndex() {
           <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Albums featuring diary you like"} type={"liked"} />
 
           {/* Made For Recently played */}
-          <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Recently viewed"} type={"recently_viewed"} />
+          <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Trending Diaries"} type={"recently_viewed"} />
 
           {/* topDiary */}
 
@@ -169,15 +181,15 @@ const TopDiarySection = () => {
   if (isError) return <p>Error: {error.message}</p>;
   return (
     <>
-      <div className="mt-6 px-4">
+      <div className="mt-6 px-0 sm:px-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-white">Diaries</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Diaries</h2>
           <button className="text-sm text-blue-500 hover:underline" onClick={() => navigate(`/sub-category/details`)}>
             Show all
           </button>
         </div>
-        <div className="h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-green-500 scrollbar-track-zinc-900 px-4">
-          <div className="space-y-4">
+        <div className="max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-green-500 scrollbar-track-zinc-900 pr-2">
+          <div className="space-y-4 p-1">
             {list?.map((item, index) => (
               <div key={item._id} className="bg-zinc-800 text-white rounded-2xl p-5 shadow-md">
                 <p className="text-lg mb-4" dangerouslySetInnerHTML={{ __html: item?.content }} />

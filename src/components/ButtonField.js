@@ -61,12 +61,12 @@ export const LikeShareActionIcon = ({ item }) => {
     }
   };
   return (
-    <div className="flex items-center gap-6 text-zinc-400">
+    <div className="flex items-center justify-start sm:justify-start gap-4 sm:gap-6 text-zinc-400">
       <button className="flex items-center gap-1 hover:text-green-400 transition" onClick={onLike} disabled={loading} loading={loading}>
-        <FaHeart /> Like
+        <FaHeart /> <span className="hidden sm:inline">Like</span>
       </button>
       <button className="flex items-center gap-1 hover:text-green-400 transition">
-        <FaComment /> Comment
+        <FaComment /> <span className="hidden sm:inline">Comment</span>
       </button>
       <button
         className="flex items-center gap-1 hover:text-green-400 transition"
@@ -87,7 +87,7 @@ export const LikeShareActionIcon = ({ item }) => {
           handleShare(shareData);
         }}
       >
-        <FaShareAlt /> Share
+        <FaShareAlt /> <span className="hidden sm:inline">Share</span>
       </button>
 
       <button
@@ -103,7 +103,7 @@ export const LikeShareActionIcon = ({ item }) => {
           message.success("Copied to clipboard!");
         }}
       >
-        <FaCopy /> Copy
+        <FaCopy /> <span className="hidden sm:inline">Copy</span>
       </button>
     </div>
   );

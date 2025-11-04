@@ -4,7 +4,7 @@ import logo from "../../assets/images/icon/logo.png";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../../context/AuthContext";
 
-function Header({ query, setQuery }) {
+function Header({ showDrawer, isMobile }) {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuthContext();
   return (
@@ -13,24 +13,19 @@ function Header({ query, setQuery }) {
       <div className="flex items-center gap-4 flex-1">
         <img src={logo} alt="Logo" className="h-8 cursor-pointer" onClick={() => navigate("/")} />
 
-        {/* Home Icon */}
-        <div className="group">
-          <HomeOutlined className="text-white text-2xl cursor-pointer group-hover:scale-110 transition-transform duration-200" onClick={() => navigate("/")} />
-        </div>
-
-        {/* Search Icon */}
-        <div className="group">
-          <SearchOutlined className="text-white text-2xl cursor-pointer group-hover:scale-110 transition-transform duration-200" />
-        </div>
-
-        {/* Search Bar */}
-        <div className="bg-[#242424] rounded-full px-4 py-[6px] flex items-center w-full max-w-md focus-within:ring-2 focus-within:ring-green-500 transition">
-          <SearchOutlined className="text-[#aaa] mr-3 text-xl" />
-          <input type="text" placeholder="What do you want to play?" className="bg-transparent outline-none text-white w-full placeholder:text-[#aaa]" />
-          <CameraOutlined className="text-[#aaa] ml-3 text-xl cursor-pointer hover:text-white transition" onClick={() => navigate("/search/sub-category")} />
-        </div>
+        {!isMobile && (
+          <>
+            <div className="group">
+              <HomeOutlined className="text-white text-2xl cursor-pointer group-hover:scale-110 transition-transform duration-200" onClick={() => navigate("/")} />
+            </div>
+            <div className="bg-[#242424] rounded-full px-4 py-[6px] flex items-center w-full max-w-md focus-within:ring-2 focus-within:ring-green-500 transition">
+              <SearchOutlined className="text-[#aaa] mr-3 text-xl" />
+              <input type="text" placeholder="What do you want to read?" className="bg-transparent outline-none text-white w-full placeholder:text-[#aaa]" />
+              <CameraOutlined className="text-[#aaa] ml-3 text-xl cursor-pointer hover:text-white transition" onClick={() => navigate("/search/sub-category")} />
+            </div>
+          </>
+        )}
       </div>
-
       {/* Right Side */}
       <div className="flex items-center gap-4">
         {!isLoggedIn ? (

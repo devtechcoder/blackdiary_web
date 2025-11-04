@@ -1,45 +1,44 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { Layout, Drawer, Affix } from "antd";
+import { Layout, Drawer } from "antd";
 import Sidenav from "./Sidenav";
 import Header from "./Header";
 import Footer from "./Footer";
+import { MenuOutlined } from "@ant-design/icons";
+import BottomNav from "./BottomNav";
 
-const { Header: AntHeader, Content, Sider } = Layout;
+const { Content } = Layout;
 
 function Main({ children }) {
+  const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const showDrawer = () => setVisible(true);
+  const closeDrawer = () => setVisible(false);
+
   return (
     <Layout className="layout-dashboard h-screen overflow-hidden bg-[#181818]">
-      {/* Fixed Header */}
-      <Header />
+      <Header showDrawer={showDrawer} isMobile={isMobile} />
 
-      {/* Main Layout: Side + Content */}
       <Layout>
-        {/* Fixed Sidenav */}
-        <Sidenav />
+        {isMobile ? <BottomNav /> : <Sidenav />}
 
-        {/* Scrollable Content area that naturally pushes Footer to bottom */}
         <Layout className="h-[calc(100vh-64px)] overflow-hidden flex flex-col flex-1">
           <Content className="overflow-y-auto p-4 text-white bg-[#181818] flex-grow">
             {children}
             <Footer />
           </Content>
-
-          {/* Footer - Comes after content naturally */}
         </Layout>
       </Layout>
     </Layout>
-    // <Layout className="layout-dashboard min-h-screen bg-[#181818]">
-    //   <Header />
-
-    //   <Layout>
-    //     <Sidenav />
-    //     <Layout>
-    //       <Content className="content-ant p-4 text-white">{children}</Content>
-    //       <Footer />
-    //     </Layout>
-    //   </Layout>
-    // </Layout>
   );
 }
 

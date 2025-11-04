@@ -42,8 +42,8 @@ export const PoetSlider = ({ title }) => {
     <>
       <div className="mt-6 px-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-white">{title}</h2>
-          <button className="text-sm text-blue-500 hover:underline" onClick={() => navigate("/poets")}>
+          <h2 className="text-lg sm:text-2xl font-bold text-white">{title}</h2>
+          <button className="text-xs sm:text-sm text-blue-500 hover:underline" onClick={() => navigate("/poets")}>
             Show all
           </button>
         </div>
@@ -95,8 +95,8 @@ export const SubCategorySlider = ({ data, title }) => {
     <>
       <div className="mt-6 px-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-white">{title}</h2>
-          <button className="text-sm text-blue-500 hover:underline" onClick={() => navigate(`/sub-category/details`)}>
+          <h2 className="text-lg sm:text-2xl font-bold text-white">{title}</h2>
+          <button className="text-xs sm:text-sm text-blue-500 hover:underline" onClick={() => navigate(`/sub-category/details`)}>
             Show all
           </button>
         </div>
@@ -169,8 +169,8 @@ export const OccasionSlider = ({ title }) => {
     <>
       <div className="mt-6 px-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-white">{title}</h2>
-          <button className="text-sm text-blue-500 hover:underline" onClick={() => navigate("/occasion")}>
+          <h2 className="text-lg sm:text-2xl font-bold text-white">{title}</h2>
+          <button className="text-xs sm:text-sm text-blue-500 hover:underline" onClick={() => navigate("/occasion")}>
             Show all
           </button>
         </div>

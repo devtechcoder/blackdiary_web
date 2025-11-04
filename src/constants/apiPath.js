@@ -9,7 +9,7 @@ console.log("appMode", appMode);
 // 3.20.147.34
 
 if (appMode === "development") {
-  // URL = "https://backend.insave.com/api/";
+  URL = "https://backend.insave.com/api/";
   URL = "https://blackdiary.onrender.com/api/";
 } else {
   URL = "https://blackdiary.onrender.com/api/";

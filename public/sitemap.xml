@@ -1,16 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://blackdiary.vercel.app/</loc>
+    <lastmod>2025-10-28T18:11:34+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- sub-category pages -->
+  <url>
+    <loc>https://blackdiary.vercel.app/search/sub-category</loc>
+    <lastmod>2025-10-25T10:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- login pages -->
+  <url>
+    <loc>https://blackdiary.vercel.app/login</loc>
+    <lastmod>2025-10-20T10:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- signup pages -->
+  <url>
+    <loc>https://blackdiary.vercel.app/signup</loc>
+    <lastmod>2025-10-20T10:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 
 
-<url>
-  <loc>https://blackdiary.vercel.app/</loc>
-  <lastmod>2025-10-28T18:11:34+00:00</lastmod>
-</url>
+  <!-- sub-category details -->
+  <url>
+    <loc>https://blackdiary.vercel.app/sub-category/details</loc>
+    <lastmod>2025-11-01T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 
+  <!-- occasion -->
+  <url>
+    <loc>https://blackdiary.vercel.app/occasion</loc>
+    <lastmod>2025-11-01T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 
 </urlset>
