@@ -1,5 +1,6 @@
 import {
   Home,
+  Leadership,
   LoginWithOtp,
   PoetDetails,
   ViewAllPoet,
@@ -19,6 +20,9 @@ import {
   ManageAccount,
   PersonalDetails,
   DiaryByType,
+  AboutUs,
+  Brand,
+  WorkingAtBlackDiary,
 } from "./pages/Index";
 
 export const publicRoutes = [
@@ -34,6 +38,10 @@ export const publicRoutes = [
   { path: "/occasion/details/:slug?/:id?", component: OccasionDetails, exact: true },
   { path: "/sub-category/details/:slug?/:id?", component: SubCategoryDetails, exact: true },
   { path: "/search/sub-category", component: ViewAllSubCategory, exact: true },
+  { path: "/leadership", component: Leadership, exact: true },
+  { path: "/about-us", component: AboutUs, exact: true },
+  { path: "/brand", component: Brand, exact: true },
+  { path: "/working-at-black-diary", component: WorkingAtBlackDiary, exact: true },
 ];
 
 export const privateRoutes = [

@@ -20,6 +20,10 @@ import BlockAccount from "./Account/ProfileAction/BlockAccount";
 import AccountPrivacy from "./Account/ProfileAction/AccountPrivacy";
 import ManageAccount from "./Account/ProfileAction/ManageAccount";
 import PersonalDetails from "./Account/ProfileAction/PersonalDetails";
+import Leadership from "./footer/leadership";
+import AboutUs from "./footer/aboutUs";
+import Brand from "./footer/brand";
+import WorkingAtBlackDiary from "./footer/workingAtBlackDiary";
 
 export {
   PersonalDetails,
@@ -42,4 +46,8 @@ export {
   NotificationPermission,
   ManageAccount,
   DiaryByType,
+  Leadership,
+  AboutUs,
+  Brand,
+  WorkingAtBlackDiary,
 };
