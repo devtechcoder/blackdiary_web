@@ -16,6 +16,7 @@ import { publicRoutes, privateRoutes } from "./routes";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 function App() {
   const queryClient = new QueryClient();
+  // testitg s fhsdfhsdfsdfsdhjfkhsd is wokring or not
   return (
     <AuthProvider>
       <AppContextProvider>
