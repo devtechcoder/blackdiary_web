@@ -6,9 +6,12 @@ import Main from "../../../components/layout/Main";
 import { useNavigate } from "react-router";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "../../../constants/seo";
+import { useAuthContext } from "../../../context/AuthContext";
 const { Title, Text } = Typography;
 
 const PersonalDetails = () => {
+  const { setIsLoggedIn, refreshUser, userProfile } = useAuthContext();
+
   const navigate = useNavigate();
   return (
     <Main>
@@ -28,14 +31,16 @@ const PersonalDetails = () => {
                 Personal details
               </Title>
             </div>
-            <Text className="text-gray-300">Meta uses this information to verify your identity and to keep our community safe. You decide what personal details you make visible to others.</Text>
+            <Text className="text-gray-300">
+              Black Diary uses this information to verify your identity and to keep our community safe. You decide what personal details you make visible to others.
+            </Text>
 
             <Divider style={{ backgroundColor: "#333" }} />
 
             <div className="hover:bg-[#1DB95422] rounded-lg p-3 flex justify-between items-center cursor-pointer">
               <div>
                 <Text className="text-white font-semibold block">Contact info</Text>
-                <Text className="text-gray-400 text-sm block">+918875382004</Text>
+                <Text className="text-gray-400 text-sm block"> {userProfile?.mobile_number ? `+${userProfile?.country_code}-${userProfile?.mobile_number}` : "Add contact info"}</Text>
               </div>
               <RightOutlined className="text-white" />
             </div>
@@ -45,7 +50,7 @@ const PersonalDetails = () => {
             <div className="hover:bg-[#1DB95422] rounded-lg p-3 flex justify-between items-center cursor-pointer">
               <div>
                 <Text className="text-white font-semibold block">Birthday</Text>
-                <Text className="text-gray-400 text-sm block">December 24, 2004</Text>
+                <Text className="text-gray-400 text-sm block">{userProfile?.dob ? userProfile?.dob : "Add birthday"}</Text>
               </div>
               <RightOutlined className="text-white" />
             </div>

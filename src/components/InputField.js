@@ -102,39 +102,7 @@ export const EmailInputBox = ({ label, name, placeholder, rules, cover, classNam
 export const PasswordInputBox = ({ label, name, placeholder, rules, cover, className, isDisable, inputProps, colProps, ...props }) => {
   return (
     <Col span={24} md={cover ? cover.md : 12} sm={24} {...colProps}>
-      <Form.Item
-        className={!!className ? className : ""}
-        label={label}
-        name={name}
-        rules={[
-          {
-            required: true,
-            message: lang("Please enter your password!"),
-          },
-          {
-            min: 8,
-            message: lang("Password must be at least 8 characters!"),
-          },
-          {
-            pattern: /^(?=.*[a-z])(?=.*[A-Z])/,
-            message: lang("Password must contain both uppercase and lowercase letters!"),
-          },
-          {
-            pattern: /^(?=.*\d)/,
-            message: lang("Password must contain at least one number!"),
-          },
-          {
-            pattern: /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/,
-            message: lang("Password must contain at least one special character!"),
-          },
-          {
-            max: 250,
-            message: lang("Password must not be more than 250 characters!"),
-          },
-        ]}
-        normalize={(value) => value.trimStart()}
-        {...props}
-      >
+      <Form.Item className={!!className ? className : ""} label={label} name={name} rules={rules} normalize={(value) => value.trimStart()} {...props}>
         <Input.Password className="custom-ant-input" placeholder={placeholder} disabled={isDisable} {...inputProps} />
       </Form.Item>
     </Col>
@@ -275,6 +243,10 @@ export const UserNameInputBox = ({ label, name, placeholder, rules, cover, class
             message: lang("Username can only contain lowercase letters, numbers, underscores, and periods. No consecutive or trailing periods."),
           },
           {
+            min: 3,
+            message: lang("Username must not be more than 30 characters!"),
+          },
+          {
             max: 30,
             message: lang("Username must not be more than 30 characters!"),
           },
@@ -397,7 +369,7 @@ export const EmailOrUserNameInputBox = ({
         rules={[
           {
             required: true,
-            message: lang("Please enter your email or username!"),
+            message: lang("Please enter your blackdiary username or email address!"),
           },
           {
             validator: (_, value) => {

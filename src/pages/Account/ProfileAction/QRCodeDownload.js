@@ -6,7 +6,11 @@ import Main from "../../../components/layout/Main";
 import logo from "../../../assets/images/allLogo/black_white_logo.png";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "../../../constants/seo";
+import { useAuthContext } from "../../../context/AuthContext";
+import { WEB_LINK } from "../../../constants/Constants";
 const QRCodeDownload = () => {
+  const { isLoggedIn, setIsLoggedIn, refreshUser, userProfile } = useAuthContext();
+
   const [selectedColor, setSelectedColor] = useState("#00B894");
   const qrRef = useRef();
 
@@ -26,7 +30,7 @@ const QRCodeDownload = () => {
         <div className="bg-white rounded-lg p-6 shadow-lg flex flex-col md:flex-row items-center gap-10">
           {/* QR Code Block */}
           <div ref={qrRef} className="bg-white p-4 rounded-xl border border-gray-200">
-            <QRCode value="https://www.instagram.com/_jyotiradityachaudhary?igsh=MWFwd2g0ODBsZjByeA==" color={selectedColor} bgColor="#ffffff" size={200} icon={logo} />
+            <QRCode value={`${WEB_LINK}/@${userProfile?.user_name}`} color={selectedColor} bgColor="#ffffff" size={200} icon={logo} />
             <p className="text-center mt-2 text-sm font-medium">BLACKDIARY_00</p>
           </div>
 

@@ -26,23 +26,20 @@ const AccountSideNav = () => {
     <div className="w-80 h-screen overflow-y-auto p-4 bg-black text-white">
       {/* Meta Card */}
       <Card className="rounded-xl shadow-md mb-6 bg-[#121212] text-white" bordered={false}>
-        <Title level={5} className="text-white">
-          Black Diary
-        </Title>
         <Text strong className="text-white">
           Accounts Center
         </Text>
         <p className="text-gray-400 text-sm mb-3">Manage your connected experiences and account settings across black diary technologies.</p>
         <div className="flex flex-col gap-2 text-gray-300 text-sm">
-          <div className="flex items-center gap-2" onClick={() => navigate(`/account/manage-account/${userProfile?.user_name}/${userProfile?._id}`)}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate(`/account/manage-account/${userProfile?.user_name}/${userProfile?._id}`)}>
             <UserOutlined />
             <span>Profile</span>
           </div>
-          <div className="flex items-center gap-2" onClick={() => navigate(`/account/personal-details/${userProfile?.user_name}/${userProfile?._id}`)}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate(`/account/personal-details/${userProfile?.user_name}/${userProfile?._id}`)}>
             <InfoOutlined />
             <span>Personal details</span>
           </div>
-          <div className="flex items-center gap-2" onClick={() => navigate(`/account/manage-account/${userProfile?.user_name}/${userProfile?._id}`)}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate(`/account/manage-account/${userProfile?.user_name}/${userProfile?._id}`)}>
             <LockOutlined />
             <span>Password and security</span>
           </div>

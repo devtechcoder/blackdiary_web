@@ -1,36 +1,51 @@
-import { toast } from "react-toastify";
+import { message } from "antd";
 
 export const Severty = {
-    SUCCESS: 'success',
-    ERROR: 'error'
-}
+  SUCCESS: "success",
+  ERROR: "error",
+};
 
-export const ShowToast = (message, type) => {
+export const ShowToast = (msg, type) => {
+  switch (type) {
+    case "success":
+      message.success(msg);
+      break;
+    case "error":
+      message.error(msg);
+      break;
+    default:
+      // You can add a default message type here if needed, e.g., message.info(msg)
+      break;
+  }
+};
 
-    switch (type) {
-        case 'success': toast.success(message, {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        });
-            break;
-        case 'error': toast.error(message, {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        });
-            break;
-        default:
-            break;
-    }
-}
+// export const ShowToast = (message, type) => {
+//   switch (type) {
+//     case "success":
+//       toast.success(message, {
+//         position: "top-right",
+//         autoClose: 1000,
+//         hideProgressBar: false,
+//         closeOnClick: false,
+//         pauseOnHover: true,
+//         draggable: true,
+//         progress: undefined,
+//         theme: "colored",
+//       });
+//       break;
+//     case "error":
+//       toast.error(message, {
+//         position: "top-right",
+//         autoClose: 1000,
+//         hideProgressBar: false,
+//         closeOnClick: false,
+//         pauseOnHover: true,
+//         draggable: true,
+//         progress: undefined,
+//         theme: "colored",
+//       });
+//       break;
+//     default:
+//       break;
+//   }
+// };

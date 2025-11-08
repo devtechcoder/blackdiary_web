@@ -19,10 +19,10 @@ const ProfileActionModal = ({ show, hide }) => {
   const handleAction = (item) => {
     switch (item) {
       case "professional_account":
-        navigate("/professional-account");
+        navigate("/account/edit-profile");
         break;
       case "qr_code":
-        navigate(`/account/qr-code/${userProfile?.user_name}/${userProfile?._id}`);
+        navigate(`/qr`);
         break;
       case "notifications":
         navigate(`/account/notification-permission/${userProfile?.user_name}/${userProfile?._id}`);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Modal, Row, Col, Radio, Avatar } from "antd";
+import { Form, Modal, Avatar, Spin } from "antd";
 import lang from "../helper/langHelper";
 import apiPath from "../constants/apiPath";
 import { Severty, ShowToast } from "../helper/toast";
@@ -13,6 +13,7 @@ const ShowLoginAccModal = ({ show, hide, data }) => {
   const { request } = useRequest();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [selectedAccountId, setSelectedAccountId] = useState(null);
 
   const onLogin = (value) => {
     const payload = {
@@ -20,6 +21,7 @@ const ShowLoginAccModal = ({ show, hide, data }) => {
       device_type: "Web",
       id: value?._id,
     };
+    setSelectedAccountId(value._id);
     setLoading(true);
     request({
       url: `${apiPath.login}`,
@@ -27,6 +29,7 @@ const ShowLoginAccModal = ({ show, hide, data }) => {
       data: payload,
       onSuccess: (data) => {
         setLoading(false);
+        setSelectedAccountId(null);
         if (data.status) {
           setIsLoggedIn(true);
           localStorage.setItem("token", data.data.token);
@@ -45,6 +48,7 @@ const ShowLoginAccModal = ({ show, hide, data }) => {
         console.log(error, "err+++");
         ShowToast(error?.response?.data?.message, Severty.ERROR);
         setLoading(false);
+        setSelectedAccountId(null);
         if (error?.response?.data?.statusText === "ACCOUNT_NOT_VERIFY") {
           setTimeout(() => navigate(`/signUp-otp/${error?.response?.data?.data?._id}`), 200);
         }
@@ -53,22 +57,38 @@ const ShowLoginAccModal = ({ show, hide, data }) => {
   };
 
   return (
-    <Modal width={700} open={show} onOk={hide} okText="OK" cancelText="Cancel" onCancel={hide} centered className="tab_modal deleteWarningModal">
-      <Form layout="vertical" className="p-2">
-        <div className="flex flex-col gap-4">
+    <Modal width={400} open={show} footer={null} onCancel={hide} centered className="custom-modal" title={<div className="text-center text-xl font-bold text-white">Choose an account</div>}>
+      <div className="p-2 text-white">
+        <div className="flex flex-col gap-3 my-4">
           {accounts.map((acc) => (
-            <div key={acc._id} onClick={() => onLogin(acc)} className="flex items-center gap-4 p-3 border rounded cursor-pointer hover:bg-gray-100 transition-all">
-              <Avatar size={48} src={acc.image}>
-                {!acc.image && acc.name?.[0]}
-              </Avatar>
-              <div>
-                <div className="font-semibold">{acc.name}</div>
-                <div className="text-gray-500">@{acc.user_name}</div>
+            <div
+              key={acc._id}
+              onClick={() => !loading && onLogin(acc)}
+              className="flex items-center justify-between gap-4 p-3 bg-neutral-800 border border-neutral-700 rounded-lg cursor-pointer hover:bg-neutral-700 transition-all"
+            >
+              <div className="flex items-center gap-4">
+                <Avatar size={48} src={acc.image}>
+                  {!acc.image && acc.name?.[0]}
+                </Avatar>
+                <div>
+                  <div className="font-semibold">{acc.name}</div>
+                  <div className="text-neutral-400 text-sm">@{acc.user_name}</div>
+                </div>
               </div>
+              {loading && selectedAccountId === acc._id && <Spin />}
             </div>
           ))}
         </div>
-      </Form>
+        <button
+          onClick={() => {
+            hide();
+            navigate("/login");
+          }}
+          className="w-full text-center py-2 text-neutral-300 hover:text-white hover:underline"
+        >
+          Log in with another account
+        </button>
+      </div>
     </Modal>
   );
 };

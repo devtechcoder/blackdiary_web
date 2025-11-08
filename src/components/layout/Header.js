@@ -6,7 +6,7 @@ import { useAuthContext } from "../../context/AuthContext";
 
 function Header({ showDrawer, isMobile }) {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuthContext();
+  const { isLoggedIn, setIsLoggedIn, refreshUser, userProfile } = useAuthContext();
   return (
     <div className="bg-[#121212] text-white h-20 px-4 md:px-6 flex items-center justify-between sticky top-0 z-50">
       {/* Left Side */}
@@ -41,11 +41,11 @@ function Header({ showDrawer, isMobile }) {
         ) : (
           // If user is logged in
           <>
-            <button className="bg-white text-black font-semibold px-4 py-1 rounded-full hover:opacity-90 transition">Black Diary</button>
-            <BellOutlined className="text-xl hover:scale-110 transition-transform duration-200" />
+            <button className="bg-white text-black font-semibold px-4 py-1 rounded-full hover:opacity-90 transition">{userProfile?.user_name}</button>
+            <BellOutlined className="text-xl hover:scale-110 transition-transform duration-200 cursor-pointer" />
 
-            <div className="bg-[#4b3b2a] w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" onClick={() => navigate(`/profile/:username?/:id?`)}>
-              S
+            <div className="bg-[#4b3b2a] w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold cursor-pointer" onClick={() => navigate(`/@${userProfile?.user_name}`)}>
+              {userProfile?.image ? <img src={userProfile?.image} alt="Profile" className="w-full h-full object-cover" /> : userProfile?.user_name?.charAt(0).toUpperCase() ?? ""}
             </div>
           </>
         )}

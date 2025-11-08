@@ -23,6 +23,13 @@ import {
   AboutUs,
   Brand,
   WorkingAtBlackDiary,
+  SafetySupport,
+  SafetyTools,
+  PrivacyTools,
+  AccountSecurity,
+  PrivacyPolicy,
+  TermsAndConditions,
+  Sitemap,
 } from "./pages/Index";
 
 export const publicRoutes = [
@@ -42,12 +49,19 @@ export const publicRoutes = [
   { path: "/about-us", component: AboutUs, exact: true },
   { path: "/brand", component: Brand, exact: true },
   { path: "/working-at-black-diary", component: WorkingAtBlackDiary, exact: true },
+  { path: "/safety-support", component: SafetySupport, exact: true },
+  { path: "/safety-tools", component: SafetyTools, exact: true },
+  { path: "/privacy-tools", component: PrivacyTools, exact: true },
+  { path: "/account-security", component: AccountSecurity, exact: true },
+  { path: "/privacy-policy", component: PrivacyPolicy, exact: true },
+  { path: "/terms-and-conditions", component: TermsAndConditions, exact: true },
+  { path: "/sitemap", component: Sitemap, exact: true },
 ];
 
 export const privateRoutes = [
-  { path: "/profile/:username?/:id?", component: Profile, exact: true },
+  { path: "/:username?/:id?", component: Profile, exact: true },
   { path: "account/edit-profile/:username?/:id?", component: EditProfile, exact: true },
-  { path: "account/qr-code/:username?/:id?", component: QRCodeDownload, exact: true },
+  { path: "/qr/:username?/:id?", component: QRCodeDownload, exact: true },
   { path: "account/login-activity/:username?/:id?", component: LoginActivity, exact: true },
   {
     path: "account/notification-permission/:username?/:id?",

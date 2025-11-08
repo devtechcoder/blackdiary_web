@@ -79,6 +79,20 @@
   box-shadow: none !important;
 }
 
+/* --- Password Input Customization --- */
+.ant-input-password.custom-ant-input input.ant-input {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.ant-input-password .ant-input-suffix .anticon {
+  color: #22c55e; /* green-500 */
+}
+.ant-input-password .ant-input-suffix .anticon:hover {
+  color: #16a34a; /* green-600 */
+}
+
 .otp-input {
   height: 3rem;
   width: 2.5rem !important;
@@ -100,23 +114,58 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
 }
+/* --- react-phone-input-2 Custom Dark UI Fix --- */
+.react-tel-input {
+  width: 100%;
+}
 
+/* Main input */
 .react-tel-input .form-control {
-  position: relative;
-  font-size: 14px;
-  letter-spacing: 0.01rem;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  padding-left: 48px;
-  margin-left: 0;
-  background: #ffffff;
-  border: 1px solid #cacaca;
-  border-radius: 5px;
-  line-height: 25px;
-  height: 35px;
-  width: 300px;
-  outline: none;
-  color: black;
+  background-color: #0a0a0a !important;
+  color: #e5e5e5 !important;
+  border: 1px solid #3f3f46 !important;
+  border-radius: 0.5rem !important;
+  width: 100% !important;
+  height: 42px !important;
+  box-shadow: none !important;
+  padding-left: 3rem !important; /* Prevent overlap with flag */
+  transition: all 0.2s ease;
+}
+
+.react-tel-input .form-control:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3) !important;
+}
+
+/* Flag dropdown */
+.react-tel-input .flag-dropdown {
+  background-color: #0a0a0a !important;
+  border: 1px solid #3f3f46 !important;
+  border-right: none !important; /* Remove visible gap line */
+  border-radius: 0.5rem 0 0 0.5rem !important;
+}
+
+.react-tel-input .flag-dropdown.open {
+  background-color: #171717 !important;
+}
+
+/* Country list dropdown */
+.react-tel-input .country-list {
+  background-color: #0a0a0a !important;
+  border: 1px solid #3f3f46 !important;
+  color: #e5e5e5 !important;
+  scrollbar-width: thin;
+}
+
+.react-tel-input .country-list .country:hover,
+.react-tel-input .country-list .country.highlight {
+  background-color: #27272a !important;
+}
+
+/* Flag icon alignment */
+.react-tel-input .selected-flag {
+  background-color: transparent !important;
+  border-radius: 0.5rem 0 0 0.5rem !important;
 }
 
 input#password {
@@ -166,6 +215,10 @@ div:where(.css-dev-only-do-not-override-mc1tut).ant-typography-h5 > textarea,
 
 .top-biggest-content {
   height: 100px;
+}
+
+li.ant-list-item.hover\:bg-\[\#1a1a1a\].px-6 {
+  cursor: pointer;
 }
 
 @layer utilities {

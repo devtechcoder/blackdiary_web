@@ -24,6 +24,13 @@ import Leadership from "./footer/leadership";
 import AboutUs from "./footer/aboutUs";
 import Brand from "./footer/brand";
 import WorkingAtBlackDiary from "./footer/workingAtBlackDiary";
+import SafetySupport from "./footer/safety/support";
+import SafetyTools from "./footer/safety/safetyTools";
+import PrivacyTools from "./footer/safety/privacyTools";
+import AccountSecurity from "./footer/safety/accountSecurity";
+import PrivacyPolicy from "./footer/privacyPolicy";
+import TermsAndConditions from "./footer/termsConditions";
+import Sitemap from "./footer/sitemap";
 
 export {
   PersonalDetails,
@@ -50,4 +57,11 @@ export {
   AboutUs,
   Brand,
   WorkingAtBlackDiary,
+  SafetySupport,
+  SafetyTools,
+  PrivacyTools,
+  AccountSecurity,
+  PrivacyPolicy,
+  TermsAndConditions,
+  Sitemap,
 };

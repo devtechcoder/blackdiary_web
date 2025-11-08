@@ -12,6 +12,8 @@ import { Severty, ShowToast } from "../../../helper/toast";
 import { FullNameInputBox, UserNameInputBox } from "../../../components/InputField";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "../../../constants/seo";
+import Prouser from "../../../assets/images/user.png";
+
 const { Title, Text } = Typography;
 
 const ManageAccount = () => {
@@ -36,20 +38,20 @@ const ManageAccount = () => {
             </Title>
           </div>
           <Text className="text-[#B3B3B3]">
-            Manage your profile info, and use the same info across Facebook, Instagram and Meta Horizon. Add more profiles by adding your accounts.{" "}
-            <a href="#" className="text-[#1DB954] font-medium">
+            Manage your profile info and account settings for Black Diary. You can edit your personal details and manage how you use the platform.{" "}
+            <a href="#" className="text-[#1DB954] font-medium no-underline">
               Learn more
             </a>
           </Text>
 
           <div className="mt-6 bg-[#121212] border border-[#2a2a2a] rounded-2xl overflow-hidden max-w-xl">
             {/* Profile Row */}
-            <div className="flex items-center justify-between px-4 py-4 hover:bg-[#1a1a1a] transition-all" onClick={() => setShow(true)}>
+            <div className="flex items-center justify-between px-4 py-4 hover:bg-[#1a1a1a] transition-all cursor-pointer" onClick={() => setShow(true)}>
               <div className="flex items-center gap-3">
-                <Avatar size="large" src="https://i.ibb.co/TTFj0Wh/blackdp.jpg" />
+                <Avatar size="large" src={userProfile?.image ?? Prouser} />
                 <div className="flex flex-col">
-                  <Text className="text-white font-medium">blackdiary_00</Text>
-                  <Text className="text-[#B3B3B3] text-xs">jyotraditya choudhary</Text>
+                  <Text className="text-white font-medium">{userProfile?.user_name ?? ""}</Text>
+                  <Text className="text-[#B3B3B3] text-xs">{userProfile?.name ?? ""}</Text>
                 </div>
               </div>
               <RightOutlined className="text-[#B3B3B3]" />
@@ -110,7 +112,7 @@ const ProfileView = ({ show, hide, setEditType }) => {
       className="custom-modal dark-scroll rounded-3xl overflow-hidden"
     >
       <div className="text-center px-6 py-8 text-white">
-        <Avatar size={96} src="https://i.ibb.co/TTFj0Wh/blackdp.jpg" className="mx-auto" />
+        <Avatar size={96} src={userProfile?.image ?? Prouser} className="mx-auto" />
         <Text className="block mt-4 text-lg font-semibold text-white">{userProfile?.name}</Text>
         <Text className="block text-[#B3B3B3] text-sm">{userProfile?.user_name}</Text>
       </div>
@@ -121,11 +123,11 @@ const ProfileView = ({ show, hide, setEditType }) => {
           dataSource={data}
           renderItem={(item) => (
             <List.Item
-              className={`hover:bg-[#1a1a1a] px-6 ${item.isActive ? "bg-[#1a1a1a]" : ""}`}
+              className={`hover:bg-[#1a1a1a] px-6 ${item.isActive ? "bg-[#1a1a1a] cursor-pointer" : ""}`}
               style={{ borderBottom: "1px solid #2a2a2a" }}
               onClick={() => (item?._id === "profile" ? navigate(`/account/edit-profile/${userProfile?.user_name}/${userProfile?._id}`) : setEditType(item?._id))}
             >
-              <Text className="text-white font-medium">{item.title}</Text>
+              <Text className="text-white font-medium ">{item.title}</Text>
               <RightOutlined className="text-[#B3B3B3]" />
             </List.Item>
           )}
