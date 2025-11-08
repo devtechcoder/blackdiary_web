@@ -1,24 +1,23 @@
-const React = require("react");
-const { Route } = require("react-router-dom");
-const { publicRoutes } = require("./src/routes.js");
-const Sitemap = require("react-router-sitemap").default;
+const { SitemapStream, streamToPromise } = require("sitemap");
 const { createWriteStream } = require("fs");
 const { resolve } = require("path");
+const { publicRoutes } = require("./src/routes");
 
-function generateSitemap() {
-  // Create a Route component from your public routes array
-  const routes = (
-    <Route>
-      {publicRoutes.map((route, index) => (
-        <Route key={index} path={route.path} />
-      ))}
-    </Route>
-  );
+async function generateSitemap() {
+  const sitemap = new SitemapStream({
+    hostname: "https://blackdiary.vercel.app",
+  });
 
-  const sitemap = new Sitemap(routes).build("https://blackdiary.vercel.app").toString();
+  publicRoutes.forEach((route) => {
+    sitemap.write({ url: route.path });
+  });
+
+  sitemap.end();
+
+  const xml = await streamToPromise(sitemap);
   const dest = resolve(__dirname, "build", "sitemap.xml");
-  createWriteStream(dest).write(sitemap);
-  console.log(`Sitemap generated at ${dest}`);
+  createWriteStream(dest).write(xml);
+  console.log("✅ Sitemap generated at:", dest);
 }
 
 generateSitemap();
