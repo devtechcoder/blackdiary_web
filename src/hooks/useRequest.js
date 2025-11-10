@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { AppStateContext } from "../context/AppContext";
 import { Severty, ShowToast } from "../helper/toast";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 const client = axios.create({
   baseURL: apiPath.baseURL,
@@ -129,6 +129,54 @@ export const useGetApi = ({ queryKey, endpoint, enabled = true, params = {}, hea
     error,
     refetch,
   };
+};
+
+export const usePostApi = ({ endpoint, onSuccess, onError }) => {
+  const { logout } = useContext(AuthContext);
+
+  const postData = async (formData) => {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(`${apiPath.baseURL}${endpoint}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  };
+
+  const { mutate, isLoading, isError, error } = useMutation({
+    mutationFn: postData,
+    onSuccess: (data) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+    onError: (err) => {
+      console.error("Mutation Error:", err);
+
+      if (err?.code === "ERR_NETWORK") {
+        ShowToast("Network error, please check your internet.", Severty.ERROR);
+      }
+      if (err?.response?.status === 401 || err?.response?.status === 403) {
+        ShowToast("Session expired, please login again.", Severty.ERROR);
+        logout();
+      }
+      if (err?.response?.data?.message === "jwt expired") {
+        ShowToast("Session expired! Please login again.", Severty.ERROR);
+        logout();
+      }
+      if (err?.response?.data?.message === "Un-Authorized User") {
+        ShowToast("Unauthorized access detected!", Severty.ERROR);
+        logout();
+      }
+
+      if (onError) {
+        onError(err.response?.data || err);
+      }
+    },
+  });
+
+  return { mutate, isLoading, isError, error };
 };
 
 export default useRequest;

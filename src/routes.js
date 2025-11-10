@@ -30,6 +30,10 @@ import {
   PrivacyPolicy,
   TermsAndConditions,
   Sitemap,
+  SearchAccount,
+  PostDiaryPage,
+  Post,
+  Shayari,
 } from "./pages/Index";
 
 export const publicRoutes = [
@@ -56,12 +60,15 @@ export const publicRoutes = [
   { path: "/privacy-policy", component: PrivacyPolicy, exact: true },
   { path: "/terms-and-conditions", component: TermsAndConditions, exact: true },
   { path: "/sitemap", component: Sitemap, exact: true },
+  { path: "/search", component: SearchAccount, exact: true },
+  { path: "/:username/:id?", component: Profile, exact: true },
+  { path: "/post", component: Post, exact: true },
+  { path: "/shayari", component: Shayari, exact: true },
 ];
 
 export const privateRoutes = [
-  { path: "/:username?/:id?", component: Profile, exact: true },
   { path: "account/edit-profile/:username?/:id?", component: EditProfile, exact: true },
-  { path: "/qr/:username?/:id?", component: QRCodeDownload, exact: true },
+  { path: "/qr/:username/:id?", component: QRCodeDownload, exact: true },
   { path: "account/login-activity/:username?/:id?", component: LoginActivity, exact: true },
   {
     path: "account/notification-permission/:username?/:id?",
@@ -73,4 +80,5 @@ export const privateRoutes = [
   { path: "account/manage-account/:username?/:id?", component: ManageAccount, exact: true },
   { path: "account/personal-details/:username?/:id?", component: PersonalDetails, exact: true },
   { path: "/diary-by-type/:type?", component: DiaryByType, exact: true },
+  { path: "/publish", component: PostDiaryPage, exact: true },
 ];

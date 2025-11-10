@@ -19,16 +19,16 @@ const ProfileImageUpload = ({ fileType, value, imageType, btnName, onChange, siz
       url: apiPath.common.imageUpload,
       method: "POST",
       data: formData,
-      onSuccess: ({ data, status }) => {
+      onSuccess: ({ data, status, message }) => {
         setLoading(false);
         if (status) {
-          ShowToast(data.message, Severty.SUCCESS);
+          ShowToast(message, Severty.SUCCESS);
           setFile([{ ...file, status: "done", url: data?.path }]);
           if (onChange) {
             onChange(data?.path);
           }
         } else {
-          ShowToast(data.message, Severty.ERROR);
+          ShowToast(message, Severty.ERROR);
         }
       },
       onError: (error) => {
@@ -71,7 +71,7 @@ const ProfileImageUpload = ({ fileType, value, imageType, btnName, onChange, siz
   return (
     <ImgCrop rotate quality={1} modalTitle="Crop Image" showGrid shape="round" modalClassName="bg-[#121212] text-white">
       <Upload listType="picture" maxCount={1} beforeUpload={beforeUpload} customRequest={handleImgChange} onRemove={onRemove} fileList={file} {...props}>
-        {file && file.length > 0 ? null : <Button icon={<UploadOutlined />}> {btnName ? `Upload ${btnName}` : "Upload"}</Button>}
+        {file && file.length > 0 ? null : <Button icon={<UploadOutlined />}> {btnName ? `${btnName}` : "Upload"}</Button>}
       </Upload>
     </ImgCrop>
   );

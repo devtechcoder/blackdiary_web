@@ -80,3 +80,8 @@ export const showError = (error) => {
       break;
   }
 };
+
+export const getOriginalUserName = (username) => {
+  if (!username) return "";
+  return username.startsWith("@") ? username.substring(1) : username;
+};

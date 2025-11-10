@@ -22,22 +22,26 @@ function Main({ children }) {
   }, []);
 
   const showDrawer = () => setVisible(true);
-  const closeDrawer = () => setVisible(false);
 
   return (
     <Layout className="layout-dashboard h-screen overflow-hidden bg-[#181818]">
-      <Header showDrawer={showDrawer} isMobile={isMobile} />
-
-      <Layout>
-        {isMobile ? <BottomNav /> : <Sidenav />}
-
-        <Layout className="h-[calc(100vh-64px)] overflow-hidden flex flex-col flex-1">
-          <Content className="overflow-y-auto p-4 text-white bg-[#181818] flex-grow">
-            {children}
-            <Footer />
-          </Content>
+      {isMobile ? (
+        <>
+          <Header showDrawer={showDrawer} isMobile={isMobile} />
+          <Content className="overflow-y-auto p-4 pb-20 text-white bg-[#181818] flex-grow">{children}</Content>
+          <BottomNav />
+        </>
+      ) : (
+        <Layout className="h-full">
+          <Sidenav />
+          <Layout className="flex flex-col">
+            <Content className="overflow-y-auto text-white bg-black">
+              <div className="p-4">{children}</div>
+              <Footer />
+            </Content>
+          </Layout>
         </Layout>
-      </Layout>
+      )}
     </Layout>
   );
 }

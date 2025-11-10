@@ -31,6 +31,10 @@ import AccountSecurity from "./footer/safety/accountSecurity";
 import PrivacyPolicy from "./footer/privacyPolicy";
 import TermsAndConditions from "./footer/termsConditions";
 import Sitemap from "./footer/sitemap";
+import SearchAccount from "./searchAccount/index";
+import PostDiaryPage from "./postDiary/index";
+import Post from "./post/index";
+import Shayari from "./shayari/index";
 
 export {
   PersonalDetails,
@@ -64,4 +68,8 @@ export {
   PrivacyPolicy,
   TermsAndConditions,
   Sitemap,
+  SearchAccount,
+  PostDiaryPage,
+  Post,
+  Shayari,
 };

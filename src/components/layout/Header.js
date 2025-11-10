@@ -1,5 +1,5 @@
 import React from "react";
-import { HomeOutlined, CameraOutlined, SearchOutlined, BellOutlined } from "@ant-design/icons";
+import { HomeOutlined, CameraOutlined, SearchOutlined, BellOutlined, LoginOutlined } from "@ant-design/icons";
 import logo from "../../assets/images/icon/logo.png";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../../context/AuthContext";
@@ -31,22 +31,23 @@ function Header({ showDrawer, isMobile }) {
         {!isLoggedIn ? (
           // If user not logged in
           <>
-            <button className="text-white hover:text-green-500 font-medium transition duration-200" onClick={() => navigate("/signUp-diary")}>
-              Sign up
-            </button>
-            <button className="bg-white text-black font-semibold px-4 py-1 rounded-full hover:scale-105 transition-transform duration-200" onClick={() => navigate("/login-diary")}>
-              Log in
+            <button
+              className="bg-green-500 text-white font-semibold px-4 py-2 rounded-full hover:bg-green-600 transition-colors duration-200 flex items-center gap-2"
+              onClick={() => navigate("/login")}
+            >
+              <LoginOutlined /> Log in
             </button>
           </>
         ) : (
           // If user is logged in
           <>
-            <button className="bg-white text-black font-semibold px-4 py-1 rounded-full hover:opacity-90 transition">{userProfile?.user_name}</button>
             <BellOutlined className="text-xl hover:scale-110 transition-transform duration-200 cursor-pointer" />
-
-            <div className="bg-[#4b3b2a] w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold cursor-pointer" onClick={() => navigate(`/@${userProfile?.user_name}`)}>
-              {userProfile?.image ? <img src={userProfile?.image} alt="Profile" className="w-full h-full object-cover" /> : userProfile?.user_name?.charAt(0).toUpperCase() ?? ""}
-            </div>
+            <button
+              className="bg-green-500 text-white font-semibold px-4 py-2 rounded-full hover:bg-green-600 transition-colors duration-200 flex items-center gap-2"
+              onClick={() => navigate(`/@${userProfile?.user_name}`)}
+            >
+              {userProfile?.user_name}
+            </button>
           </>
         )}
       </div>

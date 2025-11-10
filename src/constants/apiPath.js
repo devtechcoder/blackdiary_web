@@ -39,6 +39,9 @@ let apiPath = {
   getPoetData: "app/poet",
   getPoetDetails: "app/poet/view-details",
 
+  //Create Diary
+  publish: "app/create-diary/publish",
+
   //Occasion Apis
   getOccasionData: "app/occasion",
   getOccasionDetails: "app/occasion/view-details",
@@ -49,6 +52,10 @@ let apiPath = {
 
   //Banner List
   listBanner: "app/banner",
+
+  //shayari Apis
+  getShayari: "app/shayari",
+  getPost: "app/post",
 
   //Diary Apis
   getDiary: "app/diary",
@@ -61,7 +68,10 @@ let apiPath = {
 
   // Common APIs
   common: {
-    categories: "/common/categories",
+    getOccasion: "common/occasion",
+    getUserProfile: "common/get-user-profile",
+    searchAccount: "common/search",
+    categories: "common/categories",
     subCategories: "/common/sub-categories",
     imageUpload: "common/image-upload",
   },

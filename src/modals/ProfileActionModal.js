@@ -1,9 +1,11 @@
 import { Modal } from "antd";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAuthContext } from "../context/AuthContext";
+
 const ProfileActionModal = ({ show, hide }) => {
   const { logout, refreshUser, userProfile } = useAuthContext();
+  const { username } = useParams();
 
   const navigate = useNavigate();
   const menuItems = [
@@ -22,7 +24,7 @@ const ProfileActionModal = ({ show, hide }) => {
         navigate("/account/edit-profile");
         break;
       case "qr_code":
-        navigate(`/qr`);
+        navigate(`/qr/${username}`);
         break;
       case "notifications":
         navigate(`/account/notification-permission/${userProfile?.user_name}/${userProfile?._id}`);

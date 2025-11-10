@@ -11,6 +11,8 @@ function Footer() {
   return (
     <>
       <div className="bg-black text-gray-400 px-10 py-10 text-sm">
+        <hr className="border-gray-700 my-8" />
+
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {/* Column 1 - Company */}
           <div>

@@ -3,15 +3,41 @@ import PhoneInput from "react-phone-input-2";
 import { useAppContext } from "../context/AppContext";
 import lang from "../helper/langHelper";
 import "react-phone-input-2/lib/style.css";
+import { useState, useEffect } from "react";
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
+
+export const NumberInputBox = ({ label, name, placeholder, rules, cover, className, colProps, ...props }) => {
+  return (
+    <Col md={cover ? cover.md : 12} {...colProps}>
+      <Form.Item className={!!className ? className : ""} label={label} name={name} rules={rules} {...props}>
+        <InputNumber placeholder={placeholder} />
+      </Form.Item>
+    </Col>
+  );
+};
+
+///------------------------
 
 export const MultiSelect = ({ cover, name, label, rules, placeholder, className, options, colProps }) => {
   const { language } = useAppContext();
   return (
     <Col md={cover ? cover.md : 12} {...colProps}>
-      <Form.Item name={name} label={label} rules={rules}>
+      <Form.Item
+        name={name}
+        label={label}
+        rules={[
+          {
+            required: !!rules,
+            message: `Please select a ${label || "value"}!`,
+          },
+        ]}
+      >
         <Select
           placeholder={placeholder}
-          className={!!className ? className : ""}
+          className={`dark-input w-full ${className || ""}`}
           mode="multiple" // Set mode to "multiple" for selecting multiple values
         >
           {options && options.length > 0
@@ -26,48 +52,6 @@ export const MultiSelect = ({ cover, name, label, rules, placeholder, className,
     </Col>
   );
 };
-
-export const EmailField = ({ label, name, placeholder, cover, className }) => {
-  return (
-    <Col md={cover ? cover.md : 12}>
-      <Form.Item
-        className="mb-0"
-        label={label}
-        name={name}
-        rules={[
-          { type: "email", message: "The email is not a valid email!" },
-          { required: true, message: "Please enter the email!" },
-          {
-            max: 50,
-            message: "Email should not contain more then 50 characters!",
-          },
-          {
-            min: 5,
-            message: "Email should contain at least 5 characters!",
-          },
-          {
-            pattern: new RegExp(/^([a-zA-Z0-9._%-]*[a-zA-Z]+[a-zA-Z0-9._%-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/),
-            message: "Enter valid email!",
-          },
-        ]}
-      >
-        <Input autoComplete="off" placeholder={placeholder} />
-      </Form.Item>
-    </Col>
-  );
-};
-
-export const NumberInputBox = ({ label, name, placeholder, rules, cover, className, colProps, ...props }) => {
-  return (
-    <Col md={cover ? cover.md : 12} {...colProps}>
-      <Form.Item className={!!className ? className : ""} label={label} name={name} rules={rules} {...props}>
-        <InputNumber placeholder={placeholder} />
-      </Form.Item>
-    </Col>
-  );
-};
-
-///------------------------
 
 export const EmailInputBox = ({ label, name, placeholder, rules, cover, className, isDisable, inputProps, colProps, ...props }) => {
   return (
@@ -157,7 +141,7 @@ export const SelectInput = ({ label, name, placeholder, options, rules, cover, c
           getPopupContainer={(triggerNode) => triggerNode.parentNode}
           {...props}
           placeholder={placeholder}
-          className={!!className ? className : ""}
+          className={`dark-input w-full ${className || ""}`}
           defaultValue={defaultValue}
           onChange={handleChange}
         >
@@ -397,5 +381,47 @@ export const EmailOrUserNameInputBox = ({
         <Input className="custom-ant-input" placeholder={placeholder} disabled={isDisable} onChange={handleChange} {...inputProps} />
       </Form.Item>
     </Col>
+  );
+};
+
+export const DescriptionEditor = ({ onChange, placeholder, value }) => {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  const handleEditorChange = (newEditorState) => {
+    setEditorState(newEditorState);
+    const rawContent = convertToRaw(newEditorState.getCurrentContent());
+
+    const htmlContent = draftToHtml(rawContent, null, null, {
+      defaultBlockTag: "p",
+      blockRenderers: {
+        unstyled: (block) => {
+          return `<p>${block.text.replace(/\n/g, "<br>")}</p>`;
+        },
+      },
+    });
+
+    if (onChange) {
+      onChange(htmlContent);
+    }
+  };
+
+  useEffect(() => {
+    if (value) {
+      const blocksFromHTML = convertFromHTML(value);
+      const content = ContentState.createFromBlockArray(blocksFromHTML);
+      const editorState = EditorState.createWithContent(content);
+      setEditorState(editorState);
+    }
+  }, []);
+
+  return (
+    <Editor
+      editorState={editorState}
+      placeholder={placeholder}
+      toolbarClassName="toolbarClassName"
+      wrapperClassName="wrapperClassName"
+      editorClassName="editorClassName"
+      onEditorStateChange={handleEditorChange}
+    />
   );
 };
