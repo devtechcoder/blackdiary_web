@@ -107,6 +107,7 @@
   },
   "devDependencies": {
     "@babel/register": "^7.28.3",
+    "babel-plugin-module-resolver": "^5.0.2",
     "babel-plugin-transform-assets": "^1.0.2",
     "postcss": "^8",
     "react-router-sitemap": "^1.2.0",
