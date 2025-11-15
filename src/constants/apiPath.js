@@ -10,10 +10,16 @@ console.log("appMode", appMode);
 
 if (appMode === "development") {
   URL = "http://localhost:7900/api/";
+  ASSET_URL = `http://localhost:7900/image/`;
+
   URL = "https://blackdiary.onrender.com/api/";
+  ASSET_URL = `https://blackdiary.onrender.com/image/`;
 } else {
   URL = "http://localhost:7900/api/";
+  ASSET_URL = `http://localhost:7900/image/`;
+
   URL = "https://blackdiary.onrender.com/api/";
+  ASSET_URL = `https://blackdiary.onrender.com/image/`;
 }
 
 let apiPath = {
@@ -22,6 +28,7 @@ let apiPath = {
 
   //Auth
   login: "app/auth/login",
+  googleLogin: "app/auth/google-login",
   profile: "app/auth/profile",
   getLoginAccount: "app/auth/login-account",
   signup: "app/auth/sign-up",
@@ -63,6 +70,9 @@ let apiPath = {
 
   //Likes
   toggleLikes: "app/like",
+  toggleFollow: "app/follow/toggle-follow",
+  getFollowers: "app/follow",
+  getFollowing: "app/follow",
 
   globalDownload: "app/url/insta/download",
 

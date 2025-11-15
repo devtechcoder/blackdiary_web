@@ -8,6 +8,7 @@ import useRequest from "../hooks/useRequest";
 import { useState } from "react";
 import apiPath from "../constants/apiPath";
 import { Severty, ShowToast } from "../helper/toast";
+import { useSearchParams } from "react-router-dom";
 
 export const ViewActionIcon = () => {
   const { language } = useAppContext();
@@ -26,15 +27,16 @@ export const LikeShareActionIcon = ({ item }) => {
   const { language } = useAppContext();
   const [loading, setLoading] = useState(false);
   const { request } = useRequest();
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type");
 
   const onLike = (value) => {
-    console.log("Like---->", item);
     const payload = {
       diary_id: item?._id,
     };
     setLoading(true);
     request({
-      url: `${apiPath.toggleLikes}`,
+      url: `${apiPath.toggleLikes}?type=${type || "shayari"}`,
       method: "POST",
       data: payload,
       onSuccess: (data) => {
@@ -106,5 +108,48 @@ export const LikeShareActionIcon = ({ item }) => {
         <FaCopy /> <span className="hidden sm:inline">Copy</span>
       </button>
     </div>
+  );
+};
+
+export const FollowIcon = ({ userId, classname }) => {
+  const { language } = useAppContext();
+  const [loading, setLoading] = useState(false);
+  const { request } = useRequest();
+
+  const onFollow = (value) => {
+    const payload = {
+      following_id: userId,
+    };
+    setLoading(true);
+    request({
+      url: `${apiPath.toggleFollow}`,
+      method: "POST",
+      data: payload,
+      onSuccess: (data) => {
+        setLoading(false);
+        if (data.status) {
+          ShowToast(data.message, Severty.SUCCESS);
+        } else {
+          ShowToast(data.message, Severty.ERROR);
+        }
+      },
+      onError: (error) => {
+        ShowToast(error?.response?.data?.message, Severty.ERROR);
+        setLoading(false);
+      },
+    });
+  };
+
+  return (
+    <>
+      <button
+        className={classname ? classname : "bg-green-500 text-white font-semibold px-3 py-1 rounded-md text-sm hover:bg-green-600 transition-colors duration-200"}
+        onClick={onFollow}
+        disabled={loading}
+        loading={loading}
+      >
+        Follow
+      </button>
+    </>
   );
 };

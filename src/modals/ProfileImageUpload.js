@@ -6,7 +6,7 @@ import apiPath from "../constants/apiPath";
 import useRequest from "../hooks/useRequest";
 import ImgCrop from "antd-img-crop"; // <-- CROP SUPPORT
 
-const ProfileImageUpload = ({ fileType, value, imageType, btnName, onChange, size = 1, isDimension = false, ...props }) => {
+const ProfileImageUpload = ({ fileType, value, imageType, btnName, onChange, size = 10, isDimension = false, ...props }) => {
   const [file, setFile] = useState([]);
   const [loading, setLoading] = useState(false);
   const { request } = useRequest();

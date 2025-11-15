@@ -76,7 +76,7 @@ export default function EditProfile() {
             {/* Profile Preview Box */}
             <div className="bg-[#121212] p-4 rounded-xl flex items-center space-x-4 border border-gray-700">
               <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center text-white font-bold">
-                {userProfile?.image ? <Image src={userProfile?.image} /> : <span>{defaultUserImage(userProfile?.user_name)}</span>}
+                {userProfile?.image ? <Image src={apiPath.assetURL + userProfile?.image} /> : <span>{defaultUserImage(userProfile?.user_name)}</span>}
               </div>
               <div className="flex-1">
                 <p className="font-semibold text-white">{userProfile?.user_name ?? ""}</p>
@@ -201,7 +201,7 @@ const AddProfileImage = ({ show, hide }) => {
 
         <div className="w-20 h-20 mb-6 bg-black rounded-full flex items-center justify-center text-white font-bold mx-auto border-2 border-[#1DB954]">
           {userProfile?.image ? (
-            <Image src={userProfile?.image} preview={false} className="rounded-full object-cover" width={80} height={80} />
+            <Image src={apiPath.assetURL + userProfile?.image} preview={false} className="rounded-full object-cover" width={80} height={80} />
           ) : (
             <span>{defaultUserImage(userProfile?.user_name)}</span>
           )}

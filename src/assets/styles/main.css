@@ -242,3 +242,45 @@ li.ant-list-item.hover\:bg-\[\#1a1a1a\].px-6 {
     }
   }
 }
+
+.caption-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+}
+
+.caption-input {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  caret-color: black;
+  padding: 10px;
+  width: 100%;
+  min-height: 100px;
+  outline: none;
+  white-space: pre-wrap;
+  overflow-y: auto;
+}
+
+.highlight-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: 10px;
+  white-space: pre-wrap;
+}
+
+.mention {
+  color: #0095f6;
+  font-weight: 500;
+}
+
+.hashtag {
+  color: #0095f6;
+  font-weight: 500;
+}
+
+.notranslate.public-DraftEditor-content {
+  border: 1px solid gray;
+  border-radius: 14px;
+}

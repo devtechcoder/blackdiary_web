@@ -12,6 +12,7 @@ import apiPath from "../../constants/apiPath";
 import { useGetApi } from "../../hooks/useRequest";
 import Loader from "../../components/Loader";
 import { getOriginalUserName } from "../../helper/functions";
+import { FollowIcon } from "../../components/ButtonField";
 
 const Profile = () => {
   const { isLoggedIn, userProfile: loggedInUserProfile } = useAuthContext();
@@ -78,13 +79,15 @@ const Profile = () => {
                 <h3 className="font-semibold text-lg">{profileData?.user_name ?? ""}</h3>
                 <h2 className="text-2xl font-light">{profileData?.name ?? ""}</h2>
               </div>
-              {isOwnProfile && (
+              {isOwnProfile ? (
                 <>
                   <Button className="bg-gray-800 text-white border-gray-700 hover:bg-gray-700" onClick={() => navigate(`/account/edit-profile/${profileData?.user_name}/${profileData?._id}`)}>
                     Edit profile
                   </Button>
                   <FaCog className="text-xl cursor-pointer hover:text-gray-400" onClick={() => setShow(true)} />
                 </>
+              ) : (
+                <FollowIcon userId={profileData?._id} />
               )}
             </div>
             {/* Posts, Followers, Following */}
@@ -92,11 +95,11 @@ const Profile = () => {
               <div>
                 <strong>8</strong> posts
               </div>
-              <div>
-                <strong>{profileData?.followers_count || 0}</strong> followers
+              <div onClick={() => navigate(`/view-follow/follower/${profileData?._id}/${profileData?.user_name}`)}>
+                <strong>{profileData?.followers || 0}</strong> followers
               </div>
-              <div>
-                <strong>{profileData?.following_count || 0}</strong> following
+              <div onClick={() => navigate(`/view-follow/following/${profileData?._id}/${profileData?.user_name}`)}>
+                <strong>{profileData?.following || 0}</strong> following
               </div>
             </div>
             <div className="mt-4 text-center sm:text-left">

@@ -4,11 +4,13 @@ import logo from "../../assets/images/icon/logo.png";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../../context/AuthContext";
 
-function Header({ showDrawer, isMobile }) {
+function Header({ showDrawer, isMobile, isVisible }) {
   const navigate = useNavigate();
   const { isLoggedIn, setIsLoggedIn, refreshUser, userProfile } = useAuthContext();
   return (
-    <div className="bg-[#121212] text-white h-20 px-4 md:px-6 flex items-center justify-between sticky top-0 z-50">
+    <div
+      className={`bg-[#121212] text-white h-20 px-4 md:px-6 flex items-center justify-between sticky top-0 z-50 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
+    >
       {/* Left Side */}
       <div className="flex items-center gap-4 flex-1">
         <img src={logo} alt="Logo" className="h-8 cursor-pointer" onClick={() => navigate("/")} />
@@ -27,6 +29,7 @@ function Header({ showDrawer, isMobile }) {
         )}
       </div>
       {/* Right Side */}
+
       <div className="flex items-center gap-4">
         {!isLoggedIn ? (
           // If user not logged in
@@ -39,15 +42,18 @@ function Header({ showDrawer, isMobile }) {
             </button>
           </>
         ) : (
-          // If user is logged in
           <>
             <BellOutlined className="text-xl hover:scale-110 transition-transform duration-200 cursor-pointer" />
-            <button
-              className="bg-green-500 text-white font-semibold px-4 py-2 rounded-full hover:bg-green-600 transition-colors duration-200 flex items-center gap-2"
-              onClick={() => navigate(`/@${userProfile?.user_name}`)}
-            >
-              {userProfile?.user_name}
-            </button>
+            {!isMobile && (
+              <>
+                <button
+                  className="bg-green-500 text-white font-semibold px-4 py-2 rounded-full hover:bg-green-600 transition-colors duration-200 flex items-center gap-2"
+                  onClick={() => navigate(`/@${userProfile?.user_name}`)}
+                >
+                  {userProfile?.user_name}
+                </button>
+              </>
+            )}
           </>
         )}
       </div>

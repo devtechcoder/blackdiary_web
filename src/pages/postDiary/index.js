@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import Main from "../../components/layout/Main";
 import { useAuthContext } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { usePostApi, useGetApi } from "../../hooks/useRequest";
 import apiPath from "../../constants/apiPath";
 import { ShowToast, Severty } from "../../helper/toast";

@@ -32,8 +32,8 @@ import {
   Sitemap,
   SearchAccount,
   PostDiaryPage,
-  Post,
-  Shayari,
+  Feed,
+  ViewFollowList,
 } from "./pages/Index";
 
 export const publicRoutes = [
@@ -62,8 +62,8 @@ export const publicRoutes = [
   { path: "/sitemap", component: Sitemap, exact: true },
   { path: "/search", component: SearchAccount, exact: true },
   { path: "/:username/:id?", component: Profile, exact: true },
-  { path: "/post", component: Post, exact: true },
-  { path: "/shayari", component: Shayari, exact: true },
+  { path: "/feed", component: Feed, exact: true },
+  { path: "/view-follow/:type/:userId/:user_name?", component: ViewFollowList, exact: true },
 ];
 
 export const privateRoutes = [

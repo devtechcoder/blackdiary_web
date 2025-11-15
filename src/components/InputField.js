@@ -425,3 +425,45 @@ export const DescriptionEditor = ({ onChange, placeholder, value }) => {
     />
   );
 };
+
+// export const DescriptionEditor = ({ onChange, placeholder, value }) => {
+//   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+//   const handleEditorChange = (newEditorState) => {
+//     setEditorState(newEditorState);
+//     const rawContent = convertToRaw(newEditorState.getCurrentContent());
+
+//     const htmlContent = draftToHtml(rawContent, null, null, {
+//       defaultBlockTag: "p",
+//       blockRenderers: {
+//         unstyled: (block) => {
+//           return `<p>${block.text.replace(/\n/g, "<br>")}</p>`;
+//         },
+//       },
+//     });
+
+//     if (onChange) {
+//       onChange(htmlContent);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (value) {
+//       const blocksFromHTML = convertFromHTML(value);
+//       const content = ContentState.createFromBlockArray(blocksFromHTML);
+//       const editorState = EditorState.createWithContent(content);
+//       setEditorState(editorState);
+//     }
+//   }, []);
+
+//   return (
+//     <Editor
+//       editorState={editorState}
+//       placeholder={placeholder}
+//       toolbarClassName="toolbarClassName"
+//       wrapperClassName="wrapperClassName"
+//       editorClassName="editorClassName"
+//       onEditorStateChange={handleEditorChange}
+//     />
+//   );
+// };

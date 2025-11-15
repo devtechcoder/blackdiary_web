@@ -33,8 +33,8 @@ import TermsAndConditions from "./footer/termsConditions";
 import Sitemap from "./footer/sitemap";
 import SearchAccount from "./searchAccount/index";
 import PostDiaryPage from "./postDiary/index";
-import Post from "./post/index";
-import Shayari from "./shayari/index";
+import Feed from "./feed/index";
+import ViewFollowList from "./Account/viewFollowList";
 
 export {
   PersonalDetails,
@@ -70,6 +70,6 @@ export {
   Sitemap,
   SearchAccount,
   PostDiaryPage,
-  Post,
-  Shayari,
+  Feed,
+  ViewFollowList,
 };

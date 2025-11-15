@@ -8,6 +8,7 @@ import { useGetApi, usePostApi } from "../../hooks/useRequest";
 import { DescriptionEditor, SelectInput, MultiSelect } from "../../components/InputField";
 import { useAuthContext } from "../../context/AuthContext";
 import ProfileImageUpload from "../../modals/ProfileImageUpload";
+import CaptionInput from "../../components/captionInput";
 
 function WriteShayari() {
   const navigate = useNavigate();
@@ -67,13 +68,13 @@ function WriteShayari() {
         ShowToast("Please write your shayari in the content box.", Severty.WARNING);
         return;
       }
-      payload = payload.content = content;
+      payload.content = content;
     } else {
       if (!image) {
         ShowToast("Please upload an image for your post.", Severty.WARNING);
         return;
       }
-      payload = payload.image = image;
+      payload.image = image;
     }
     mutate(payload);
   };
@@ -123,11 +124,12 @@ function WriteShayari() {
           </Row>
           {type === "shayari" ? (
             <Form.Item label="Content">
-              <DescriptionEditor value={content} onChange={setContent} placeholder="Write your heart out..." />
+              <CaptionInput value={content} onChange={setContent} />
+              {/* <DescriptionEditor value={content} onChange={setContent} placeholder="Write your heart out..." /> */}
             </Form.Item>
           ) : (
             <Form.Item name="image" className="text-white" label="Image" rules={[{ required: true, message: "Please upload an image for your post." }]}>
-              <ProfileImageUpload value={image} fileType={FileType} btnName={"Choose Image"} imageType="Image" onChange={(data) => handleImage(data)} isDimension={true} />
+              <ProfileImageUpload size={10} value={image} fileType={FileType} btnName={"Choose Image"} imageType="Image" onChange={(data) => handleImage(data)} isDimension={true} />
             </Form.Item>
           )}
           <div className="flex justify-end gap-4 mt-8">

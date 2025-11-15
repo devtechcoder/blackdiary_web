@@ -6,6 +6,7 @@ import apiPath from "../../constants/apiPath";
 import { useGetApi } from "../../hooks/useRequest";
 import dayjs from "dayjs";
 import Prouser from "../../assets/images/user.png";
+import { FollowIcon, LikeShareActionIcon } from "../../components/ButtonField";
 
 // Utility to get a random gradient background
 const gradients = [
@@ -24,16 +25,6 @@ const stripHtml = (html) => {
 };
 
 const ShayariCard = ({ shayari }) => {
-  // In a real app, isLiked would come from API or user context
-  const [isLiked, setIsLiked] = useState(false);
-  const [likes, setLikes] = useState(shayari.total_likes);
-
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    setLikes(isLiked ? likes - 1 : likes + 1);
-    // Here you would also call an API to toggle the like status on the server
-  };
-
   return (
     <Card className="w-full max-w-lg bg-[#121212] border border-gray-800 rounded-lg mb-6" bodyStyle={{ padding: 0 }}>
       {/* Post Header */}
@@ -42,7 +33,10 @@ const ShayariCard = ({ shayari }) => {
           <Avatar src={shayari.author?.image || Prouser} />
           <span className="text-white font-semibold">{shayari.author?.user_name || "Unknown User"}</span>
         </div>
-        <MoreOutlined className="text-white text-xl cursor-pointer" />
+        <div className="flex items-center gap-4">
+          <FollowIcon userId={shayari?.author?._id} />
+          <MoreOutlined className="text-white text-xl cursor-pointer" />
+        </div>
       </div>
 
       {/* Shayari Text Content */}
@@ -56,21 +50,15 @@ const ShayariCard = ({ shayari }) => {
 
       {/* Post Actions */}
       <div className="p-3">
-        <div className="flex justify-between items-center text-white text-2xl">
+        <div className="flex justify-between items-center text-white text-xl">
           <div className="flex gap-4">
-            {isLiked ? (
-              <HeartFilled className="text-red-500 cursor-pointer transition-transform duration-200 ease-in-out transform hover:scale-110" onClick={handleLike} />
-            ) : (
-              <HeartOutlined className="cursor-pointer transition-transform duration-200 ease-in-out transform hover:scale-110" onClick={handleLike} />
-            )}
-            <MessageOutlined className="cursor-pointer transition-transform duration-200 ease-in-out transform hover:scale-110" />
-            <SendOutlined className="cursor-pointer transition-transform duration-200 ease-in-out transform hover:scale-110" />
+            <LikeShareActionIcon item={shayari} />
           </div>
         </div>
 
         {/* Likes and Caption */}
         <div className="text-white mt-2">
-          <p className="font-semibold">{likes?.toLocaleString()} likes</p>
+          <p className="font-semibold">{shayari?.total_likes || 0} likes</p>
           <p>
             <span className="font-semibold mr-2">{shayari.author?.user_name || "Unknown User"}</span>
             <span className="text-gray-300">{stripHtml(shayari.content).substring(0, 50)}...</span>
@@ -133,7 +121,7 @@ const ShayariPage = () => {
   );
 
   return (
-    <Main>
+    <>
       <div className="flex justify-center w-full bg-black text-white">
         <div className="flex flex-col items-center w-full px-4">
           {shayaris.map((shayari, index) => {
@@ -153,7 +141,7 @@ const ShayariPage = () => {
           {!hasMore && <p className="text-gray-500 my-4">You've reached the end!</p>}
         </div>
       </div>
-    </Main>
+    </>
   );
 };
 

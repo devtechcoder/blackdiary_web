@@ -14,6 +14,16 @@ export const AuthProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState();
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [refreshProfile, setRefreshProfile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const fetchUser = async (user) => {
     try {
@@ -83,6 +93,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout: (navigate) => handleLogout(navigate),
         isDarkTheme,
+        isMobile,
       }}
     >
       {children}

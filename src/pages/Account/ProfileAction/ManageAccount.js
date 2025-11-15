@@ -48,7 +48,7 @@ const ManageAccount = () => {
             {/* Profile Row */}
             <div className="flex items-center justify-between px-4 py-4 hover:bg-[#1a1a1a] transition-all cursor-pointer" onClick={() => setShow(true)}>
               <div className="flex items-center gap-3">
-                <Avatar size="large" src={userProfile?.image ?? Prouser} />
+                <Avatar size="large" src={apiPath.assetURL + userProfile?.image ?? Prouser} />
                 <div className="flex flex-col">
                   <Text className="text-white font-medium">{userProfile?.user_name ?? ""}</Text>
                   <Text className="text-[#B3B3B3] text-xs">{userProfile?.name ?? ""}</Text>
@@ -112,7 +112,7 @@ const ProfileView = ({ show, hide, setEditType }) => {
       className="custom-modal dark-scroll rounded-3xl overflow-hidden"
     >
       <div className="text-center px-6 py-8 text-white">
-        <Avatar size={96} src={userProfile?.image ?? Prouser} className="mx-auto" />
+        <Avatar size={96} src={apiPath.assetURL + userProfile?.image ?? Prouser} className="mx-auto" />
         <Text className="block mt-4 text-lg font-semibold text-white">{userProfile?.name}</Text>
         <Text className="block text-[#B3B3B3] text-sm">{userProfile?.user_name}</Text>
       </div>

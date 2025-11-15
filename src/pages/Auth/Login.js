@@ -13,6 +13,7 @@ import ShowLoginAccModal from "../../modals/ShowLoginAccModal";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "../../constants/seo";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
+import GoogleLogin from "./googleLogin";
 export default function Login() {
   const { request } = useRequest();
   const [loading, setLoading] = useState(false);
@@ -106,9 +107,7 @@ export default function Login() {
 
           {/* Social Buttons */}
           <div className="space-y-4 mb-8">
-            <button className="w-full border border-gray-600 rounded-full py-2 flex items-center justify-center gap-3 hover:bg-neutral-800">
-              <FaGoogle className="text-xl" /> Continue with Google
-            </button>
+            <GoogleLogin />
             <button className="w-full border border-gray-600 rounded-full py-2 flex items-center justify-center gap-3 hover:bg-neutral-800">
               <FaFacebookF className="text-xl" /> Continue with Facebook
             </button>
