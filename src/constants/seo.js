@@ -1,36 +1,39 @@
-import black_white_logo from "../assets/images/brand/black_white_logo.png";
+import black_white_logo from "../assets/images/brand/favicon.png";
 
 export const SEO = {
   common: {
-    title: "Black Diary - Read, Write & Share Shayari, Quotes, Ghazals",
+    title: "Black Diary Shayari – Best Hindi Shayari, Attitude, Love & Sad Quotes",
     robots: "index, follow",
-    language: "en",
-    author: "Black Diary",
-    description: "Black Diary is a creative platform where you can read, write, like, comment, and share Shayari, Quotes, and Ghazals. Join thousands of poetry lovers and express yourself!",
-    keywords: "shayari, quotes, sher, ghazal, write shayari, read shayari, like shayari, comment on shayari, share shayari, black diary, poetry platform, user-generated content",
+    language: "hi",
+    author: "Shivraj Jajra",
+    description: "Black Diary – India’s #1 Hindi Shayari Website. पढ़ें Attitude Shayari, Love Shayari, Sad Shayari, Heart Touching Quotes और Romantic Status. रोज़ नई शायरी अपडेट होती है!",
+    keywords: "Black Diary, Black Diary Shayari, Hindi Shayari, Attitude Shayari, Love Shayari, Sad Shayari, Romantic Shayari, Hindi Quotes, Attitude Status, Black Diary Quotes",
     image: black_white_logo,
     url: "https://blackdiary.vercel.app/",
     type: "website",
-    site_name: "Black Diary",
+    site_name: "Black Diary - Hindi Shayari Platform",
   },
 
+  // ---------------- HOME PAGE SEO ----------------
   home: {
     primary: {
-      title: "Black Diary - Read, Write & Share Shayari",
-      description: "Discover, write, and share Shayari, Quotes, and Ghazals on Black Diary. Like, comment, and engage with a vibrant poetry community.",
-      keywords: "shayari, quotes, ghazal, read shayari, write shayari, like, comment, share, black diary, poetry platform, user-generated content",
+      title: "Black Diary – Best Hindi Shayari, Attitude Quotes & Love Status",
+      description: "Black Diary पर पढ़ें बेहतरीन Hindi Shayari: Attitude Shayari, Love Shayari, Sad Shayari, Romantic Quotes, Emotional Lines और Friendship Status. Daily नई शायरी!",
+      keywords: "Black Diary Shayari, Hindi Shayari, Attitude Shayari, Love Quotes, Sad Shayari, Romantic Quotes, Friendship Shayari, Boys Attitude Status",
     },
+
     openGraph: {
-      title: "Black Diary - Read, Write & Share Shayari",
-      description: "Join Black Diary to explore, write, like, comment, and share Shayari, Quotes, and Ghazals. Express your emotions and connect with other poetry lovers.",
+      title: "Black Diary – Hindi Shayari, Quotes & Attitude Status",
+      description: "India की सबसे बेहतरीन Shayari website. पढ़ें Attitude, Love, Sad और Romantic Shayari. अपनी खुद की Shayari लिखें और शेयर करें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/",
       type: "website",
       site_name: "Black Diary",
     },
+
     twitter: {
-      title: "Black Diary - Read, Write & Share Shayari",
-      description: "Read, write, like, comment, and share Shayari and Quotes on Black Diary. Be part of India's largest poetry community.",
+      title: "Black Diary – Read, Write & Share Shayari",
+      description: "Black Diary पर पढ़ें, लिखें, लाइक करें और Shayari शेयर करें। Hindi Shayari का सबसे बड़ा प्लेटफॉर्म।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/",
       type: "website",
@@ -38,23 +41,24 @@ export const SEO = {
     },
   },
 
+  // ---------------- LOGIN PAGE SEO ----------------
   login: {
     primary: {
-      title: "Login - Black Diary",
-      description: "Login to Black Diary to write, read, like, comment, and share Shayari, Quotes, and Ghazals.",
-      keywords: "login, shayari, quotes, write shayari, read shayari, like, comment, share, black diary",
+      title: "Login – Black Diary",
+      description: "Login करें और पढ़ें, लिखें, लाइक करें, कमेंट करें और Shayari शेयर करें। Black Diary पर अपना अकाउंट एक्सेस करें।",
+      keywords: "login, shayari login, hindi shayari account, black diary login",
     },
     openGraph: {
-      title: "Login - Black Diary",
-      description: "Access your Black Diary account to write, read, like, comment, and share Shayari and Quotes.",
+      title: "Login – Black Diary",
+      description: "अपने Black Diary अकाउंट में लॉगिन करें और Hindi Shayari पढ़ें व लिखें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/login",
       type: "website",
       site_name: "Black Diary",
     },
     twitter: {
-      title: "Login - Black Diary",
-      description: "Login to Black Diary to engage with Shayari, Quotes, and Ghazals. Read, write, like, comment, and share with the community.",
+      title: "Login – Black Diary",
+      description: "Black Diary login करें और Shayari व Quotes का आनंद लें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/login",
       type: "website",
@@ -62,23 +66,24 @@ export const SEO = {
     },
   },
 
+  // ---------------- SIGNUP PAGE SEO ----------------
   signup: {
     primary: {
-      title: "Sign Up - Black Diary",
-      description: "Join Black Diary to read, write, like, comment, and share Shayari, Quotes, and Ghazals. Become part of India's vibrant poetry community.",
-      keywords: "signup, shayari, quotes, ghazal, write shayari, read shayari, like, comment, share, black diary, poetry platform",
+      title: "Sign Up – Black Diary",
+      description: "Black Diary से जुड़ें और Shayari, Quotes, Ghazals पढ़ें, लिखें और शेयर करें। Poetry community का हिस्सा बनें।",
+      keywords: "signup, shayari signup, hindi shayari, poetry platform india, black diary signup",
     },
     openGraph: {
-      title: "Sign Up - Black Diary",
-      description: "Create your Black Diary account to explore, write, like, comment, and share Shayari, Quotes, and Ghazals.",
+      title: "Sign Up – Black Diary",
+      description: "Black Diary में खाता बनाएं और Hindi Shayari पढ़ें व लिखें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/signup",
       type: "website",
       site_name: "Black Diary",
     },
     twitter: {
-      title: "Sign Up - Black Diary",
-      description: "Sign up for Black Diary to read, write, like, comment, and share Shayari, Quotes, and Ghazals. Join thousands of poetry enthusiasts.",
+      title: "Sign Up – Black Diary",
+      description: "Join Black Diary और Hindi Shayari community का हिस्सा बनें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/signup",
       type: "website",
@@ -86,47 +91,49 @@ export const SEO = {
     },
   },
 
+  // ---------------- OTP VERIFICATION ----------------
   LoginWithOtp: {
     primary: {
-      title: "Verify OTP - Black Diary",
-      description: "Complete your sign-up or login by verifying the OTP sent to your device. Securely access your Black Diary account.",
-      keywords: "otp verification, secure login, black diary signup, verify account",
+      title: "Verify OTP – Black Diary",
+      description: "OTP verify करके अपने Black Diary अकाउंट में सुरक्षित लॉगिन करें।",
+      keywords: "otp verification, login otp, secure shayari login, black diary otp",
     },
     openGraph: {
-      title: "Verify OTP - Black Diary",
-      description: "Verify your OTP to securely access your Black Diary account and join our poetry community.",
+      title: "Verify OTP – Black Diary",
+      description: "OTP verify करें और Black Diary अकाउंट एक्सेस करें।",
       image: black_white_logo,
-      url: "https://blackdiary.vercel.app/signup",
+      url: "https://blackdiary.vercel.app/login",
       type: "website",
       site_name: "Black Diary",
     },
     twitter: {
-      title: "Verify OTP - Black Diary",
-      description: "Enter your OTP to complete the verification process and start exploring poetry on Black Diary.",
+      title: "Verify OTP – Black Diary",
+      description: "अपने Black Diary अकाउंट का OTP confirm करें।",
       image: black_white_logo,
-      url: "https://blackdiary.vercel.app/signup",
+      url: "https://blackdiary.vercel.app/login",
       type: "website",
       site_name: "Black Diary",
     },
   },
 
+  // ---------------- POET DETAILS PAGE ----------------
   PoetDetailsPage: {
     primary: {
-      title: "Poet Profile - Black Diary",
-      description: "Explore the profile, biography, and collection of Shayari, Quotes, and Ghazals by famous poets on Black Diary.",
-      keywords: "poet profile, poet biography, shayari collection, ghazals, quotes, black diary",
+      title: "Poet Profile – Black Diary",
+      description: "Famous poets की biography और उनकी Shayari व Quotes पढ़ें।",
+      keywords: "poet profile, poet shayari, hindi poets, shayari collection, black diary poets",
     },
     openGraph: {
-      title: "Poet Profile - Black Diary",
-      description: "Discover the life and works of your favorite poets. Read their best Shayari, Quotes, and Ghazals on Black Diary.",
+      title: "Poet Profile – Black Diary",
+      description: "अपने पसंदीदा शायरों की Shayari पढ़ें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/poets",
       type: "website",
       site_name: "Black Diary",
     },
     twitter: {
-      title: "Poet Profile - Black Diary",
-      description: "Dive into the world of legendary poets on Black Diary. Explore their poetry and life stories.",
+      title: "Poet Profile – Black Diary",
+      description: "Poets की Shayari explore करें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/poets",
       type: "website",
@@ -134,23 +141,24 @@ export const SEO = {
     },
   },
 
+  // ---------------- ALL POETS PAGE ----------------
   AllPoetsPage: {
     primary: {
-      title: "Browse All Poets - Black Diary",
-      description: "Discover and explore a comprehensive list of poets on Black Diary. Find new and classic poets to read and admire.",
-      keywords: "all poets, list of poets, find poets, shayari artists, ghazal writers, black diary",
+      title: "All Poets – Black Diary",
+      description: "Black Diary पर सभी शायरों की लिस्ट ब्राउज़ करें और उनकी Shayari पढ़ें।",
+      keywords: "all poets list, hindi poets, ghazal writers, shayari artists, black diary poets",
     },
     openGraph: {
-      title: "Browse All Poets - Black Diary",
-      description: "Explore our curated list of poets. From timeless legends to contemporary voices, find them all on Black Diary.",
+      title: "All Poets – Black Diary",
+      description: "Poets की पूरी सूची ब्राउज़ करें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/poets",
       type: "website",
       site_name: "Black Diary",
     },
     twitter: {
-      title: "Browse All Poets - Black Diary",
-      description: "Looking for poets? Browse our extensive list of Shayari and Ghazal writers on Black Diary.",
+      title: "All Poets – Black Diary",
+      description: "Hindi Shayari poets explore करें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/poets",
       type: "website",
@@ -158,23 +166,24 @@ export const SEO = {
     },
   },
 
+  // ---------------- OCCASION PAGE ----------------
   viewAllOccasionsPage: {
     primary: {
-      title: "Shayari for All Occasions - Black Diary",
-      description: "Find the perfect Shayari, Quotes, and Ghazals for every occasion like birthdays, festivals, and special moments on Black Diary.",
-      keywords: "occasion shayari, festival quotes, birthday shayari, special moments, diwali shayari, new year quotes, black diary",
+      title: "Occasion Shayari – Black Diary",
+      description: "Birthday, Festivals और हर मौके के लिए Shayari और Quotes खोजें।",
+      keywords: "occasion shayari, festival quotes, birthday shayari, diwali shayari, new year quotes",
     },
     openGraph: {
-      title: "Shayari for All Occasions - Black Diary",
-      description: "Explore a collection of poetry for all of life's occasions. Celebrate with the right words from Black Diary.",
+      title: "Occasion Shayari – Black Diary",
+      description: "हर festival और special moment के लिए best Shayari collection।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/occasion",
       type: "website",
       site_name: "Black Diary",
     },
     twitter: {
-      title: "Shayari for All Occasions - Black Diary",
-      description: "From festivals to personal milestones, find Shayari for every occasion on Black Diary.",
+      title: "Occasion Shayari – Black Diary",
+      description: "हर occasion की Shayari पढ़ें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/occasion",
       type: "website",
@@ -182,23 +191,24 @@ export const SEO = {
     },
   },
 
+  // ---------------- OCCASION DETAILS PAGE ----------------
   occasionDetailsPage: {
     primary: {
-      title: "Occasion-Specific Shayari - Black Diary",
-      description: "Discover a curated collection of Shayari, Quotes, and Ghazals for a specific occasion. Find the perfect words to celebrate.",
-      keywords: "occasion shayari, festival poetry, celebration quotes, special event shayari, black diary",
+      title: "Special Occasion Shayari – Black Diary",
+      description: "इस खास मौके के लिए बेहतरीन Shayari और Quotes खोजें।",
+      keywords: "special occasion shayari, festival poetry, celebration quotes",
     },
     openGraph: {
-      title: "Occasion-Specific Shayari - Black Diary",
-      description: "Explore poetry tailored for this special occasion. Share the joy with beautiful words from Black Diary.",
+      title: "Special Occasion Shayari – Black Diary",
+      description: "Occasion based Shayari पढ़ें और शेयर करें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/occasion",
       type: "website",
       site_name: "Black Diary",
     },
     twitter: {
-      title: "Occasion-Specific Shayari - Black Diary",
-      description: "Find the best Shayari and Quotes for this occasion on Black Diary. Read, share, and celebrate.",
+      title: "Special Occasion Shayari – Black Diary",
+      description: "हर खास moment की Shayari पाएं।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/occasion",
       type: "website",
@@ -206,23 +216,24 @@ export const SEO = {
     },
   },
 
+  // ---------------- SUB CATEGORY PAGE ----------------
   subCategoryDetailsPage: {
     primary: {
-      title: "Explore Shayari by Category - Black Diary",
-      description: "Browse our collection of Shayari, Quotes, and Ghazals sorted by categories like Love, Sad, Motivational, and more. Find the perfect words for every mood on Black Diary.",
-      keywords: "shayari by category, love shayari, sad shayari, motivational quotes, ghazal categories, poetry collection, black diary",
+      title: "Shayari by Category – Black Diary",
+      description: "Love, Sad, Attitude, Motivation और अन्य categories में Shayari explore करें।",
+      keywords: "shayari categories, love shayari, sad shayari, motivational quotes, category based shayari",
     },
     openGraph: {
-      title: "Explore Shayari by Category - Black Diary",
-      description: "Discover thousands of Shayari, Quotes, and Ghazals organized by category. Dive into collections of Love, Sadness, and Motivation.",
+      title: "Shayari by Category – Black Diary",
+      description: "Category wise Shayari collection जैसे Love, Sadness और Motivation।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/sub-category/details",
       type: "website",
       site_name: "Black Diary",
     },
     twitter: {
-      title: "Explore Shayari by Category - Black Diary",
-      description: "Browse Shayari, Quotes, and Ghazals by category on Black Diary. Find content that resonates with your feelings.",
+      title: "Shayari by Category – Black Diary",
+      description: "Category wise Shayari search करें और पढ़ें।",
       image: black_white_logo,
       url: "https://blackdiary.vercel.app/sub-category/details",
       type: "website",

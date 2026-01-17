@@ -35,6 +35,7 @@ import SearchAccount from "./searchAccount/index";
 import PostDiaryPage from "./postDiary/index";
 import Feed from "./feed/index";
 import ViewFollowList from "./Account/viewFollowList";
+import GoAds from "./goAds/index";
 
 export {
   PersonalDetails,
@@ -72,4 +73,5 @@ export {
   PostDiaryPage,
   Feed,
   ViewFollowList,
+  GoAds,
 };

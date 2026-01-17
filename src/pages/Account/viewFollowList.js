@@ -25,7 +25,7 @@ const UserList = ({ listType, userId }) => {
 
   const endpoint = listType === "followers" ? apiPath.getFollowers : apiPath.getFollowing;
 
-  const { data, isFetching, isError, error } = useGetApi({
+  const { data, isFetching, isError, error, refetch } = useGetApi({
     queryKey: [`followList_${listType}`, userId, pagination.current, debouncedSearchTerm],
     endpoint: `${endpoint}/${userId}?type=${listType}&page=${pagination.current}&limit=${pagination.pageSize}&search=${debouncedSearchTerm}`,
     enabled: hasMore && !!userId,
@@ -62,13 +62,39 @@ const UserList = ({ listType, userId }) => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-250px)]">
-      <Input
-        placeholder={`Search ${listType}...`}
-        prefix={<SearchOutlined className="text-gray-400" />}
-        className="mb-4 bg-gray-800 border-gray-700 text-white placeholder-gray-500"
-        onChange={(e) => setSearchTerm(e.target.value)}
-        value={searchTerm}
-      />
+      <div className="w-full max-w-md mx-auto">
+        <div className="relative">
+          <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+            <SearchOutlined className="text-gray-400" />
+          </span>
+
+          <input
+            type="text"
+            placeholder={`Search ${listType}...`}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            autoComplete="off"
+            className="
+        w-full
+        pl-11 pr-4 py-2
+        bg-gray-800 
+        text-white 
+        placeholder-gray-500
+        rounded-xl 
+        shadow-sm
+        focus:outline-none 
+        focus:ring-2 
+        focus:ring-blue-500 
+        focus:ring-offset-0 
+        transition-all
+        border border-gray-700
+        hover:border-gray-500
+        sm:py-3 sm:text-lg
+      "
+          />
+        </div>
+      </div>
+
       <div className="flex-grow overflow-y-auto pr-2">
         {users.map((user, index) => {
           const isCurrentUser = user._id === loggedInUserProfile?._id;
@@ -77,17 +103,13 @@ const UserList = ({ listType, userId }) => {
               <div className="flex items-center gap-3">
                 <Avatar src={user.image ? apiPath.assetURL + user.image : Prouser} />
                 <div>
-                  <p className="font-semibold text-white">{user.userId}</p>
+                  <p className="font-semibold text-white">{user.user_name}</p>
                   <p className="text-gray-400 text-sm">{user.name}</p>
                 </div>
               </div>
               {!isCurrentUser && (
                 <div>
-                  {listType === "followers" && userId === loggedInUserProfile?._id ? (
-                    <button className="bg-gray-700 text-white font-semibold px-3 py-1 rounded-md text-sm hover:bg-gray-600">Remove</button>
-                  ) : (
-                    <FollowIcon userId={user._id} />
-                  )}
+                  <FollowIcon userId={user._id} buttonName={userId === loggedInUserProfile?._id ? "Unfollow" : "Follow"} onActionComplete={refetch} />
                 </div>
               )}
             </div>
@@ -111,24 +133,30 @@ const UserList = ({ listType, userId }) => {
 const ViewFollowList = () => {
   const navigate = useNavigate();
   const { userId, user_name, type } = useParams();
-  const activeTab = type === "following" ? "following" : "followers";
+  const activeTab = type === "following" ? "following" : "follower";
 
   // Fetch the user profile to get the user ID
 
   const handleTabChange = (key) => {
-    navigate(`/view-follow/${type}/${userId}/${user_name}`);
+    navigate(`/view-follow/${key}/${userId}/${user_name}`);
   };
 
   return (
     <Main>
       <div className="max-w-2xl mx-auto p-4">
-        <h2 className="text-xl font-bold text-white mb-4">{user_name}</h2>
-        <Tabs activeKey={activeTab} onChange={handleTabChange} className="follow-tabs">
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 text-center sm:text-left">{user_name}</h2>
+
+        <Tabs activeKey={activeTab} onChange={handleTabChange} className="custom-tabs text-white" centered>
           <TabPane tab="Follower" key="follower">
-            <UserList listType="follower" userId={userId} />
+            <div className="mt-4">
+              <UserList listType="follower" userId={userId} />
+            </div>
           </TabPane>
+
           <TabPane tab="Following" key="following">
-            <UserList listType="following" userId={userId} />
+            <div className="mt-4">
+              <UserList listType="following" userId={userId} />
+            </div>
           </TabPane>
         </Tabs>
       </div>

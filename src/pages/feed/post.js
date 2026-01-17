@@ -7,18 +7,21 @@ import { useGetApi } from "../../hooks/useRequest";
 import dayjs from "dayjs";
 import Prouser from "../../assets/images/user.png";
 import { FollowIcon, LikeShareActionIcon } from "../../components/ButtonField";
+import { useNavigate } from "react-router";
 
 const PostCard = ({ post }) => {
+  const navigate = useNavigate();
   return (
     <Card className="w-full max-w-lg bg-[#121212] border border-gray-800 rounded-lg mb-6" bodyStyle={{ padding: 0 }}>
       {/* Post Header */}
       <div className="flex items-center justify-between p-3">
-        <div className="flex items-center gap-3 cursor-pointer">
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate(`/@${post.author?.user_name}`)}>
           <Avatar src={post.author?.image || Prouser} />
           <span className="text-white font-semibold">{post.author?.user_name || "Unknown User"}</span>
         </div>
         <div className="flex items-center gap-4">
-          <FollowIcon userId={post?.author?._id} />
+          {!post?.is_follow && <FollowIcon userId={post?.author?._id} hideButton={post?.is_follow || false} />}
+
           <MoreOutlined className="text-white text-xl cursor-pointer" />
         </div>
       </div>
@@ -32,26 +35,6 @@ const PostCard = ({ post }) => {
           <div className="flex gap-4">
             <LikeShareActionIcon item={post} />
           </div>
-        </div>
-        {/* Likes and Caption */}
-        <div className="text-white mt-2">
-          <p className="font-semibold">{post?.total_likes || 0} likes</p>
-          {post.content && (
-            <p>
-              <span className="font-semibold mr-2">{post.author?.user_name || "Unknown User"}</span>
-              <span className="text-gray-300" dangerouslySetInnerHTML={{ __html: post.content }} />
-            </p>
-          )}
-          <p className="text-gray-500 text-xs mt-1 uppercase">{dayjs(post.created_at).fromNow()}</p>
-        </div>
-
-        {/* Comment Input */}
-        <div className="mt-3 border-t border-gray-800 pt-3">
-          <Input
-            placeholder="Add a comment..."
-            className="bg-transparent border-none text-white placeholder-gray-500 focus:ring-0"
-            suffix={<span className="text-green-500 font-semibold cursor-pointer">Post</span>}
-          />
         </div>
       </div>
     </Card>

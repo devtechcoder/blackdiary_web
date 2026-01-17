@@ -23,9 +23,9 @@ const ProfileImageUpload = ({ fileType, value, imageType, btnName, onChange, siz
         setLoading(false);
         if (status) {
           ShowToast(message, Severty.SUCCESS);
-          setFile([{ ...file, status: "done", url: data?.path }]);
+          setFile([{ ...file, status: "done", url: data?.url }]);
           if (onChange) {
-            onChange(data?.path);
+            onChange(data?.url);
           }
         } else {
           ShowToast(message, Severty.ERROR);

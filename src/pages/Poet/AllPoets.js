@@ -11,69 +11,6 @@ const AllPoets = () => {
   const [list, setList] = useState([]);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
 
-  const mixes = [
-    {
-      id: 1,
-      title: "Hindi Mix",
-      artists: "Jasleen Royal, Sachet-Parampara, Sohan...",
-      image: "https://i.ibb.co/6n1P9y2/hindi-mix.jpg",
-    },
-    {
-      id: 2,
-      title: "Telugu Mix",
-      artists: "Neha Bhasin, Benny Dayal and more",
-      image: "https://i.ibb.co/Lv4FQyb/telugu-mix.jpg",
-    },
-    {
-      id: 3,
-      title: "Ram Sampath Mix",
-      artists: "Sachet-Parampara, Jasleen Royal and...",
-      image: "https://i.ibb.co/7zGcmfD/ram-sampath.jpg",
-    },
-    {
-      id: 4,
-      title: "2010s Mix",
-      artists: "Sunidhi Chauhan, Benny Dayal, Ram Sampath",
-      image: "https://i.ibb.co/vQcmMx9/2010s-mix.jpg",
-    },
-    {
-      id: 5,
-      title: "Moody Mix",
-      artists: "Sachet-Parampara, Ram Sampath, Neha Bhasin",
-      image: "https://i.ibb.co/jJf1vbm/moody-mix.jpg",
-    },
-    {
-      id: 1,
-      title: "Hindi Mix",
-      artists: "Jasleen Royal, Sachet-Parampara, Sohan...",
-      image: "https://i.ibb.co/6n1P9y2/hindi-mix.jpg",
-    },
-    {
-      id: 2,
-      title: "Telugu Mix",
-      artists: "Neha Bhasin, Benny Dayal and more",
-      image: "https://i.ibb.co/Lv4FQyb/telugu-mix.jpg",
-    },
-    {
-      id: 3,
-      title: "Ram Sampath Mix",
-      artists: "Sachet-Parampara, Jasleen Royal and...",
-      image: "https://i.ibb.co/7zGcmfD/ram-sampath.jpg",
-    },
-    {
-      id: 4,
-      title: "2010s Mix",
-      artists: "Sunidhi Chauhan, Benny Dayal, Ram Sampath",
-      image: "https://i.ibb.co/vQcmMx9/2010s-mix.jpg",
-    },
-    {
-      id: 5,
-      title: "Moody Mix",
-      artists: "Sachet-Parampara, Ram Sampath, Neha Bhasin",
-      image: "https://i.ibb.co/jJf1vbm/moody-mix.jpg",
-    },
-  ];
-
   const { data, isLoading, isError, error, refetch } = useGetApi({
     queryKey: "poetData",
     endpoint: `${apiPath.getPoetData}?page=${pagination ? pagination.current : 1}&pageSize=${pagination ? pagination.pageSize : 10}`,

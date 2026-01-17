@@ -70,12 +70,12 @@ function Sidenav() {
           <SearchOutlined style={{ fontSize: "22px" }} />
           {!collapsed && <span className="font-semibold">Search</span>}
         </div>
-        {isLoggedIn && (
+        {/* {isLoggedIn && (
           <div className="flex items-center gap-4 p-3 rounded-md cursor-pointer transition-colors duration-200 hover:bg-[#2a2a2a]">
             <HeartOutlined style={{ fontSize: "22px" }} />
             {!collapsed && <span className="font-semibold">Saved</span>}
           </div>
-        )}
+        )} */}
         {isLoggedIn ? (
           <div onClick={() => navigate(`/@${userProfile?.user_name}`)} className={getNavItemClass(`/@${userProfile?.user_name}`)}>
             {userProfile?.image ? <img src={apiPath.assetURL + userProfile?.image} alt="Profile" className="w-10 h-10 rounded-full object-cover" /> : <UserOutlined style={{ fontSize: "22px" }} />}

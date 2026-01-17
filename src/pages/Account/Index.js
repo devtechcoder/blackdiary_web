@@ -13,6 +13,7 @@ import { useGetApi } from "../../hooks/useRequest";
 import Loader from "../../components/Loader";
 import { getOriginalUserName } from "../../helper/functions";
 import { FollowIcon } from "../../components/ButtonField";
+import MyFeed from "./myFeed";
 
 const Profile = () => {
   const { isLoggedIn, userProfile: loggedInUserProfile } = useAuthContext();
@@ -95,10 +96,10 @@ const Profile = () => {
               <div>
                 <strong>8</strong> posts
               </div>
-              <div onClick={() => navigate(`/view-follow/follower/${profileData?._id}/${profileData?.user_name}`)}>
+              <div className="cursor-pointer" onClick={() => navigate(`/view-follow/follower/${profileData?._id}/${profileData?.user_name}`)}>
                 <strong>{profileData?.followers || 0}</strong> followers
               </div>
-              <div onClick={() => navigate(`/view-follow/following/${profileData?._id}/${profileData?.user_name}`)}>
+              <div className="cursor-pointer" onClick={() => navigate(`/view-follow/following/${profileData?._id}/${profileData?.user_name}`)}>
                 <strong>{profileData?.following || 0}</strong> following
               </div>
             </div>
@@ -109,23 +110,7 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Tabs (Posts, Reels, etc.) */}
-        <div className="border-t border-gray-700 mt-8 pt-4 flex justify-center sm:justify-around gap-8 text-sm font-medium text-gray-400">
-          <span className="cursor-pointer">DIARIES</span>
-          <span className="cursor-pointer">SAVED</span>
-          <span className="cursor-pointer">TAGGED</span>
-        </div>
-
-        {/* Posts Placeholder */}
-        <div className="grid grid-cols-3 gap-1 md:gap-4 mt-4">
-          {Array(6)
-            .fill(null)
-            .map((_, i) => (
-              <div key={i} className="bg-gray-900 aspect-square flex items-center justify-center text-white text-2xl">
-                {/* Placeholder for a post */}
-              </div>
-            ))}
-        </div>
+        <MyFeed userId={profileData?._id} />
       </div>
       {show && <ProfileActionModal show={show} hide={() => setShow(false)} />}
     </Main>

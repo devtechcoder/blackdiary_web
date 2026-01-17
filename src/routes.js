@@ -34,6 +34,7 @@ import {
   PostDiaryPage,
   Feed,
   ViewFollowList,
+  GoAds,
 } from "./pages/Index";
 
 export const publicRoutes = [
@@ -64,6 +65,7 @@ export const publicRoutes = [
   { path: "/:username/:id?", component: Profile, exact: true },
   { path: "/feed", component: Feed, exact: true },
   { path: "/view-follow/:type/:userId/:user_name?", component: ViewFollowList, exact: true },
+  { path: "/go", component: GoAds, exact: true },
 ];
 
 export const privateRoutes = [

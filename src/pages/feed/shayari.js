@@ -7,6 +7,7 @@ import { useGetApi } from "../../hooks/useRequest";
 import dayjs from "dayjs";
 import Prouser from "../../assets/images/user.png";
 import { FollowIcon, LikeShareActionIcon } from "../../components/ButtonField";
+import { useNavigate } from "react-router";
 
 // Utility to get a random gradient background
 const gradients = [
@@ -19,22 +20,20 @@ const gradients = [
 const getRandomGradient = () => gradients[Math.floor(Math.random() * gradients.length)];
 
 // Utility to strip HTML tags for plain text display
-const stripHtml = (html) => {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  return doc.body.textContent || "";
-};
 
 const ShayariCard = ({ shayari }) => {
+  const navigate = useNavigate();
+
   return (
     <Card className="w-full max-w-lg bg-[#121212] border border-gray-800 rounded-lg mb-6" bodyStyle={{ padding: 0 }}>
       {/* Post Header */}
       <div className="flex items-center justify-between p-3">
-        <div className="flex items-center gap-3 cursor-pointer">
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate(`/@${shayari.author?.user_name}`)}>
           <Avatar src={shayari.author?.image || Prouser} />
           <span className="text-white font-semibold">{shayari.author?.user_name || "Unknown User"}</span>
         </div>
         <div className="flex items-center gap-4">
-          <FollowIcon userId={shayari?.author?._id} />
+          {!shayari?.is_follow && <FollowIcon userId={shayari?.author?._id} hideButton={shayari?.is_follow || false} />}
           <MoreOutlined className="text-white text-xl cursor-pointer" />
         </div>
       </div>
@@ -54,25 +53,6 @@ const ShayariCard = ({ shayari }) => {
           <div className="flex gap-4">
             <LikeShareActionIcon item={shayari} />
           </div>
-        </div>
-
-        {/* Likes and Caption */}
-        <div className="text-white mt-2">
-          <p className="font-semibold">{shayari?.total_likes || 0} likes</p>
-          <p>
-            <span className="font-semibold mr-2">{shayari.author?.user_name || "Unknown User"}</span>
-            <span className="text-gray-300">{stripHtml(shayari.content).substring(0, 50)}...</span>
-          </p>
-          <p className="text-gray-500 text-xs mt-1 uppercase">{dayjs(shayari.created_at).fromNow()}</p>
-        </div>
-
-        {/* Comment Input */}
-        <div className="mt-3 border-t border-gray-800 pt-3">
-          <Input
-            placeholder="Add a comment..."
-            className="bg-transparent border-none text-white placeholder-gray-500 focus:ring-0"
-            suffix={<span className="text-green-500 font-semibold cursor-pointer">Post</span>}
-          />
         </div>
       </div>
     </Card>

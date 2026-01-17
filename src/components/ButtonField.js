@@ -3,12 +3,15 @@ import PhoneInput from "react-phone-input-2";
 import { useAppContext } from "../context/AppContext";
 import lang from "../helper/langHelper";
 import { FaHeart, FaComment, FaShareAlt, FaCopy } from "react-icons/fa";
-import { message } from "antd";
+import { message, Modal } from "antd";
 import useRequest from "../hooks/useRequest";
 import { useState } from "react";
 import apiPath from "../constants/apiPath";
 import { Severty, ShowToast } from "../helper/toast";
 import { useSearchParams } from "react-router-dom";
+import dayjs from "dayjs";
+import { stripHtml } from "../helper/functions";
+import CommentModal from "./CommentModal";
 
 export const ViewActionIcon = () => {
   const { language } = useAppContext();
@@ -26,6 +29,9 @@ export const ViewActionIcon = () => {
 export const LikeShareActionIcon = ({ item }) => {
   const { language } = useAppContext();
   const [loading, setLoading] = useState(false);
+  const [isLiked, setIsLiked] = useState(item?.is_liked || false);
+  const [totalLikes, setTotalLikes] = useState(item?.total_likes || 0);
+  const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const { request } = useRequest();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
@@ -43,6 +49,8 @@ export const LikeShareActionIcon = ({ item }) => {
         setLoading(false);
         if (data.status) {
           ShowToast(data.message, Severty.SUCCESS);
+          setIsLiked(!isLiked);
+          setTotalLikes(isLiked ? totalLikes - 1 : totalLikes + 1);
         } else {
           ShowToast(data.message, Severty.ERROR);
         }
@@ -63,57 +71,75 @@ export const LikeShareActionIcon = ({ item }) => {
     }
   };
   return (
-    <div className="flex items-center justify-start sm:justify-start gap-4 sm:gap-6 text-zinc-400">
-      <button className="flex items-center gap-1 hover:text-green-400 transition" onClick={onLike} disabled={loading} loading={loading}>
-        <FaHeart /> <span className="hidden sm:inline">Like</span>
-      </button>
-      <button className="flex items-center gap-1 hover:text-green-400 transition">
-        <FaComment /> <span className="hidden sm:inline">Comment</span>
-      </button>
-      <button
-        className="flex items-center gap-1 hover:text-green-400 transition"
-        onClick={() => {
-          const temp = document.createElement("div");
-          temp.innerHTML = item?.content || "";
-          const plainText = temp.textContent || temp.innerText || "";
+    <div className="w-full">
+      <div className="flex items-center justify-start sm:justify-start gap-4 sm:gap-6 text-zinc-400">
+        <button className={`flex items-center gap-1 ${isLiked ? "text-green-400" : "hover:text-green-400 transition"}`} onClick={onLike} disabled={loading} loading={loading}>
+          <FaHeart /> <span className="hidden sm:inline">Like</span>
+        </button>
+        <button className="flex items-center gap-1 hover:text-green-400 transition" onClick={() => setIsCommentModalVisible(true)}>
+          <FaComment /> <span className="hidden sm:inline">Comment</span>
+        </button>
+        <button
+          className="flex items-center gap-1 hover:text-green-400 transition"
+          onClick={() => {
+            const temp = document.createElement("div");
+            temp.innerHTML = item?.content || "";
+            const plainText = temp.textContent || temp.innerText || "";
 
-          const title = encodeURIComponent("Black Diary – Shayari");
-          const text = encodeURIComponent(`${plainText}\n\nRead this Shayari on Black Diary 💫`);
-          const baseUrl = window.location.origin + "/sub-category/details";
+            const title = encodeURIComponent("Black Diary – Shayari");
+            const text = encodeURIComponent(`${plainText}\n\nRead this Shayari on Black Diary 💫`);
+            const baseUrl = window.location.origin + "/sub-category/details";
 
-          const shareUrl = `${baseUrl}?title=${title}&text=${text}`;
+            const shareUrl = `${baseUrl}?title=${title}&text=${text}`;
 
-          const shareData = {
-            url: shareUrl,
-          };
-          handleShare(shareData);
-        }}
-      >
-        <FaShareAlt /> <span className="hidden sm:inline">Share</span>
-      </button>
+            const shareData = {
+              url: shareUrl,
+            };
+            handleShare(shareData);
+          }}
+        >
+          <FaShareAlt /> <span className="hidden sm:inline">Share</span>
+        </button>
 
-      <button
-        className="flex items-center gap-1 hover:text-green-400 transition"
-        onClick={() => {
-          // Strip HTML using a dummy div
-          const tempElement = document.createElement("div");
-          tempElement.innerHTML = item?.content || "";
-          const plainText = tempElement.textContent || tempElement.innerText || "";
+        <button
+          className="flex items-center gap-1 hover:text-green-400 transition"
+          onClick={() => {
+            // Strip HTML using a dummy div
+            const tempElement = document.createElement("div");
+            tempElement.innerHTML = item?.content || "";
+            const plainText = tempElement.textContent || tempElement.innerText || "";
 
-          // Copy to clipboard
-          navigator.clipboard.writeText(plainText);
-          message.success("Copied to clipboard!");
-        }}
-      >
-        <FaCopy /> <span className="hidden sm:inline">Copy</span>
-      </button>
+            // Copy to clipboard
+            navigator.clipboard.writeText(plainText);
+            message.success("Copied to clipboard!");
+          }}
+        >
+          <FaCopy /> <span className="hidden sm:inline">Copy</span>
+        </button>
+      </div>
+
+      <div className="text-white mt-2">
+        <p className="font-medium text-sm">{totalLikes} likes</p>
+        <p className="text-sm">
+          {!!item?.content && (
+            <>
+              <span className="font-medium mr-2">{item.author?.user_name || "Unknown User"}</span>
+              <span className="text-gray-400">{item.content ? `${stripHtml(item.content).substring(0, 50)}...` : ""}</span>
+            </>
+          )}{" "}
+        </p>
+        <p className="text-gray-500 text-xs mt-1 uppercase">{dayjs(item?.created_at).fromNow()}</p>
+      </div>
+
+      <CommentModal postId={item?._id} visible={isCommentModalVisible} onClose={() => setIsCommentModalVisible(false)} />
     </div>
   );
 };
 
-export const FollowIcon = ({ userId, classname }) => {
+export const FollowIcon = ({ userId, classname, hideButton = false, buttonName = "Follow", onActionComplete }) => {
   const { language } = useAppContext();
   const [loading, setLoading] = useState(false);
+  const [showButton, setShowButton] = useState(hideButton || true);
   const { request } = useRequest();
 
   const onFollow = (value) => {
@@ -128,7 +154,11 @@ export const FollowIcon = ({ userId, classname }) => {
       onSuccess: (data) => {
         setLoading(false);
         if (data.status) {
+          setShowButton(!showButton);
           ShowToast(data.message, Severty.SUCCESS);
+          if (onActionComplete) {
+            onActionComplete();
+          }
         } else {
           ShowToast(data.message, Severty.ERROR);
         }
@@ -142,14 +172,16 @@ export const FollowIcon = ({ userId, classname }) => {
 
   return (
     <>
-      <button
-        className={classname ? classname : "bg-green-500 text-white font-semibold px-3 py-1 rounded-md text-sm hover:bg-green-600 transition-colors duration-200"}
-        onClick={onFollow}
-        disabled={loading}
-        loading={loading}
-      >
-        Follow
-      </button>
+      {!!showButton && (
+        <button
+          className={classname ? classname : "bg-green-500 text-white font-semibold px-3 py-1 rounded-md text-sm hover:bg-green-600 transition-colors duration-200"}
+          onClick={onFollow}
+          disabled={loading}
+          loading={loading}
+        >
+          {buttonName}
+        </button>
+      )}
     </>
   );
 };

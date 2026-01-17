@@ -11,9 +11,6 @@ console.log("appMode", appMode);
 if (appMode === "development") {
   URL = "http://localhost:7900/api/";
   ASSET_URL = `http://localhost:7900/image/`;
-
-  URL = "https://blackdiary.onrender.com/api/";
-  ASSET_URL = `https://blackdiary.onrender.com/image/`;
 } else {
   URL = "http://localhost:7900/api/";
   ASSET_URL = `http://localhost:7900/image/`;
@@ -46,6 +43,9 @@ let apiPath = {
   getPoetData: "app/poet",
   getPoetDetails: "app/poet/view-details",
 
+  //Leadership Apis
+  getLeadershipList: "app/leadership",
+
   //Create Diary
   publish: "app/create-diary/publish",
 
@@ -74,6 +74,10 @@ let apiPath = {
   getFollowers: "app/follow",
   getFollowing: "app/follow",
 
+  //Comments Apis
+  getComments: "app/comment",
+  addComment: "app/comment/add",
+
   globalDownload: "app/url/insta/download",
 
   // Common APIs
@@ -84,6 +88,7 @@ let apiPath = {
     categories: "common/categories",
     subCategories: "/common/sub-categories",
     imageUpload: "common/image-upload",
+    getCms: "common/get-cms",
   },
 };
 

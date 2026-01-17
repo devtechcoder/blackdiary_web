@@ -85,3 +85,8 @@ export const getOriginalUserName = (username) => {
   if (!username) return "";
   return username.startsWith("@") ? username.substring(1) : username;
 };
+
+export const stripHtml = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+};

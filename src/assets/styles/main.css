@@ -284,3 +284,82 @@ li.ant-list-item.hover\:bg-\[\#1a1a1a\].px-6 {
   border: 1px solid gray;
   border-radius: 14px;
 }
+
+/* Tabs Container */
+.custom-tabs .ant-tabs-nav {
+  margin-bottom: 0 !important;
+  border-bottom: 1px solid #374151; /* gray-700 */
+}
+
+.custom-tabs .ant-tabs-tab {
+  padding: 10px 16px !important;
+  color: #9ca3af !important; /* gray-400 */
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-tabs .ant-tabs-tab-btn {
+  font-size: 1rem;
+}
+
+/* Active Tab */
+.custom-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Ink Bar */
+.custom-tabs .ant-tabs-ink-bar {
+  background: #3b82f6 !important; /* blue-500 */
+  height: 3px !important;
+  border-radius: 6px;
+}
+
+/* Hover */
+.custom-tabs .ant-tabs-tab:hover .ant-tabs-tab-btn {
+  color: #d1d5db !important; /* gray-300 */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .custom-tabs .ant-tabs-tab {
+    padding: 8px 10px !important;
+  }
+
+  .custom-tabs .ant-tabs-tab-btn {
+    font-size: 0.9rem;
+  }
+}
+
+.chatgpt-loader {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatgpt-loader span {
+  width: 8px;
+  height: 8px;
+  background-color: #10a37f; /* ChatGPT green */
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.chatgpt-loader span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.chatgpt-loader span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}

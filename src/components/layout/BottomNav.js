@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HomeOutlined, SearchOutlined, PlusSquareOutlined, HeartOutlined, UserOutlined, CompassOutlined } from "@ant-design/icons";
+import { HomeOutlined, SearchOutlined, PlusSquareOutlined, HeartOutlined, UserOutlined, CompassOutlined, LoginOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { useAuthContext } from "../../context/AuthContext";
 import CreatePostOption from "../../modals/createPostOption";
@@ -44,9 +44,16 @@ function BottomNav() {
         </button>
 
         {/* Profile */}
-        <button onClick={() => navigate(`/@${userProfile?.user_name}`)} className={getButtonClass(`/@${userProfile?.user_name}`)}>
-          <UserOutlined style={{ fontSize: "22px" }} />
-        </button>
+
+        {isLoggedIn ? (
+          <button onClick={() => navigate(`/@${userProfile?.user_name}`)} className={getButtonClass(`/@${userProfile?.user_name}`)}>
+            <UserOutlined style={{ fontSize: "22px" }} />
+          </button>
+        ) : (
+          <button onClick={() => navigate(`/login`)} className={getButtonClass(`/@${userProfile?.user_name}`)}>
+            <LoginOutlined style={{ fontSize: "22px" }} />
+          </button>
+        )}
       </div>
       {showCreateOptions && <CreatePostOption show={() => setShowCreateOptions(true)} hide={() => setShowCreateOptions(false)} />}
     </>
