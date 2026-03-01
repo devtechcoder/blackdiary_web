@@ -67,7 +67,7 @@ const AllPoets = () => {
 
                 {/* Play button */}
                 <div className="absolute right-3 bottom-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-green-500 p-3 rounded-full shadow-lg" onClick={() => navigate(`/shayar/details/${item.name}/${item._id}`)}>
+                  <div className="bg-green-500 p-3 rounded-full shadow-lg" onClick={() => navigate(`/poets/details/${item.name}/${item._id}`)}>
                     <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M6 4l10 6-10 6V4z" />
                     </svg>

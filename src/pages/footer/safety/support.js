@@ -2,24 +2,25 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { QuestionCircleOutlined, MailOutlined } from "@ant-design/icons";
 import PublicLayout from "../../../components/layout/publicLayout";
+import { useSelector } from "react-redux";
 
 // A simple styled component for section titles.
 // In a real app, you would use Tailwind CSS classes.
 const SectionTitle = ({ children }) => <h2 className="text-2xl font-bold mt-8 mb-4 border-b pb-2">{children}</h2>;
 
 const SupportPage = () => {
+  const headingData = useSelector((state) => state.masterData.allPageHeadings?.find((item) => item.type === "user_safety_support"));
+
   return (
     <>
       <Helmet>
-        <title>Support Center - Black Diary</title>
+        <title>{headingData?.title || "Support Center"} - Black Diary</title>
         <meta name="description" content="Get help and support for Black Diary. Find resources for your safety and answers to frequently asked questions." />
       </Helmet>
       <PublicLayout>
         <div className="container mx-auto px-4 py-8 max-w-4xl">
-          <h1 className="text-4xl font-bold text-center  text-gray-600 mb-6">Support & Safety Center</h1>
-          <p className="text-center text-gray-600 mb-10">
-            Your well-being is our top priority. Here you can find resources for immediate help, contact our support team, and get answers to common questions.
-          </p>
+          <h1 className="text-4xl font-bold text-center  text-gray-600 mb-6">{headingData?.title || ""}</h1>
+          <p className="text-center text-gray-600 mb-10">{headingData?.sub_title || ""}</p>
 
           {/* Immediate Help Section */}
           <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8" role="alert">

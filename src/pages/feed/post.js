@@ -27,7 +27,7 @@ const PostCard = ({ post }) => {
       </div>
 
       {/* Post Image */}
-      {post.image && <img src={apiPath.assetURL + post.image} alt="Post" className="w-full h-auto object-cover bg-gray-900" />}
+      {post.image && <img src={post.image} alt="Post" className="w-full h-auto object-cover bg-gray-900" />}
 
       {/* Post Actions */}
       <div className="p-3">
@@ -78,7 +78,7 @@ const PostPage = () => {
       });
       if (node) observer.current.observe(node);
     },
-    [isFetching, hasMore]
+    [isFetching, hasMore],
   );
 
   return (

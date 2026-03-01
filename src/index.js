@@ -11,11 +11,15 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 import { HelmetProvider } from "react-helmet-async";
+import { Provider } from "react-redux";
+import { store } from "./redux/store/index.jsx";
 dayjs.extend(relativeTime);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <HelmetProvider>
-    <App />
-  </HelmetProvider>
+  <Provider store={store}>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </Provider>,
 );

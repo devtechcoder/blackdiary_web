@@ -1,33 +1,58 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import PublicLayout from "../../components/layout/publicLayout";
-import { useGetApi } from "../../hooks/useRequest";
+import { useRequest } from "../../hooks/useReduxRequest";
 import apiPath from "../../constants/apiPath";
+import { useSelector } from "react-redux";
 
 const TermsAndConditions = () => {
   const [list, setList] = useState({});
+  const [shouldFetch, setShouldFetch] = useState(false);
+  const headingData = useSelector((state) => state.masterData.allPageHeadings?.find((item) => ["terms_and_conditions"].includes(item.type)));
 
-  const { data, isLoading, isError, error, refetch } = useGetApi({
-    queryKey: "terms-and-conditions",
-    endpoint: `${apiPath.common.getCms}/terms-and-conditions`,
+  useEffect(() => {
+    const frameId = requestAnimationFrame(() => setShouldFetch(true));
+    return () => cancelAnimationFrame(frameId);
+  }, []);
+
+  const { response: data, loading } = useRequest(`${apiPath.common.getCms}/terms-and-conditions`, {
+    skip: !shouldFetch,
   });
 
   useEffect(() => {
-    if (data?.status && !isError) {
+    if (data?.status) {
       setList(data?.data ?? {});
     }
   }, [data]);
+
   return (
     <>
       <Helmet>
-        <title>Terms and Conditions - Black Diary</title>
+        <title>{headingData?.title || "Terms and Conditions"} - Black Diary</title>
         <meta name="description" content="Read the Terms and Conditions for using the Black Diary application. This governs your rights and responsibilities as a user." />
       </Helmet>
 
       <PublicLayout>
         <div className="bg-white text-gray-800 py-12 px-4">
           <div className="max-w-4xl mx-auto">
-            <p dangerouslySetInnerHTML={{ __html: list?.description || "" }} />
+            <div className="text-center mb-10">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">{headingData?.title || "Terms and Conditions"}</h1>
+              <p className="text-lg text-gray-600">{headingData?.sub_title || ""}</p>
+            </div>
+
+            {loading ? (
+              <div className="space-y-4">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <div key={index} className="bg-gray-50 p-6 rounded-lg border border-gray-200 animate-pulse">
+                    <div className="h-4 w-full rounded bg-gray-200 mb-3" />
+                    <div className="h-4 w-11/12 rounded bg-gray-200 mb-3" />
+                    <div className="h-4 w-10/12 rounded bg-gray-200" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p dangerouslySetInnerHTML={{ __html: list?.description || "" }} />
+            )}
           </div>
         </div>
       </PublicLayout>

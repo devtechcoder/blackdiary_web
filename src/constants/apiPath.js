@@ -12,8 +12,8 @@ if (appMode === "development") {
   URL = "http://localhost:7900/api/";
   ASSET_URL = `http://localhost:7900/image/`;
 } else {
-  URL = "http://localhost:7900/api/";
-  ASSET_URL = `http://localhost:7900/image/`;
+  // URL = "http://localhost:7900/api/";
+  // ASSET_URL = `http://localhost:7900/image/`;
 
   URL = "https://blackdiary.onrender.com/api/";
   ASSET_URL = `https://blackdiary.onrender.com/image/`;
@@ -86,9 +86,11 @@ let apiPath = {
     getUserProfile: "common/get-user-profile",
     searchAccount: "common/search",
     categories: "common/categories",
-    subCategories: "/common/sub-categories",
+    subCategories: "common/sub-categories",
     imageUpload: "common/image-upload",
     getCms: "common/get-cms",
+    getMasters: "common/get-masters",
+    getSettings: "common/get-settings",
   },
 };
 

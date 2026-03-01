@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import PublicLayout from "../../components/layout/publicLayout";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const sitemapSections = [
   {
@@ -49,6 +50,8 @@ const sitemapSections = [
 ];
 
 const SitemapPage = () => {
+  const headingData = useSelector((state) => state.masterData.allPageHeadings?.find((item) => ["sitemap"].includes(item.type)));
+
   const Section = ({ title, links }) => (
     <section>
       <h2 className="text-2xl font-semibold text-gray-900 mb-4 border-l-4 border-indigo-600 pl-4">{title}</h2>
@@ -67,16 +70,16 @@ const SitemapPage = () => {
   return (
     <>
       <Helmet>
-        <title>Sitemap - Black Diary</title>
+        <title>{headingData?.title || "Sitemap"} - Black Diary</title>
         <meta name="description" content="Explore the sitemap for Black Diary to easily navigate through our features, company information, safety guidelines, and your account settings." />
       </Helmet>
 
       <PublicLayout>
         <div className="bg-white text-gray-800 py-12 px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Sitemap</h1>
-              <p className="text-lg text-gray-600">An overview of all pages on Black Diary.</p>
+            <div className="text-center mb-10">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">{headingData?.title || "Sitemap"}</h1>
+              <p className="text-lg text-gray-600">{headingData?.sub_title || "An overview of all pages on Black Diary."}</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-x-8 gap-y-12">

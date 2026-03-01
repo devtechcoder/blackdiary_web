@@ -49,7 +49,7 @@ const GoAds = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#000",
+          background: "#0e0e0e",
           padding: "20px",
         }}
       >
@@ -58,21 +58,21 @@ const GoAds = () => {
             maxWidth: 420,
             width: "100%",
             textAlign: "center",
-            background: "#0e0e0e",
+            background: "#f8f3f3",
             borderRadius: 12,
             padding: "24px",
             boxShadow: "0 0 25px rgba(255,255,255,0.05)",
           }}
         >
           {/* Brand */}
-          <Title level={3} style={{ color: "#fff", marginBottom: 4 }}>
+          <Title level={3} style={{ color: "#0e0e0e", marginBottom: 4 }}>
             Black Diary
           </Title>
-          <Text style={{ color: "#aaa" }}>Please wait, redirecting…</Text>
+          <Text style={{ color: "#0e0e0e" }}>Please wait, redirecting…</Text>
 
           {/* Countdown */}
           <div style={{ margin: "12px 0" }}>
-            <Text style={{ color: "#888" }}>
+            <Text style={{ color: "#0e0e0e" }}>
               Redirecting in <b>{count}</b> seconds
             </Text>
           </div>

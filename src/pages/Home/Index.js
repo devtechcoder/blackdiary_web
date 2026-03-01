@@ -1,22 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import Main from "../../components/layout/Main";
-import { FaHeart, FaComment, FaShareAlt, FaCopy } from "react-icons/fa";
-import Slider from "react-slick";
 import { useAppContext } from "../../context/AppContext";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import Prouser from "../../assets/images/user.png";
 import apiPath from "../../constants/apiPath";
-// import { useGetApi } from "../../hooks/useGetApi";
 import { useNavigate } from "react-router";
-import { useGetApi } from "../../hooks/useRequest";
+import { useRequest } from "../../hooks/useReduxRequest";
 import { FormattedBgColor } from "../../constants/Constants";
 import { LikeShareActionIcon, ViewActionIcon } from "../../components/ButtonField";
 import { OccasionSlider, PoetSlider, SubCategorySlider } from "../Common/Slider";
 import { ViewSliderDairy } from "../Common/Section";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "../../constants/seo";
-import Loader from "../../components/Loader";
 
 function LandingIndex() {
   const { categories } = useAppContext();
@@ -24,16 +17,7 @@ function LandingIndex() {
   const [homeData, setHomeData] = useState({});
   const navigate = useNavigate();
 
-  const {
-    data: subCategoriesData,
-    isLoading: subCategoryLoading,
-    isError: subCategoryIsError,
-    error: subCategoryError,
-    refetch: subCategoryRefetch,
-  } = useGetApi({
-    queryKey: "subCategories",
-    endpoint: apiPath.common.subCategories,
-  });
+  const { response: subCategoriesData, loading: subCategoryLoading } = useRequest(apiPath.common.subCategories);
 
   useEffect(() => {
     if (subCategoriesData?.status && Array.isArray(subCategoriesData?.data)) {
@@ -41,26 +25,15 @@ function LandingIndex() {
     }
   }, [subCategoriesData]);
 
-  const { data, isLoading, isError, error, refetch } = useGetApi({
-    queryKey: "homeData",
-    endpoint: apiPath.homeData,
-  });
+  const { response: data, loading: homeDataLoading } = useRequest(apiPath.homeData);
 
   useEffect(() => {
-    console.log(data?.data?.topPoets, "datadatadata");
     setHomeData(data?.data ?? []);
-
     if (data?.status && Array.isArray(data?.data)) {
     }
   }, [data]);
 
-  if (isLoading)
-    return (
-      <Main>
-        <Loader />
-      </Main>
-    );
-  if (isError) return <p>Error: {error.message}</p>;
+  const isPageLoading = subCategoryLoading || homeDataLoading;
 
   return (
     <Main>
@@ -96,89 +69,119 @@ function LandingIndex() {
           <meta name="author" content={SEO.common.author} />
         </Helmet>
         <div className="flex flex-col gap-6 p-2 sm:p-4 text-white">
-          {/* Top Filters */}
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
-            <button
-              key={"All"}
-              className={`px-4 py-2 rounded-full text-sm font-semibold flex-shrink-0 hover:bg-zinc-600 bg-green-500 text-black hover:bg-zinc-600 hover:text-white`}
-              onClick={() => navigate(`/sub-category/details`)}
-            >
-              All
-            </button>
-            {categories?.length
-              ? categories?.map((item) => (
-                  <button key={item?.value} className="px-4 py-2 bg-zinc-700 rounded-full text-sm hover:bg-zinc-600" onClick={() => navigate(`/sub-category/details?category=${item?.value}`)}>
-                    {item?.name}
-                  </button>
-                ))
-              : ""}
-          </div>
-          {/* Quick Access Section */}
-          {/* conononsdfsdf */}
-          <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
-            {subCategories?.length
-              ? subCategories?.map((item, idx) => (
-                  <>
-                    <div
-                      className={`p-3 rounded-lg flex items-center gap-3 cursor-pointer transition-colors duration-300 hover:bg-zinc-700 ${
-                        FormattedBgColor[item.bg_color] || "bg-zinc-800"
-                      } w-64 flex-shrink-0`}
-                      onClick={() => navigate(`/sub-category/details/${item?.name}/${item._id}`)}
-                    >
-                      <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-blue-400 rounded overflow-hidden">
-                        <img src={item?.image} alt="sub category" className="w-full h-full object-cover" />
+          {isPageLoading ? (
+            <HomePageSkeleton />
+          ) : (
+            <>
+              {/* Top Filters */}
+              <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
+                <button
+                  key={"All"}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold flex-shrink-0 hover:bg-zinc-600 bg-green-500 text-black hover:bg-zinc-600 hover:text-white`}
+                  onClick={() => navigate(`/sub-category/details`)}
+                >
+                  All
+                </button>
+                {categories?.length
+                  ? categories?.map((item) => (
+                      <button key={item?.value} className="px-4 py-2 bg-zinc-700 rounded-full text-sm hover:bg-zinc-600" onClick={() => navigate(`/sub-category/details?category=${item?.value}`)}>
+                        {item?.name}
+                      </button>
+                    ))
+                  : ""}
+              </div>
+              {/* Quick Access Section */}
+              <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
+                {subCategories?.length
+                  ? subCategories?.map((item) => (
+                      <div
+                        key={item?._id}
+                        className={`p-3 rounded-lg flex items-center gap-3 cursor-pointer transition-colors duration-300 hover:bg-zinc-700 ${
+                          FormattedBgColor[item.bg_color] || "bg-zinc-800"
+                        } w-64 flex-shrink-0`}
+                        onClick={() => navigate(`/sub-category/details/${item?.name}/${item._id}`)}
+                      >
+                        <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-blue-400 rounded overflow-hidden">
+                          <img src={item?.image} alt="sub category" className="w-full h-full object-cover" />
+                        </div>
+                        <span className="font-semibold text-sm flex-grow"> {item?.name}</span>
                       </div>
-                      <span className="font-semibold text-sm flex-grow"> {item?.name}</span>
-                    </div>
-                  </>
-                ))
-              : "No Sub Categories"}
-          </div>
-          {/* Today's biggest hits Section Section */}
-          <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Today's biggest hits"} type={"top_hits"} />
+                    ))
+                  : ""}
+              </div>
+              {/* Today's biggest hits Section Section */}
+              <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Today's biggest hits"} type={"top_hits"} />
 
-          {/* Popular albums */}
-          <SubCategorySlider data={homeData?.subCategories ?? []} title={"Popular albums"} />
+              {/* Popular albums */}
+              <SubCategorySlider data={homeData?.subCategories ?? []} title={"Popular albums"} />
 
-          {/* Popular Artists Section */}
-          <PoetSlider data={homeData?.topPoets ?? []} title={"Shayaron Ki Mehfil"} />
+              {/* Popular Artists Section */}
+              <PoetSlider data={homeData?.topPoets ?? []} title={"Shayaron Ki Mehfil"} />
 
-          {/* SHER FOR OCCASION */}
-          <OccasionSlider data={homeData?.occasions ?? []} title={"Special Moments Shayari"} />
+              {/* SHER FOR OCCASION */}
+              <OccasionSlider data={homeData?.occasions ?? []} title={"Special Moments Shayari"} />
 
-          {/* Made For Albums featuring diary you like */}
-          <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Albums featuring diary you like"} type={"liked"} />
+              {/* Made For Albums featuring diary you like */}
+              <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Albums featuring diary you like"} type={"liked"} />
 
-          {/* Made For Recently played */}
-          <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Trending Diaries"} type={"recently_viewed"} />
+              {/* Made For Recently played */}
+              <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Trending Diaries"} type={"recently_viewed"} />
 
-          {/* topDiary */}
-
-          <TopDiarySection />
+              {/* topDiary */}
+              <TopDiarySection />
+            </>
+          )}
         </div>
       </>
     </Main>
   );
 }
 
+const HomePageSkeleton = () => {
+  return (
+    <div className="grid md:grid-cols-2 gap-8">
+      {Array.from({ length: 4 }).map((_, index) => (
+        <div key={index} className="bg-gray-50 p-6 rounded-lg border border-gray-200 animate-pulse">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="h-10 w-10 rounded-full bg-gray-200" />
+            <div className="h-6 w-40 rounded bg-gray-200" />
+          </div>
+          <div className="h-4 w-full rounded bg-gray-200 mb-2" />
+          <div className="h-4 w-5/6 rounded bg-gray-200 mb-6" />
+          <div className="h-4 w-28 rounded bg-gray-200" />
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const TopDiarySection = () => {
   const navigate = useNavigate();
   const [list, setList] = useState([]);
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
+  const [pagination] = useState({ current: 1, pageSize: 10 });
 
-  const { data, isLoading, isError, error, refetch } = useGetApi({
-    queryKey: "TopDiarySection",
-    endpoint: `${apiPath.getHomeTopDiary}?page=${pagination ? pagination.current : 1}&pageSize=${pagination ? pagination.pageSize : 10}`,
-  });
+  const { response: data, loading: isLoading } = useRequest(`${apiPath.getHomeTopDiary}?page=${pagination ? pagination.current : 1}&pageSize=${pagination ? pagination.pageSize : 10}`);
 
   useEffect(() => {
-    if (data?.status && !isError) {
+    if (data?.status) {
       setList(data?.data?.docs ?? []);
     }
   }, [data]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isLoading) {
+    return (
+      <div className="grid md:grid-cols-2 gap-8 mt-6 px-0 sm:px-4">
+        {Array.from({ length: 2 }).map((_, index) => (
+          <div key={index} className="bg-gray-50 p-6 rounded-lg border border-gray-200 animate-pulse">
+            <div className="h-4 w-full rounded bg-gray-200 mb-2" />
+            <div className="h-4 w-5/6 rounded bg-gray-200 mb-6" />
+            <div className="h-4 w-28 rounded bg-gray-200" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="mt-6 px-0 sm:px-4">

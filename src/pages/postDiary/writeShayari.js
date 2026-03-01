@@ -5,9 +5,9 @@ import apiPath from "../../constants/apiPath";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { useGetApi, usePostApi } from "../../hooks/useRequest";
-import { DescriptionEditor, SelectInput, MultiSelect } from "../../components/InputField";
+import { SelectInput, MultiSelect } from "../../components/InputField";
 import { useAuthContext } from "../../context/AuthContext";
-import ProfileImageUpload from "../../modals/ProfileImageUpload";
+import ImageCustomize from "./imageCustomize";
 import CaptionInput from "../../components/captionInput";
 
 function WriteShayari() {
@@ -16,12 +16,9 @@ function WriteShayari() {
   const [form] = Form.useForm();
   const [content, setContent] = useState("");
   const type = searchParams.get("type");
-  const { isLoggedIn, setIsLoggedIn, refreshUser, userProfile } = useAuthContext();
-  const [image, setImage] = useState();
+  const { userProfile } = useAuthContext();
+  const image = Form.useWatch("image", form);
   const FileType = ["image/png", "image/jpg", "image/jpeg", "image/avif", "image/webp", "image/gif"];
-  const handleImage = (data) => {
-    data ? setImage(data) : setImage();
-  };
   // Fetch categories
   const { data: categoriesData, isLoading: categoriesLoading } = useGetApi({
     queryKey: "categories",
@@ -62,19 +59,29 @@ function WriteShayari() {
   });
 
   const OnSubmit = (values) => {
-    let payload = { ...values, author: userProfile?._id, type };
+    const payload = new FormData();
+    payload.append("author", userProfile?._id || "");
+    payload.append("type", type || "");
+    Object.entries(values || {}).forEach(([key, fieldValue]) => {
+      if (key === "image" || fieldValue === undefined || fieldValue === null || fieldValue === "") {
+        return;
+      }
+
+      payload.append(key, fieldValue);
+    });
+
     if (type === "shayari") {
       if (!content.trim() || content === "<p><br></p>") {
         ShowToast("Please write your shayari in the content box.", Severty.WARNING);
         return;
       }
-      payload.content = content;
+      payload.append("content", content);
     } else {
       if (!image) {
         ShowToast("Please upload an image for your post.", Severty.WARNING);
         return;
       }
-      payload.image = image;
+      payload.append("image", image);
     }
     mutate(payload);
   };
@@ -125,11 +132,10 @@ function WriteShayari() {
           {type === "shayari" ? (
             <Form.Item label="Content">
               <CaptionInput value={content} onChange={setContent} />
-              {/* <DescriptionEditor value={content} onChange={setContent} placeholder="Write your heart out..." /> */}
             </Form.Item>
           ) : (
             <Form.Item name="image" className="text-white" label="Image" rules={[{ required: true, message: "Please upload an image for your post." }]}>
-              <ProfileImageUpload size={10} value={image} fileType={FileType} btnName={"Choose Image"} imageType="Image" onChange={(data) => handleImage(data)} isDimension={true} />
+              <ImageCustomize size={10} fileType={FileType} btnName={"Choose Image"} imageType="Image" isDimension={true} />
             </Form.Item>
           )}
           <div className="flex justify-end gap-4 mt-8">

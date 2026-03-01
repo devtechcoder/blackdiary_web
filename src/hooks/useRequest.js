@@ -2,7 +2,6 @@ import axios from "axios";
 import apiPath from "../constants/apiPath";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { AppStateContext } from "../context/AppContext";
 import { Severty, ShowToast } from "../helper/toast";
 import { useQuery, useMutation } from "@tanstack/react-query";
 

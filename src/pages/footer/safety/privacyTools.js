@@ -3,44 +3,45 @@ import { Helmet } from "react-helmet-async";
 import PublicLayout from "../../../components/layout/publicLayout";
 import { Link } from "react-router-dom";
 import { EyeInvisibleOutlined, MessageOutlined, TagsOutlined, UserSwitchOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { useRequest } from "../../../hooks/useReduxRequest";
+import apiPath from "../../../constants/apiPath";
 
-const privacyOptions = [
-  {
-    icon: <EyeInvisibleOutlined className="text-3xl text-indigo-500" />,
-    title: "Private Account",
-    description: "When your account is private, only followers you approve can see your posts, stories, and diary entries. This gives you complete control over your audience.",
-    link: "/account/privacy-account",
-    linkText: "Go to Privacy Settings",
-  },
-  {
-    icon: <MessageOutlined className="text-3xl text-indigo-500" />,
-    title: "Story Replies & Sharing",
-    description:
-      "Choose who can reply to your stories and whether others can share your posts to their own stories. You can allow replies from everyone, people you follow, or turn them off completely.",
-    link: "/account/privacy-account",
-    linkText: "Manage Story Settings",
-  },
-  {
-    icon: <TagsOutlined className="text-3xl text-indigo-500" />,
-    title: "Mentions",
-    description: "Decide who can mention you in their posts, comments, or stories. This helps prevent unwanted interactions and keeps your space focused.",
-    link: "/account/privacy-account",
-    linkText: "Control Mentions",
-  },
-  {
-    icon: <UserSwitchOutlined className="text-3xl text-indigo-500" />,
-    title: "Activity Status",
-    description: "Choose whether to show your activity status (e.g., 'Active now') to other accounts. When turned off, you won't be able to see the activity status of others.",
-    link: "/account/privacy-account",
-    linkText: "Set Activity Status",
-  },
-];
+const getPrivacyIcon = (title = "") => {
+  const normalizedTitle = title.toLowerCase();
+
+  if (normalizedTitle.includes("mention") || normalizedTitle.includes("tag")) return <TagsOutlined className="text-3xl text-indigo-500" />;
+  if (normalizedTitle.includes("activity") || normalizedTitle.includes("status")) return <UserSwitchOutlined className="text-3xl text-indigo-500" />;
+  if (normalizedTitle.includes("story") || normalizedTitle.includes("reply") || normalizedTitle.includes("share")) return <MessageOutlined className="text-3xl text-indigo-500" />;
+
+  return <EyeInvisibleOutlined className="text-3xl text-indigo-500" />;
+};
 
 const PrivacyTools = () => {
+  const headingData = useSelector((state) => state.masterData.allPageHeadings?.find((item) => item.type === "user_privacy_tools"));
+  const { response: data, loading } = useRequest(`${apiPath.common.getMasters}/user_privacy_tools`);
+
+  const privacyOptions = React.useMemo(() => {
+    const list = data?.data;
+    if (!Array.isArray(list)) return [];
+
+    return list.map((item) => {
+      const title = item?.title || item?.name || "";
+
+      return {
+        icon: getPrivacyIcon(title),
+        title,
+        description: item?.description || "",
+        link: item?.link || item?.url || "#",
+        linkText: item?.sub_title || "Learn More",
+      };
+    });
+  }, [data]);
+
   return (
     <>
       <Helmet>
-        <title>Privacy Tools - Black Diary</title>
+        <title>{headingData?.title || "Privacy Tools"} - Black Diary</title>
         <meta name="description" content="Manage your privacy on Black Diary. Control who sees your content, how you're mentioned, and more." />
       </Helmet>
 
@@ -49,24 +50,37 @@ const PrivacyTools = () => {
           <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Your Privacy, Your Rules</h1>
-              <p className="text-lg text-gray-600">Control your experience and decide what you share on Black Diary.</p>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">{headingData?.title || ""}</h1>
+              <p className="text-lg text-gray-600">{headingData?.sub_title || ""}</p>
             </div>
 
             {/* Privacy Settings List */}
             <div className="space-y-10">
-              {privacyOptions.map((option, index) => (
-                <div key={index} className="flex flex-col sm:flex-row items-start gap-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="flex-shrink-0">{option.icon}</div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900">{option.title}</h3>
-                    <p className="text-gray-700 mt-1 mb-4">{option.description}</p>
-                    <Link to={option.link} className="font-semibold text-indigo-600 hover:text-indigo-800">
-                      {option.linkText} &rarr;
-                    </Link>
-                  </div>
-                </div>
-              ))}
+              {loading
+                ? Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="bg-gray-50 p-6 rounded-lg border border-gray-200 animate-pulse">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="h-10 w-10 rounded-full bg-gray-200" />
+                        <div className="h-6 w-40 rounded bg-gray-200" />
+                      </div>
+                      <div className="h-4 w-full rounded bg-gray-200 mb-2" />
+                      <div className="h-4 w-5/6 rounded bg-gray-200 mb-6" />
+                      <div className="h-4 w-28 rounded bg-gray-200" />
+                    </div>
+                  ))
+                : privacyOptions.map((option, index) => (
+                    <div key={index} className="flex flex-col sm:flex-row items-start gap-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="flex-shrink-0">{option.icon}</div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-gray-900">{option.title}</h3>
+                        <p className="text-gray-700 mt-1 mb-4">{option.description}</p>
+                        <Link to={option.link} className="font-semibold text-indigo-600 hover:text-indigo-800">
+                          {option.linkText} &rarr;
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+              {!loading && privacyOptions.length === 0 && <div className="text-center text-gray-500">No privacy tools available right now.</div>}
             </div>
           </div>
         </div>
