@@ -11,11 +11,9 @@ import { useNavigate } from "react-router";
 
 // Utility to get a random gradient background
 const gradients = [
-  "bg-gradient-to-br from-purple-900 to-indigo-900",
-  "bg-gradient-to-br from-gray-800 via-gray-900 to-black",
-  "bg-gradient-to-br from-red-900 to-rose-900",
-  "bg-gradient-to-br from-cyan-800 to-blue-900",
-  "bg-gradient-to-br from-emerald-800 to-green-900",
+  "bg-gradient-to-br from-[#171717] to-[#0d0d0d]",
+  "bg-gradient-to-br from-[#1f1a12] to-[#0d0d0d]",
+  "bg-gradient-to-br from-[#1d1710] to-[#0d0d0d]",
 ];
 const getRandomGradient = () => gradients[Math.floor(Math.random() * gradients.length)];
 
@@ -25,12 +23,12 @@ const ShayariCard = ({ shayari }) => {
   const navigate = useNavigate();
 
   return (
-    <Card className="w-full max-w-lg bg-[#121212] border border-gray-800 rounded-lg mb-6" bodyStyle={{ padding: 0 }}>
+    <Card className="w-full max-w-lg premium-shayari-card premium-hover-card mb-6" bodyStyle={{ padding: 0 }}>
       {/* Post Header */}
       <div className="flex items-center justify-between p-3">
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate(`/@${shayari.author?.user_name}`)}>
           <Avatar src={shayari.author?.image || Prouser} />
-          <span className="text-white font-semibold">{shayari.author?.user_name || "Unknown User"}</span>
+          <span className="text-white font-semibold premium-title">{shayari.author?.user_name || "Unknown User"}</span>
         </div>
         <div className="flex items-center gap-4">
           {!shayari?.is_follow && <FollowIcon userId={shayari?.author?._id} hideButton={shayari?.is_follow || false} />}
@@ -41,7 +39,7 @@ const ShayariCard = ({ shayari }) => {
       {/* Shayari Text Content */}
       <div className={`flex items-center justify-center text-center p-8 min-h-[300px] ${getRandomGradient()}`}>
         <p
-          className="text-xl md:text-2xl font-medium leading-relaxed whitespace-pre-line text-white"
+          className="poetic-content text-xl md:text-2xl font-medium leading-relaxed whitespace-pre-line text-white"
           style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.5)" }}
           dangerouslySetInnerHTML={{ __html: shayari?.content }}
         />
@@ -102,7 +100,7 @@ const ShayariPage = () => {
 
   return (
     <>
-      <div className="flex justify-center w-full bg-black text-white">
+      <div className="flex justify-center w-full bg-[#0d0d0d] text-white">
         <div className="flex flex-col items-center w-full px-4">
           {shayaris.map((shayari, index) => {
             if (shayaris.length === index + 1) {

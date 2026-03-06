@@ -1,8 +1,205 @@
-@import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @import "./responsive.css";
+
+:root {
+  --bd-bg: #0d0d0d;
+  --bd-card-bg: #1a1a1a;
+  --bd-text-primary: #f5f5f5;
+  --bd-text-secondary: #cfcfcf;
+  --bd-gold: #d4af37;
+  --bd-gold-hover: #ffd700;
+  --bd-border: #2a2a2a;
+  --bd-footer-bg: #0b0b0b;
+  --bd-footer-text: #aaaaaa;
+}
+
+html,
+body,
+#root {
+  background: var(--bd-bg);
+  color: var(--bd-text-primary);
+  font-family: "Inter", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.poetic-heading,
+.poetic-content {
+  font-family: "Playfair Display", serif;
+}
+
+* {
+  transition: all 0.3s ease;
+}
+
+a {
+  color: var(--bd-text-primary);
+}
+
+a:hover {
+  color: var(--bd-gold);
+}
+
+.bd-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.premium-card,
+.ant-card,
+.bg-zinc-800,
+.bg-zinc-900,
+.bg-\[\#121212\],
+.bg-\[\#181818\] {
+  background: var(--bd-card-bg) !important;
+  border: 1px solid var(--bd-border) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.premium-card:hover,
+.premium-hover-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 14px 30px rgba(212, 175, 55, 0.2);
+}
+
+.premium-shayari-card {
+  background: var(--bd-card-bg) !important;
+  border: 1px solid var(--bd-border) !important;
+  border-radius: 18px !important;
+}
+
+.premium-shayari-card .poetic-content {
+  color: var(--bd-text-primary);
+}
+
+.premium-title {
+  color: var(--bd-gold) !important;
+}
+
+.text-white,
+.text-gray-100,
+.text-gray-200,
+.text-gray-300 {
+  color: var(--bd-text-primary) !important;
+}
+
+.text-gray-400,
+.text-gray-500,
+.text-zinc-300,
+.text-zinc-400,
+.text-\[\#aaa\] {
+  color: var(--bd-text-secondary) !important;
+}
+
+.text-blue-500,
+.text-green-500,
+.hover\:text-green-500:hover,
+.hover\:text-blue-500:hover {
+  color: var(--bd-gold) !important;
+}
+
+.bg-green-500,
+.ant-btn-primary,
+.premium-btn-primary {
+  background: var(--bd-gold) !important;
+  color: #0d0d0d !important;
+  border-color: var(--bd-gold) !important;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+}
+
+.bg-green-500:hover,
+.ant-btn-primary:hover,
+.premium-btn-primary:hover {
+  background: var(--bd-gold-hover) !important;
+  border-color: var(--bd-gold-hover) !important;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
+}
+
+.premium-btn-secondary {
+  background: transparent !important;
+  color: var(--bd-gold) !important;
+  border: 1px solid var(--bd-gold) !important;
+}
+
+.border-gray-700,
+.border-gray-800,
+.border-zinc-700,
+.border-zinc-800 {
+  border-color: var(--bd-border) !important;
+}
+
+.premium-navbar {
+  background: var(--bd-bg) !important;
+  color: var(--bd-text-primary) !important;
+  border-bottom: 1px solid var(--bd-border);
+}
+
+.premium-nav-link {
+  position: relative;
+  color: var(--bd-text-primary);
+  font-weight: 500;
+}
+
+.premium-nav-link:hover {
+  color: var(--bd-gold-hover);
+}
+
+.premium-nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--bd-gold);
+}
+
+.premium-footer {
+  background: var(--bd-footer-bg) !important;
+  color: var(--bd-footer-text) !important;
+  border-top: 1px solid var(--bd-border);
+}
+
+.premium-footer a:hover {
+  color: var(--bd-gold) !important;
+}
+
+/* Premium react-slick arrows */
+.slick-slider .slick-prev,
+.slick-slider .slick-next {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  background: rgba(11, 11, 11, 0.92);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.slick-slider .slick-prev:hover,
+.slick-slider .slick-next:hover {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: #ffd700;
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.3);
+}
+
+.slick-slider .slick-prev::before,
+.slick-slider .slick-next::before {
+  color: #d4af37 !important;
+  font-size: 20px !important;
+  opacity: 1 !important;
+}
 
 /* scroll bar css------ */
 ::-webkit-scrollbar {

@@ -12,17 +12,17 @@ function BottomNav() {
   const [showCreateOptions, setShowCreateOptions] = useState(false); // New state for modal
 
   const getButtonClass = (path) => {
-    const baseClass = "flex flex-col items-center hover:text-white transition-colors duration-200";
+    const baseClass = "flex flex-col items-center hover:text-[#d4af37] transition-colors duration-200";
 
     if (pathname.startsWith("/@") && username === userProfile?.user_name) {
-      return `${baseClass} text-green-500`;
+      return `${baseClass} text-[#d4af37]`;
     }
-    return `${baseClass} ${pathname === path ? "text-green-500" : "text-gray-400"}`;
+    return `${baseClass} ${pathname === path ? "text-[#d4af37]" : "text-gray-400"}`;
   };
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 w-full bg-[#121212] border-t border-gray-800 flex justify-around items-center py-3 z-50">
+      <div className="fixed bottom-0 left-0 w-full bg-[#0d0d0d] border-t border-[#2a2a2a] flex justify-around items-center py-3 z-50">
         {/* Home */}
         <button onClick={() => navigate("/")} className={getButtonClass("/")}>
           <HomeOutlined style={{ fontSize: "22px" }} />

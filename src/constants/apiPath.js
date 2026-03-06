@@ -81,6 +81,9 @@ let apiPath = {
   globalDownload: "app/url/insta/download",
 
   // Common APIs
+  contactEnquiry: "contact-enquiry",
+
+  // Common APIs
   common: {
     getOccasion: "common/occasion",
     getUserProfile: "common/get-user-profile",
@@ -91,6 +94,7 @@ let apiPath = {
     getCms: "common/get-cms",
     getMasters: "common/get-masters",
     getSettings: "common/get-settings",
+    getSeo: "common/get-seo",
   },
 };
 

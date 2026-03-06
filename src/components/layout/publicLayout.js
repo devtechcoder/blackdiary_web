@@ -23,13 +23,15 @@ function PublicLayout({ children }) {
   const showDrawer = () => setVisible(true);
 
   return (
-    <Layout className="layout-dashboard h-screen overflow-hidden bg-white">
+    <Layout className="layout-dashboard h-screen overflow-hidden bg-[#0d0d0d]">
       <PublicHeader showDrawer={showDrawer} isMobile={isMobile} />
 
       <Layout className="h-[calc(100vh-64px)] overflow-hidden flex flex-col flex-1">
-        <Content className="overflow-y-auto p-4 text-white bg-white flex-grow">
-          {children}
-          <Footer />
+        <Content className="overflow-y-auto p-4 text-white bg-[#0d0d0d] flex-grow">
+          <div className="bd-container">
+            {children}
+            <Footer />
+          </div>
         </Content>
       </Layout>
     </Layout>

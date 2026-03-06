@@ -37,19 +37,20 @@ function Main({ children }) {
   const showDrawer = () => setVisible(true);
 
   return (
-    <Layout className={`layout-dashboard bg-[#181818] ${isMobile ? "min-h-screen" : "h-screen overflow-hidden"}`}>
+    <Layout className={`layout-dashboard bg-[#0d0d0d] ${isMobile ? "min-h-screen" : "h-screen overflow-hidden"}`}>
       {isMobile ? (
         <>
           <Header showDrawer={showDrawer} isMobile={isMobile} isVisible={headerVisible} />
-          <Content className="p-4 pb-20 text-white bg-[#181818] flex-grow">
-            {React.Children.map(children, (child) => {
-              if (React.isValidElement(child)) {
-                // Pass headerVisible to child components
-                return React.cloneElement(child, { isHeaderVisible: headerVisible });
-              }
-              return child;
-            })}
-            <Footer />
+          <Content className="p-4 pb-20 text-white bg-[#0d0d0d] flex-grow">
+            <div className="bd-container">
+              {React.Children.map(children, (child) => {
+                if (React.isValidElement(child)) {
+                  return React.cloneElement(child, { isHeaderVisible: headerVisible });
+                }
+                return child;
+              })}
+              <Footer />
+            </div>
           </Content>
           <BottomNav />
         </>
@@ -57,9 +58,11 @@ function Main({ children }) {
         <Layout className="h-full">
           <Sidenav />
           <Layout className="flex flex-col">
-            <Content className="overflow-y-auto text-white bg-black">
-              <div className="p-4">{children}</div>
-              <Footer />
+            <Content className="overflow-y-auto text-white bg-[#0d0d0d]">
+              <div className="p-4 bd-container">{children}</div>
+              <div className="p-4 pt-0 bd-container">
+                <Footer />
+              </div>
             </Content>
           </Layout>
         </Layout>

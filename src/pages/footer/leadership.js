@@ -26,41 +26,53 @@ const Leadership = () => {
         <meta name="description" content="Meet the team behind Black Diary. Our leaders are passionate about creating a space for creativity and expression." />
       </Helmet>
 
-      {/* MAIN PAGE CONTAINER */}
       <PublicLayout>
-        <div className="max-w-7xl mx-auto px-4 py-12">
-          {/* PAGE HEADER */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold text-gray-900">{headingData?.title || "Our Leadership"}</h1>
-            <p className="text-gray-600 mt-2 text-lg">{headingData?.sub_title || "The passionate team dedicated to bringing poetry to the world."}</p>
+        <section className="min-h-screen bg-[#0B0B0B] py-12">
+          <div className="bd-container px-4">
+            <div className="mb-14 text-center">
+              <h1 className="poetic-heading text-[36px] font-semibold text-[#D4AF37]">{headingData?.title || "Our Leadership"}</h1>
+              <p className="mt-2 text-[14px] text-[#9ca3af]">{headingData?.sub_title || "The passionate team bringing poetry to the world."}</p>
+            </div>
+
+            <div
+              className="grid gap-7"
+              style={{
+                gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              }}
+            >
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <div key={index} className="animate-pulse rounded-[18px] border border-[rgba(212,175,55,0.25)] bg-[#161616] p-6">
+                      <div className="mx-auto mb-4 h-[90px] w-[90px] rounded-full bg-[#232323]" />
+                      <div className="mx-auto mb-3 h-5 w-36 rounded bg-[#232323]" />
+                      <div className="mx-auto mb-4 h-4 w-28 rounded bg-[#232323]" />
+                      <div className="mx-auto mb-2 h-3 w-full rounded bg-[#232323]" />
+                      <div className="mx-auto h-3 w-4/5 rounded bg-[#232323]" />
+                    </div>
+                  ))
+                : !!list?.length &&
+                  list?.map((leader, index) => (
+                    <article
+                      key={leader?._id || index}
+                      className="rounded-[18px] border border-[rgba(212,175,55,0.25)] bg-[#161616] p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_25px_rgba(212,175,55,0.25)]"
+                    >
+                      <img
+                        src={leader?.image || Prouser}
+                        alt={leader?.name || "Leader"}
+                        className="mx-auto h-[90px] w-[90px] rounded-full border-[3px] border-[#D4AF37] object-cover"
+                      />
+
+                      <h3 className="mt-[10px] text-[18px] font-semibold text-white">{leader?.name || ""}</h3>
+                      <p className="text-[13px] text-[#D4AF37]">{leader?.designation || ""}</p>
+
+                      <p className="mt-[6px] text-[13px] leading-relaxed text-[#9ca3af]" dangerouslySetInnerHTML={{ __html: leader?.description || "" }} />
+                    </article>
+                  ))}
+
+              {!loading && !list?.length && <div className="text-center text-[#9ca3af]">No leadership data available right now.</div>}
+            </div>
           </div>
-
-          {/* LEADERS GRID */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {loading
-              ? Array.from({ length: 6 }).map((_, index) => (
-                  <div key={index} className="bg-gray-50 p-8 rounded-2xl border border-gray-200 animate-pulse">
-                    <div className="w-36 h-36 rounded-full bg-gray-200 mx-auto mb-6" />
-                    <div className="h-6 w-40 rounded bg-gray-200 mx-auto mb-3" />
-                    <div className="h-4 w-28 rounded bg-gray-200 mx-auto mb-5" />
-                    <div className="h-4 w-full rounded bg-gray-200 mb-2" />
-                    <div className="h-4 w-5/6 rounded bg-gray-200 mx-auto" />
-                  </div>
-                ))
-              : !!list?.length &&
-                list?.map((leader, index) => (
-                  <div key={index} className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8 flex flex-col items-center text-center hover:shadow-md transition-shadow">
-                    <img src={leader?.image || Prouser} alt={leader?.name} className="w-36 h-36 object-cover rounded-full shadow-sm mb-6" />
-
-                    <h3 className="text-xl font-semibold text-gray-900">{leader?.name || ""}</h3>
-                    <p className="text-indigo-600 font-medium mt-1">{leader?.designation || ""}</p>
-
-                    <p className="text-gray-600 text-sm mt-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: leader?.description || "" }}></p>
-                  </div>
-                ))}
-            {!loading && !list?.length && <div className="sm:col-span-2 lg:col-span-3 text-center text-gray-500">No leadership data available right now.</div>}
-          </div>
-        </div>
+        </section>
       </PublicLayout>
     </>
   );

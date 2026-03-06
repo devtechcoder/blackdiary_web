@@ -16,7 +16,7 @@ import CommentModal from "./CommentModal";
 export const ViewActionIcon = () => {
   const { language } = useAppContext();
   return (
-    <div className="bg-green-500 p-3 rounded-full shadow-lg">
+    <div className="cursor-pointer bg-[#D4AF37] p-3 rounded-full shadow-[0_0_14px_rgba(212,175,55,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFD700]">
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" stroke="black" strokeWidth="6">
         <path d="M50 10 L90 90 H10 Z" />
         <path d="M50 10 V90" />

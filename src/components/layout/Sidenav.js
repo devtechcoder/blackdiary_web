@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { HomeOutlined, SearchOutlined, PlusOutlined, HeartOutlined, UserOutlined, RightCircleOutlined, LeftCircleOutlined, LoginOutlined, FileTextOutlined, CompassOutlined } from "@ant-design/icons";
-import { Layout, Button, Modal } from "antd"; // Import Modal
+import { HomeOutlined, SearchOutlined, PlusOutlined, HeartOutlined, UserOutlined, LoginOutlined, FileTextOutlined, CompassOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { Layout, Modal } from "antd"; // Import Modal
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import apiPath from "../../constants/apiPath";
@@ -21,8 +21,8 @@ function Sidenav() {
 
   const getNavItemClass = (path) => {
     const baseClass = "flex items-center gap-4 p-3 rounded-md cursor-pointer transition-colors duration-200";
-    const activeClass = "bg-green-500 text-white";
-    const inactiveClass = "hover:bg-[#2a2a2a]";
+    const activeClass = "bg-[#d4af37] text-[#0d0d0d]";
+    const inactiveClass = "hover:bg-[#1a1a1a]";
 
     let isActive = false;
 
@@ -40,11 +40,20 @@ function Sidenav() {
   };
 
   return (
-    <Sider width={250} collapsible collapsed={collapsed} onCollapse={setCollapsed} trigger={null} className="bg-[#121212] text-white">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#2a2a2a]">
-        <img src={logowithoutbrand} alt="Logo" className="w-8 h-8 object-contain" />
-        {!collapsed && <span className="text-base font-semibold">Black Diary</span>}
-        <Button type="text" icon={collapsed ? <RightCircleOutlined /> : <LeftCircleOutlined />} onClick={() => setCollapsed(!collapsed)} className="text-white" />
+    <Sider width={250} collapsible collapsed={collapsed} onCollapse={setCollapsed} trigger={null} className="bg-[#0B0B0B] text-white border-r border-[#2a2a2a]">
+      <div className="flex items-center justify-between px-[18px] py-4 border-b border-[rgba(255,255,255,0.08)]">
+        <div className="flex items-center gap-[10px] min-w-0">
+          {!collapsed && <img src={logowithoutbrand} alt="Logo" className="w-8 h-8 object-contain" />}
+          {!collapsed && <span className="truncate text-[18px] font-semibold text-white">Black Diary</span>}
+        </div>
+        <button
+          type="button"
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          onClick={() => setCollapsed(!collapsed)}
+          className="h-8 w-8 min-w-[32px] rounded-full border border-[#D4AF37] text-[#D4AF37] flex items-center justify-center hover:bg-[rgba(212,175,55,0.15)] transition-colors duration-300"
+        >
+          {collapsed ? <RightOutlined /> : <LeftOutlined />}
+        </button>
       </div>
 
       <div className="p-2 space-y-2">
@@ -82,7 +91,7 @@ function Sidenav() {
             {!collapsed && <span className="font-semibold">Profile</span>}
           </div>
         ) : (
-          <div onClick={() => navigate("/login")} className="flex items-center gap-4 p-3 rounded-md cursor-pointer transition-colors duration-200 hover:bg-[#2a2a2a]">
+          <div onClick={() => navigate("/login")} className="flex items-center gap-4 p-3 rounded-md cursor-pointer transition-colors duration-200 hover:bg-[#1a1a1a]">
             <LoginOutlined style={{ fontSize: "22px" }} />
             {!collapsed && <span className="font-semibold">Log in</span>}
           </div>

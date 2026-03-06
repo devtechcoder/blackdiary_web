@@ -42,26 +42,26 @@ export const PoetSlider = ({ title }) => {
     <>
       <div className="mt-6 px-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg sm:text-2xl font-bold text-white">{title}</h2>
-          <button className="text-xs sm:text-sm text-blue-500 hover:underline" onClick={() => navigate("/poets")}>
+          <h2 className="poetic-heading text-lg sm:text-2xl font-semibold text-[#F5F5F5]">{title}</h2>
+          <button className="text-xs sm:text-sm text-[#D4AF37] hover:text-[#FFD700] hover:underline" onClick={() => navigate("/poets")}>
             Show all
           </button>
         </div>
 
         <Slider {...authorSliderSettings}>
           {list?.map((item, index) => (
-            <div key={index} className="px-2 hover:bg-zinc-800">
+            <div key={index} className="px-2">
               <div className="flex flex-col items-center group ">
-                <div className="relative w-36 h-36 bg-zinc-800 rounded-full overflow-hidden transition-all duration-300 group-hover:bg-zinc-700 ">
+                <div className="relative w-36 h-36 bg-[#161616] rounded-full overflow-hidden border border-[rgba(212,175,55,0.25)] shadow-[0_10px_22px_rgba(0,0,0,0.28)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_0_18px_rgba(212,175,55,0.25)]">
                   <img src={item?.image ?? Prouser} alt={item?.name} className="rounded-full w-full h-full object-cover transition-all duration-300 group-hover:brightness-75 z-0" />
                   <div
-                    className="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-1"
+                    className="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-1 cursor-pointer"
                     onClick={() => navigate(`/poets/details/${item?.name}/${item?._id}`)}
                   >
                     <ViewActionIcon />
                   </div>
                 </div>
-                <p className="text-center text-white mt-2 text-sm font-semibold">{item?.name}</p>
+                <p className="text-center text-[#F5F5F5] mt-2 text-sm font-semibold">{item?.name}</p>
               </div>
             </div>
           ))}
@@ -95,8 +95,8 @@ export const SubCategorySlider = ({ data, title }) => {
     <>
       <div className="mt-6 px-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg sm:text-2xl font-bold text-white">{title}</h2>
-          <button className="text-xs sm:text-sm text-blue-500 hover:underline" onClick={() => navigate(`/sub-category/details`)}>
+          <h2 className="poetic-heading text-lg sm:text-2xl font-semibold text-[#F5F5F5]">{title}</h2>
+          <button className="text-xs sm:text-sm text-[#D4AF37] hover:text-[#FFD700] hover:underline" onClick={() => navigate(`/sub-category/details`)}>
             Show all
           </button>
         </div>
@@ -104,14 +104,14 @@ export const SubCategorySlider = ({ data, title }) => {
         <Slider {...settings}>
           {data?.map((card, index) => (
             <div key={index} className="px-2">
-              <div className="relative group bg-zinc-800 rounded-2xl p-4 shadow-md hover:bg-zinc-700 transition-all duration-300 h-full">
+              <div className="relative group bg-[#161616] rounded-[18px] p-4 border border-[rgba(212,175,55,0.25)] shadow-[0_10px_22px_rgba(0,0,0,0.28)] transition-all duration-300 h-full hover:-translate-y-[6px] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)]">
                 {/* Image container */}
                 <div className="relative w-full h-40 overflow-hidden rounded-xl">
                   <img src={card?.image} alt={card?.name} className="w-full h-full object-cover rounded-xl transition-transform duration-300 group-hover:brightness-75" />
 
                   {/* Play Button (bottom right side) */}
                   <div
-                    className="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
                     onClick={() => navigate(`/sub-category/details/${card?.name}/${card._id}`)}
                   >
                     <ViewActionIcon />
@@ -120,8 +120,8 @@ export const SubCategorySlider = ({ data, title }) => {
 
                 {/* Text Content */}
                 <div className="mt-4">
-                  <p className="text-lg font-semibold truncate">{card?.name}</p>
-                  <p className="text-sm text-zinc-300 truncate">{card?.description}</p>
+                  <p className="text-lg font-semibold truncate text-[#F5F5F5]">{card?.name}</p>
+                  <p className="text-sm text-[#9CA3AF] truncate">{card?.description}</p>
                 </div>
               </div>
             </div>
@@ -169,8 +169,8 @@ export const OccasionSlider = ({ title }) => {
     <>
       <div className="mt-6 px-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg sm:text-2xl font-bold text-white">{title}</h2>
-          <button className="text-xs sm:text-sm text-blue-500 hover:underline" onClick={() => navigate("/occasion")}>
+          <h2 className="poetic-heading text-lg sm:text-2xl font-semibold text-[#F5F5F5]">{title}</h2>
+          <button className="text-xs sm:text-sm text-[#D4AF37] hover:text-[#FFD700] hover:underline" onClick={() => navigate("/occasion")}>
             Show all
           </button>
         </div>
@@ -178,20 +178,20 @@ export const OccasionSlider = ({ title }) => {
         <Slider {...settings}>
           {list?.map((card, index) => (
             <div key={index} className="px-2">
-              <div className="relative group bg-zinc-800 rounded-2xl p-4 shadow-md hover:bg-zinc-700 transition-all duration-300 h-full">
+              <div className="relative group bg-[#161616] rounded-[18px] p-4 border border-[rgba(212,175,55,0.25)] shadow-[0_10px_22px_rgba(0,0,0,0.28)] transition-all duration-300 h-full hover:-translate-y-[6px] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)]">
                 {/* Image container */}
                 <div className="relative w-full h-40 overflow-hidden rounded-xl">
                   <img src={card?.image} alt={card?.name} className="w-full h-full object-cover rounded-xl transition-transform duration-300 group-hover:brightness-75" />
 
-                  <div className="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" onClick={() => navigate(`/occasion/details/${card?.name}/${card._id}`)}>
+                  <div className="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" onClick={() => navigate(`/occasion/details/${card?.name}/${card._id}`)}>
                     <ViewActionIcon />
                   </div>
                 </div>
 
                 {/* Text Content */}
                 <div className="mt-4">
-                  <p className="text-lg font-semibold truncate">{card?.name}</p>
-                  <p className="text-sm text-zinc-300 truncate">{card?.description}</p>
+                  <p className="text-lg font-semibold truncate text-[#F5F5F5]">{card?.name}</p>
+                  <p className="text-sm text-[#9CA3AF] truncate">{card?.description}</p>
                 </div>
               </div>
             </div>

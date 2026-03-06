@@ -36,12 +36,12 @@ function Footer() {
 
   return (
     <>
-      <div className="bg-black text-gray-400 px-10 py-10 text-sm">
-        <hr className="border-gray-700 my-8" />
+      <div className="premium-footer px-6 md:px-10 py-10 text-sm rounded-2xl mt-8">
+        <hr className="border-[#2a2a2a] my-8" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-2">
-            <h4 className="text-white font-semibold mb-4">Our Story</h4>
+            <h4 className="text-white font-semibold mb-4 premium-title">Our Story</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/leadership" target="blank">
@@ -67,7 +67,7 @@ function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h4 className="text-white font-semibold mb-4">Features</h4>
+            <h4 className="text-white font-semibold mb-4 premium-title">Features</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/sub-category/details?category=Shayri">Shayari</Link>
@@ -85,7 +85,7 @@ function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h4 className="text-white font-semibold mb-4">Safety</h4>
+            <h4 className="text-white font-semibold mb-4 premium-title">Safety</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/safety-support" target="blank">
@@ -111,7 +111,7 @@ function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h4 className="text-white font-semibold mb-4">Useful Links</h4>
+            <h4 className="text-white font-semibold mb-4 premium-title">Useful Links</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/">Home</Link>
@@ -136,7 +136,7 @@ function Footer() {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="shrink-0 bg-white rounded-full w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                  className="shrink-0 bg-[#1a1a1a] border border-[#2a2a2a] rounded-full w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center hover:border-[#d4af37] transition-colors"
                 >
                   <img src={platform.icon} alt={platform.alt} className="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
                 </a>
@@ -145,13 +145,15 @@ function Footer() {
           </div>
         </div>
 
-        <hr className="border-gray-700 my-8" />
+        <hr className="border-[#2a2a2a] my-8" />
 
         <div className="flex flex-col md:flex-row justify-between text-xs">
           <div className="flex flex-wrap gap-4 mb-4 md:mb-0">
-            <span>English (US)</span>
             {generalSettingMap?.site_name ? <span>{generalSettingMap.site_name}</span> : "Black Diary - Shayari & Emotions"}
 
+            <span>
+              <Link to="/contact-us">Contact Us</Link>
+            </span>
             <span>
               <Link to="/privacy-policy" target="_blank">
                 Privacy Policy
@@ -162,6 +164,7 @@ function Footer() {
                 Terms & Conditions
               </Link>
             </span>
+
             <span>
               <Link to="/sitemap" target="_blank">
                 Sitemap
