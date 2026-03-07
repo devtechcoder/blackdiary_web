@@ -201,6 +201,49 @@ a:hover {
   opacity: 1 !important;
 }
 
+/* Home page sliders: keep arrows close to cards and responsive */
+.bd-home-slider {
+  position: relative;
+}
+
+.bd-home-slider .slick-list {
+  margin: 0 -8px;
+}
+
+.bd-home-slider .slick-prev {
+  left: -40px !important;
+}
+
+.bd-home-slider .slick-next {
+  right: -40px !important;
+}
+
+@media (max-width: 1024px) {
+  .bd-home-slider .slick-prev {
+    left: -8px !important;
+  }
+
+  .bd-home-slider .slick-next {
+    right: -8px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .bd-home-slider .slick-prev,
+  .bd-home-slider .slick-next {
+    width: 30px;
+    height: 30px;
+  }
+
+  .bd-home-slider .slick-prev {
+    left: 2px !important;
+  }
+
+  .bd-home-slider .slick-next {
+    right: 2px !important;
+  }
+}
+
 /* scroll bar css------ */
 ::-webkit-scrollbar {
   width: 10px;

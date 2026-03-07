@@ -22,13 +22,6 @@ export const api = createApi({
       }),
     }),
 
-    fetchPatientDetails: builder.query({
-      query: (patientId) => ({
-        url: `${BASEURL}/auth/patient/${patientId}`,
-        method: "get",
-      }),
-    }),
-
     fetchCommonDetails: builder.query({
       query: ({ baseurl = BASEURL, url }) => ({
         url: `${baseurl}/${url}`,
@@ -46,4 +39,4 @@ export const api = createApi({
   }),
 });
 
-export const { useLoginUserMutation, useCommonPostMutation, useFetchCommonDetailsQuery, useFetchPatientDetailsQuery } = api;
+export const { useLoginUserMutation, useCommonPostMutation, useFetchCommonDetailsQuery } = api;

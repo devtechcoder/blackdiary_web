@@ -50,7 +50,7 @@ export const AppContextProvider = ({ children }) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       };
-      const response = await axios.get(apiPath.baseURL + `app/sub-category`, {
+      const response = await axios.get(apiPath.baseURL + `/app/sub-category`, {
         headers,
       });
       const data = response?.data?.data?.docs;

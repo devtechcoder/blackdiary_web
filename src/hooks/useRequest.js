@@ -85,7 +85,7 @@ export const useGetApi = ({ queryKey, endpoint, enabled = true, params = {}, hea
   const fetchData = async () => {
     const token = localStorage.getItem("token");
 
-    const response = await axios.get(`${apiPath.baseURL}${endpoint}`, {
+    const response = await axios.get(`${apiPath.baseURL}/${endpoint}`, {
       params,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -135,7 +135,7 @@ export const usePostApi = ({ endpoint, onSuccess, onError }) => {
 
   const postData = async (formData) => {
     const token = localStorage.getItem("token");
-    const response = await axios.post(`${apiPath.baseURL}${endpoint}`, formData, {
+    const response = await axios.post(`${apiPath.baseURL}/${endpoint}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

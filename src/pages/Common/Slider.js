@@ -48,7 +48,7 @@ export const PoetSlider = ({ title }) => {
           </button>
         </div>
 
-        <Slider {...authorSliderSettings}>
+        <Slider {...authorSliderSettings} className="bd-home-slider">
           {list?.map((item, index) => (
             <div key={index} className="px-2">
               <div className="flex flex-col items-center group ">
@@ -101,7 +101,7 @@ export const SubCategorySlider = ({ data, title }) => {
           </button>
         </div>
 
-        <Slider {...settings}>
+        <Slider {...settings} className="bd-home-slider">
           {data?.map((card, index) => (
             <div key={index} className="px-2">
               <div className="relative group bg-[#161616] rounded-[18px] p-4 border border-[rgba(212,175,55,0.25)] shadow-[0_10px_22px_rgba(0,0,0,0.28)] transition-all duration-300 h-full hover:-translate-y-[6px] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)]">
@@ -175,7 +175,7 @@ export const OccasionSlider = ({ title }) => {
           </button>
         </div>
 
-        <Slider {...settings}>
+        <Slider {...settings} className="bd-home-slider">
           {list?.map((card, index) => (
             <div key={index} className="px-2">
               <div className="relative group bg-[#161616] rounded-[18px] p-4 border border-[rgba(212,175,55,0.25)] shadow-[0_10px_22px_rgba(0,0,0,0.28)] transition-all duration-300 h-full hover:-translate-y-[6px] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)]">

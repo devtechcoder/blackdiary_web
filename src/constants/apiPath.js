@@ -1,22 +1,18 @@
-import { notification } from "antd";
-
 let appMode = process.env.REACT_APP_ENV;
-let ASSET_URL = "https://api-ap-south-mum-1.openstack.acecloudhosting.com:8080/";
+let ASSET_URL = "";
 let URL;
 
 console.log("appMode", appMode);
 
+// console.log("process.env", process.env);
 // 3.20.147.34
 
 if (appMode === "development") {
-  URL = "http://localhost:7900/api/";
-  ASSET_URL = `http://localhost:7900/image/`;
+  URL = process.env.REACT_APP_DEV_API_BASE_URL;
+  ASSET_URL = process.env.REACT_APP_DEV_API_LOCAL_ASSET_URL;
 } else {
-  // URL = "http://localhost:7900/api/";
-  // ASSET_URL = `http://localhost:7900/image/`;
-
-  URL = "https://blackdiary.onrender.com/api/";
-  ASSET_URL = `https://blackdiary.onrender.com/image/`;
+  URL = process.env.REACT_APP_PROD_API_BASE_URL;
+  ASSET_URL = process.env.REACT_APP_PROD_API_ASSET_URL;
 }
 
 let apiPath = {

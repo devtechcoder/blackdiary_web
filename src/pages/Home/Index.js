@@ -11,6 +11,9 @@ import { OccasionSlider, PoetSlider, SubCategorySlider } from "../Common/Slider"
 import { ViewSliderDairy } from "../Common/Section";
 
 const HOME_PILLS = ["All", "Sher", "Shayari", "Ghazal", "Nazm", "Story", "Meme"];
+const CATEGORY_ALIAS = {
+  shayari: "shayri",
+};
 
 function LandingIndex() {
   const navigate = useNavigate();
@@ -30,20 +33,21 @@ function LandingIndex() {
   const filteredDiaries = useMemo(() => {
     if (activeCategory === "All") return diaries;
 
+    const activeCategoryKey = (CATEGORY_ALIAS[activeCategory.toLowerCase()] || activeCategory).toLowerCase();
+
     return diaries.filter((item) => {
       const bucket = [
+        item?.category, // backend diary category (string)
         item?.type,
         item?.category_name,
         item?.sub_category_name,
         item?.category?.name,
         item?.sub_category?.name,
-        item?.title,
       ]
         .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+        .map((value) => String(value).toLowerCase());
 
-      return bucket.includes(activeCategory.toLowerCase());
+      return bucket.some((value) => value === activeCategoryKey || value.includes(activeCategoryKey));
     });
   }, [diaries, activeCategory]);
 
