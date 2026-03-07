@@ -1,4 +1,4 @@
 export const config = {
-  API_BASEURL_URL: "http://localhost:7900/api/",
-  ASSET_URL: `http://localhost:7900/image/`,
+  API_BASEURL_URL: process.env.REACT_APP_ENV === "development" ? process.env.REACT_APP_DEV_API_BASE_URL : process.env.REACT_APP_PROD_API_BASE_URL,
+  ASSET_URL: process.env.REACT_APP_ENV === "development" ? process.env.REACT_APP_DEV_ASSET_URL : process.env.REACT_APP_PROD_ASSET_URL,
 };

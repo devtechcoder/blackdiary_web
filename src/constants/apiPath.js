@@ -1,19 +1,10 @@
-let appMode = process.env.REACT_APP_ENV;
+import { config } from "../config/config";
+
 let ASSET_URL = "";
 let URL;
 
-console.log("appMode", appMode);
-
-// console.log("process.env", process.env);
-// 3.20.147.34
-
-if (appMode === "development") {
-  URL = process.env.REACT_APP_DEV_API_BASE_URL;
-  ASSET_URL = process.env.REACT_APP_DEV_API_LOCAL_ASSET_URL;
-} else {
-  URL = process.env.REACT_APP_PROD_API_BASE_URL;
-  ASSET_URL = process.env.REACT_APP_PROD_API_ASSET_URL;
-}
+URL = config.API_BASEURL_URL;
+ASSET_URL = config.ASSET_URL;
 
 let apiPath = {
   baseURL: URL,
