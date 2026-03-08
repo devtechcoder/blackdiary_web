@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import apiPath from "../../constants/apiPath";
 import { Severty, ShowToast } from "../../helper/toast";
 
-const GoogleLogin = () => {
+const GoogleLogin = ({ className = "w-full border border-gray-600 rounded-full py-2 flex items-center justify-center gap-3 hover:bg-neutral-800" }) => {
   const { setIsLoggedIn, setUserProfile } = useAuthContext();
   const { request } = useRequest();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const GoogleLogin = () => {
   };
 
   return (
-    <button onClick={handleGoogleLogin} className="w-full border border-gray-600 rounded-full py-2 flex items-center justify-center gap-3 hover:bg-neutral-800">
+    <button onClick={handleGoogleLogin} className={className}>
       <FaGoogle className="text-xl" /> Continue with Google
     </button>
   );
