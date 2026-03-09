@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { FaGoogle, FaFacebookF, FaApple } from "react-icons/fa";
-import logo from "../../assets/images/icon/logo.png";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { FaFacebookF } from "react-icons/fa";
+import sideLogo from "../../assets/images/brand/login-logo.png";
+import { Link, useNavigate } from "react-router-dom";
 import { EmailInputBox, FullNameInputBox, PasswordInputBox, PhoneNumberInputBox, UserNameInputBox } from "../../components/InputField";
-import { Button, Col, Form, Row } from "antd";
+import { Button, Form } from "antd";
 import useRequest from "../../hooks/useRequest";
 import apiPath from "../../constants/apiPath";
 import { Severty, ShowToast } from "../../helper/toast";
 import { Helmet } from "react-helmet-async";
-
 import { SEO } from "../../constants/seo";
 import lang from "../../helper/langHelper";
+import GoogleLogin from "./googleLogin";
+
 export default function SignUp() {
   const [form] = Form.useForm();
   const { request } = useRequest();
@@ -26,10 +27,10 @@ export default function SignUp() {
     setLoading(true);
     const payload = {
       ...values,
-      signup_type: !!isPhoneSignUp ? "Phone" : "Email",
+      signup_type: isPhoneSignUp ? "Phone" : "Email",
+      mobile_number: mobileNumber.mobile_number,
+      country_code: mobileNumber.country_code,
     };
-    payload.mobile_number = mobileNumber.mobile_number;
-    payload.country_code = mobileNumber.country_code;
 
     request({
       url: `${apiPath.signup}`,
@@ -39,7 +40,6 @@ export default function SignUp() {
         setLoading(false);
         if (status) {
           ShowToast(message, Severty.SUCCESS);
-          console.log(data, "data++++");
           navigate(`/signUp-otp/${data?.data?._id}`);
         } else {
           ShowToast(message, Severty.ERROR);
@@ -53,9 +53,8 @@ export default function SignUp() {
   };
 
   const handleChange = (value, data) => {
-    var country_code = data.dialCode;
     setMobileNumber({
-      country_code: country_code,
+      country_code: data.dialCode,
       mobile_number: value.slice(data.dialCode.length),
     });
   };
@@ -63,12 +62,10 @@ export default function SignUp() {
   return (
     <>
       <Helmet>
-        {/* 🔹 Primary Meta Tags */}
         <title>{SEO.signup.primary.title}</title>
         <meta name="description" content={SEO.signup.primary.description} />
         <meta name="keywords" content={SEO.signup.primary.keywords} />
 
-        {/* 🔹 Open Graph (for Facebook, WhatsApp, etc.) */}
         <meta property="og:title" content={SEO.signup.openGraph.title} />
         <meta property="og:description" content={SEO.signup.openGraph.description} />
         <meta property="og:image" content={SEO.signup.openGraph.image} />
@@ -76,7 +73,6 @@ export default function SignUp() {
         <meta property="og:type" content={SEO.signup.openGraph.type} />
         <meta property="og:site_name" content={SEO.signup.openGraph.site_name} />
 
-        {/* 🔹 Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={SEO.signup.twitter.title} />
         <meta name="twitter:description" content={SEO.signup.twitter.description} />
@@ -85,40 +81,81 @@ export default function SignUp() {
         <meta name="twitter:type" content={SEO.signup.twitter.type} />
         <meta name="twitter:site_name" content={SEO.signup.twitter.site_name} />
 
-        {/* 🔹 Canonical & Language Tags */}
         <link rel="canonical" href={SEO.common.url} />
         <meta name="robots" content={SEO.common.robots} />
         <meta name="language" content={SEO.common.language} />
         <meta name="author" content={SEO.common.author} />
       </Helmet>
-      <div className="min-h-screen bg-gradient-to-b from-black to-neutral-900 text-white flex items-center justify-center px-4 py-10">
-        <div className="bg-neutral-950 w-full max-w-md rounded-lg p-8 text-white shadow-lg animate-fade-in">
-          {/* Logo */}
-          <div className="text-center mb-8">
-            <img src={logo} alt="diary" className="h-20 mx-auto mb-4 cursor-pointer" onClick={() => navigate("/")} />
 
-            {/* Headline */}
-            <h1 className="text-2xl font-bold text-white">Sign up to explore soulful shayaris</h1>
-          </div>
+      <div className="min-h-screen bg-black text-white lg:h-screen lg:overflow-hidden">
+        <main className="h-full lg:grid lg:grid-cols-[45%_55%]">
+          <section className="relative hidden items-center justify-center bg-gradient-to-br from-[#000000] via-[#030303] to-[#0a0a0a] px-6 py-8 lg:flex lg:px-12">
+            <div className="relative flex flex-col items-center justify-center text-center">
+              <div className="absolute h-52 w-52 rounded-full bg-[#D4AF37]/20 blur-[88px]" aria-hidden="true" />
+              <img
+                onClick={() => navigate("/")}
+                src={sideLogo}
+                alt="Black Diary Shayari logo"
+                className="relative cursor-pointer w-24 max-w-[230px] object-contain drop-shadow-[0_0_38px_rgba(212,175,55,0.35)] sm:w-32 lg:w-44"
+              />
+              <div className="mt-5 space-y-1 text-center text-sm text-[#cfb061] sm:text-base">
+                <p className="tracking-wide">Read words that understand your feelings.</p>
+                <p className="tracking-wide text-[#e2c675]">Welcome to the world of Shayari.</p>
+              </div>
+              <div className="mt-5 w-44 space-y-2" aria-hidden="true">
+                <div className="h-[2px] overflow-hidden rounded-full bg-[#2a2a2a]">
+                  <span className="block h-full w-full animate-pulse bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
+                </div>
+                <div className="h-[1px] overflow-hidden rounded-full bg-[#1f1f1f]">
+                  <span className="block h-full w-full animate-pulse bg-gradient-to-r from-transparent via-[#D4AF37]/80 to-transparent" />
+                </div>
+              </div>
+            </div>
+          </section>
 
-          {/* Form */}
-          <Form id="create" form={form} onFinish={onCreate} layout="vertical" className="custom-form space-y-4">
-            <Row gutter={[16, 0]}>
-              <Col span={24}>
+          <section className="flex min-h-screen items-start justify-center bg-[#050505] px-4 py-6 sm:px-8 lg:h-screen lg:overflow-y-auto lg:px-12">
+            <article className="my-2 w-full max-w-md rounded-2xl border border-[#262626] bg-white/[0.02] p-6 shadow-[0_20px_55px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:my-6 sm:p-8">
+              <div>
+                <h1 className="mb-2 text-left text-2xl font-semibold text-[#f8f8f8]">Create account</h1>
+                <p className="mb-5 max-w-sm text-sm leading-relaxed text-[#b9b9b9] sm:text-[15px]">Join Black Diary and share your feelings in words.</p>
+              </div>
+
+              <div className="space-y-3">
+                <GoogleLogin className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-[#323232] bg-[#0b0b0b] px-4 text-sm font-medium text-[#f0f0f0] transition-all duration-300 hover:border-[#D4AF37]/70 hover:text-[#D4AF37]" />
+                <button
+                  type="button"
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-[#323232] bg-[#0b0b0b] px-4 text-sm font-medium text-[#f0f0f0] transition-all duration-300 hover:border-[#D4AF37]/70 hover:text-[#D4AF37]"
+                >
+                  <FaFacebookF className="text-base" /> Sign up with Facebook
+                </button>
+                <button
+                  type="button"
+                  className="flex h-11 w-full items-center justify-center rounded-[10px] border border-[#323232] bg-[#0b0b0b] px-4 text-sm font-medium text-[#f0f0f0] transition-all duration-300 hover:border-[#D4AF37]/70 hover:text-[#D4AF37]"
+                  onClick={() => setIsPhoneSignup((prev) => !prev)}
+                >
+                  Continue with {!isPhoneSignUp ? "Phone number" : "Email"}
+                </button>
+              </div>
+
+              <div className="my-6 h-px bg-gradient-to-r from-transparent via-[#383838] to-transparent" />
+
+              <Form
+                id="create"
+                form={form}
+                onFinish={onCreate}
+                layout="vertical"
+                className="login-auth-form [&_.ant-form-item]:mb-4 [&_.ant-form-item-explain-error]:text-xs [&_.ant-form-item-explain-error]:text-red-400 [&_.ant-input]:h-11 [&_.ant-input]:rounded-[10px] [&_.ant-input]:border-[#303030] [&_.ant-input]:bg-[#0d0d0d] [&_.ant-input]:text-[#f2f2f2] [&_.ant-input::placeholder]:text-[#757575] [&_.custom-ant-input]:!h-11 [&_.custom-ant-input]:!rounded-[10px] [&_.custom-ant-input]:!border-[#303030] [&_.custom-ant-input]:!bg-[#0d0d0d] [&_.custom-ant-input]:!text-[#f2f2f2] [&_.custom-ant-input]:!shadow-none [&_.custom-ant-input:hover]:!border-[#D4AF37]/70 [&_.ant-input-affix-wrapper]:h-11 [&_.ant-input-affix-wrapper]:rounded-[10px] [&_.ant-input-affix-wrapper]:border-[#303030] [&_.ant-input-affix-wrapper]:bg-[#0d0d0d] [&_.ant-input-affix-wrapper:hover]:border-[#D4AF37]/70 [&_.ant-input-affix-wrapper-focused]:border-[#D4AF37] [&_.ant-input-affix-wrapper_.ant-input]:!h-auto [&_.ant-input-affix-wrapper_.ant-input]:!border-0 [&_.ant-input-affix-wrapper_.ant-input]:!bg-transparent [&_.ant-input-affix-wrapper_.ant-input]:!px-1 [&_.ant-input-affix-wrapper_.ant-input]:!shadow-none [&_.ant-input-password-icon]:!text-[#8e8e8e] [&_.ant-input-password-icon:hover]:!text-[#D4AF37] [&_.ant-input-suffix_.anticon]:!text-[#8e8e8e]"
+              >
                 {isPhoneSignUp ? (
-                  <PhoneNumberInputBox span={24} cover={{ md: 24 }} name="mobile" placeholder={"Mobile Number"} number={mobileNumber?.mobile_number} onChange={handleChange} rules={true} />
+                  <PhoneNumberInputBox span={24} cover={{ md: 24 }} name="mobile" placeholder="Phone number" number={mobileNumber?.mobile_number} onChange={handleChange} rules />
                 ) : (
-                  <EmailInputBox span={24} cover={{ md: 24 }} name="email" placeholder={"shayar@domain.com"} rules={true} />
+                  <EmailInputBox span={24} cover={{ md: 24 }} name="email" placeholder="shayar@domain.com" rules />
                 )}
-                <p className="text-green-500 text-sm cursor-pointer hover:underline text-center mt-2" onClick={() => setIsPhoneSignup((prev) => !prev)}>
-                  Use {isPhoneSignUp ? "email" : "phone number"} instead.
-                </p>
-              </Col>
-              <Col span={24}>
+
                 <PasswordInputBox
                   cover={{ md: 24 }}
                   name="password"
-                  placeholder={"Password"}
+                  placeholder="Password"
                   rules={[
                     {
                       required: true,
@@ -129,72 +166,37 @@ export default function SignUp() {
                       message:
                         "New password at least contain 8 characters, at least contain one capital letter, at least contain one small letter, at  least contain one digit, atleast contain one special character",
                     },
-
                     {
                       max: 250,
                       message: lang("Password must not be more than 250 characters!"),
                     },
                   ]}
                 />
-              </Col>
-              <Col span={24}>
-                <FullNameInputBox cover={{ md: 24 }} name="name" placeholder={"Full Name"} rules={true} />
-              </Col>
-              <Col span={24}>
-                <UserNameInputBox cover={{ md: 24 }} name="user_name" placeholder={"User Name"} rules={true} />
-              </Col>
-            </Row>
-            <Form.Item className="mb-0">
-              <Button
-                htmlType="submit"
-                loading={loading}
-                disabled={loading}
-                className="w-full bg-green-500 hover:bg-green-600 text-black font-semibold py-2 rounded-md transition-all duration-300 h-auto text-base transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/40"
-              >
-                Sign Up
-              </Button>
-            </Form.Item>
-          </Form>
 
-          {/* Divider */}
-          <div className="flex items-center gap-2 my-6">
-            <div className="flex-grow border-t border-gray-700" />
-            <span className="text-neutral-400 text-sm">or</span>
-            <div className="flex-grow border-t border-gray-700" />
-          </div>
+                <FullNameInputBox cover={{ md: 24 }} name="name" placeholder="Full Name" rules />
+                <UserNameInputBox cover={{ md: 24 }} name="user_name" placeholder="User Name" rules />
 
-          {/* Social Buttons */}
-          <div className="space-y-4">
-            <button className="w-full flex items-center gap-3 justify-center border border-gray-600 py-2 rounded-full hover:bg-neutral-800 transition">
-              <FaGoogle className="text-xl" /> Sign up with Google
-            </button>
-            <button className="w-full flex items-center gap-3 justify-center border border-gray-600 py-2 rounded-full hover:bg-neutral-800 transition">
-              <FaFacebookF className="text-xl" /> Sign up with Facebook
-            </button>
-          </div>
+                <Form.Item className="!mb-1 !mt-2">
+                  <Button
+                    htmlType="submit"
+                    loading={loading}
+                    disabled={loading}
+                    className="!h-11 !w-full !rounded-[10px] !border-0 !bg-[#D4AF37] !text-base !font-semibold !text-[#131313] shadow-[0_12px_28px_rgba(212,175,55,0.22)] transition-all duration-300 hover:!bg-[#e1bd4f] hover:shadow-[0_16px_32px_rgba(212,175,55,0.3)]"
+                  >
+                    {lang("Sign Up")}
+                  </Button>
+                </Form.Item>
+              </Form>
 
-          {/* Footer */}
-          <div className="text-center mt-8">
-            <p className="text-sm text-neutral-400">
-              Already have an account?{" "}
-              <Link to={"/login"} className="text-white underline cursor-pointer hover:text-green-500 cursor-pointer">
-                Log in here.
-              </Link>
-            </p>
-            <p className="text-xs text-neutral-500 mt-4">
-              This site is protected by reCAPTCHA and the Google
-              <br />
-              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline">
-                Privacy Policy
-              </a>{" "}
-              and{" "}
-              <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline">
-                Terms of Service
-              </a>{" "}
-              apply.
-            </p>
-          </div>
-        </div>
+              <p className="mt-5 text-center text-sm text-[#b6b6b6]">
+                Already have an account?{" "}
+                <Link to="/login" className="font-medium text-[#D4AF37] transition-colors duration-200 hover:text-[#e7c75e]">
+                  Log in
+                </Link>
+              </p>
+            </article>
+          </section>
+        </main>
       </div>
     </>
   );

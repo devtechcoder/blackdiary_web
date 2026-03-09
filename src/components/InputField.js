@@ -21,7 +21,7 @@ export const NumberInputBox = ({ label, name, placeholder, rules, cover, classNa
 
 ///------------------------
 
-export const MultiSelect = ({ cover, name, label, rules, placeholder, className, options, colProps }) => {
+export const MultiSelect = ({ cover, name, label, rules, placeholder, className, options, colProps, ...props }) => {
   const { language } = useAppContext();
   return (
     <Col md={cover ? cover.md : 12} {...colProps}>
@@ -36,14 +36,17 @@ export const MultiSelect = ({ cover, name, label, rules, placeholder, className,
         ]}
       >
         <Select
+          getPopupContainer={() => document.body}
+          dropdownStyle={{ zIndex: 2100 }}
           placeholder={placeholder}
           className={`dark-input w-full ${className || ""}`}
           mode="multiple" // Set mode to "multiple" for selecting multiple values
+          {...props}
         >
           {options && options.length > 0
             ? options.map((item, index) => (
                 <Select.Option key={item._id} value={item._id}>
-                  <span className="cap">{language !== ("en" || null) ? item[`${language}_name`] ?? item?.name : item?.name}</span>
+                  <span className="cap">{language !== ("en" || null) ? (item[`${language}_name`] ?? item?.name) : item?.name}</span>
                 </Select.Option>
               ))
             : null}
@@ -138,20 +141,21 @@ export const SelectInput = ({ label, name, placeholder, options, rules, cover, c
         ]}
       >
         <Select
-          getPopupContainer={(triggerNode) => triggerNode.parentNode}
+          getPopupContainer={() => document.body}
+          dropdownStyle={{ zIndex: 2100 }}
           {...props}
           placeholder={placeholder}
           className={`dark-input w-full ${className || ""}`}
           defaultValue={defaultValue}
           onChange={handleChange}
         >
-          {options && options && options.length > 0
-            ? options.map((item, index) => (
-                <Select.Option className="select-option" key={item._id} value={item._id} label={item.name} onChange={handleChange}>
-                  <span className="cap">{language !== ("en" || null) ? item[`${language}_name`] ?? item?.name : item?.name}</span>
-                </Select.Option>
-              ))
-            : null}
+          {options &&
+            options.length > 0 &&
+            options.map((item) => (
+              <Select.Option className="select-option" key={item._id} value={item._id} label={item.name}>
+                <span className="cap">{language !== "en" ? (item[`${language}_name`] ?? item?.name) : item?.name}</span>
+              </Select.Option>
+            ))}
         </Select>
       </Form.Item>
     </Col>

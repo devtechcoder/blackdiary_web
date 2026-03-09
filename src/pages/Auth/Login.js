@@ -1,7 +1,7 @@
 import { Button, Form } from "antd";
 import React, { useState } from "react";
 import sideLogo from "../../assets/images/brand/login-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiPath from "../../constants/apiPath";
 import lang from "../../helper/langHelper";
 import { ShowToast, Severty } from "../../helper/toast";
@@ -19,6 +19,7 @@ export default function Login() {
   const [account, setAccount] = useState([]);
   const [showAccount, setShowAccount] = useState(false);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const [isPhoneVerify, setIsPhoneVerify] = useState(false);
   const [authType, setAuthType] = useState("Email");
@@ -99,7 +100,12 @@ export default function Login() {
           <section className="relative hidden items-center justify-center bg-gradient-to-br from-[#000000] via-[#030303] to-[#0a0a0a] px-6 py-8 lg:flex lg:px-12">
             <div className="relative flex flex-col items-center justify-center text-center">
               <div className="absolute h-52 w-52 rounded-full bg-[#D4AF37]/20 blur-[88px]" aria-hidden="true" />
-              <img src={sideLogo} alt="Black Diary Shayari logo" className="relative w-24 max-w-[230px] object-contain drop-shadow-[0_0_38px_rgba(212,175,55,0.35)] sm:w-32 lg:w-44" />
+              <img
+                onClick={() => navigate("/")}
+                src={sideLogo}
+                alt="Black Diary Shayari logo"
+                className="relative cursor-pointer w-24 max-w-[230px] object-contain drop-shadow-[0_0_38px_rgba(212,175,55,0.35)] sm:w-32 lg:w-44"
+              />
               <div className="mt-5 space-y-1 text-center text-sm text-[#cfb061] sm:text-base">
                 <p className="tracking-wide">Read words that understand your feelings.</p>
                 <p className="tracking-wide text-[#e2c675]">Welcome to the world of Shayari.</p>
@@ -119,9 +125,7 @@ export default function Login() {
             <article className="w-full max-w-md rounded-2xl border border-[#262626] bg-white/[0.02] p-6 shadow-[0_20px_55px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-8">
               <div>
                 <h1 className="mb-2 text-left text-2xl font-semibold text-[#f8f8f8]">Welcome!</h1>
-                <p className="mb-5 max-w-sm text-sm leading-relaxed text-[#b9b9b9] sm:text-[15px]">
-                  Sign in to your Black Diary and express your feelings.
-                </p>
+                <p className="mb-5 max-w-sm text-sm leading-relaxed text-[#b9b9b9] sm:text-[15px]">Sign in to your Black Diary and express your feelings.</p>
               </div>
 
               <div className="space-y-3">
@@ -148,7 +152,7 @@ export default function Login() {
                 onFinish={getLoginAccount}
                 onFinishFailed={(err) => ShowToast(err, Severty.ERROR)}
                 layout="vertical"
-                className="[&_.ant-form-item]:mb-4 [&_.ant-form-item-explain-error]:text-xs [&_.ant-form-item-explain-error]:text-red-400 [&_.ant-input]:h-11 [&_.ant-input]:rounded-[10px] [&_.ant-input]:border-[#303030] [&_.ant-input]:bg-[#0d0d0d] [&_.ant-input]:text-[#f2f2f2] [&_.ant-input-affix-wrapper]:h-11 [&_.ant-input-affix-wrapper]:rounded-[10px] [&_.ant-input-affix-wrapper]:border-[#303030] [&_.ant-input-affix-wrapper]:bg-[#0d0d0d] [&_.ant-input-affix-wrapper-focused]:border-[#D4AF37] [&_.ant-input-affix-wrapper:hover]:border-[#D4AF37]/70 [&_.ant-input-password-icon]:text-[#8e8e8e] [&_.ant-input::placeholder]:text-[#757575] [&_.custom-ant-input:hover]:border-[#D4AF37]/70 [&_.react-tel-input_.form-control]:!h-11 [&_.react-tel-input_.form-control]:!w-full [&_.react-tel-input_.form-control]:!rounded-[10px] [&_.react-tel-input_.form-control]:!border-[#303030] [&_.react-tel-input_.form-control]:!bg-[#0d0d0d] [&_.react-tel-input_.form-control]:!text-[#f2f2f2] [&_.react-tel-input_.selected-flag]:!rounded-l-[10px] [&_.react-tel-input_.selected-flag]:!bg-[#0d0d0d] [&_.react-tel-input_.flag-dropdown]:!rounded-l-[10px] [&_.react-tel-input_.flag-dropdown]:!border-[#303030] [&_.react-tel-input_.flag-dropdown]:!bg-[#0d0d0d]"
+                className="login-auth-form [&_.ant-form-item]:mb-4 [&_.ant-form-item-explain-error]:text-xs [&_.ant-form-item-explain-error]:text-red-400 [&_.ant-input]:h-11 [&_.ant-input]:rounded-[10px] [&_.ant-input]:border-[#303030] [&_.ant-input]:bg-[#0d0d0d] [&_.ant-input]:text-[#f2f2f2] [&_.ant-input::placeholder]:text-[#757575] [&_.custom-ant-input]:!h-11 [&_.custom-ant-input]:!rounded-[10px] [&_.custom-ant-input]:!border-[#303030] [&_.custom-ant-input]:!bg-[#0d0d0d] [&_.custom-ant-input]:!text-[#f2f2f2] [&_.custom-ant-input]:!shadow-none [&_.custom-ant-input:hover]:!border-[#D4AF37]/70 [&_.ant-input-affix-wrapper]:h-11 [&_.ant-input-affix-wrapper]:rounded-[10px] [&_.ant-input-affix-wrapper]:border-[#303030] [&_.ant-input-affix-wrapper]:bg-[#0d0d0d] [&_.ant-input-affix-wrapper:hover]:border-[#D4AF37]/70 [&_.ant-input-affix-wrapper-focused]:border-[#D4AF37] [&_.ant-input-affix-wrapper_.ant-input]:!h-auto [&_.ant-input-affix-wrapper_.ant-input]:!border-0 [&_.ant-input-affix-wrapper_.ant-input]:!bg-transparent [&_.ant-input-affix-wrapper_.ant-input]:!px-1 [&_.ant-input-affix-wrapper_.ant-input]:!shadow-none [&_.ant-input-password-icon]:!text-[#8e8e8e] [&_.ant-input-password-icon:hover]:!text-[#D4AF37] [&_.ant-input-suffix_.anticon]:!text-[#8e8e8e] [&_.react-tel-input_.form-control]:!h-11 [&_.react-tel-input_.form-control]:!w-full [&_.react-tel-input_.form-control]:!rounded-[10px] [&_.react-tel-input_.form-control]:!border-[#303030] [&_.react-tel-input_.form-control]:!bg-[#0d0d0d] [&_.react-tel-input_.form-control]:!text-[#f2f2f2] [&_.react-tel-input_.selected-flag]:!rounded-l-[10px] [&_.react-tel-input_.selected-flag]:!bg-[#0d0d0d] [&_.react-tel-input_.flag-dropdown]:!rounded-l-[10px] [&_.react-tel-input_.flag-dropdown]:!border-[#303030] [&_.react-tel-input_.flag-dropdown]:!bg-[#0d0d0d]"
               >
                 {isPhoneVerify ? (
                   <PhoneNumberInputBox span={24} cover={{ md: 24 }} name="mobile" placeholder="Phone number" number={mobileNumber?.mobile_number} onChange={handleChange} rules />

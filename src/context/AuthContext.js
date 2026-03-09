@@ -4,14 +4,27 @@ import { useNavigate } from "react-router";
 import { ShowToast, Severty } from "../helper/toast";
 import axios from "axios";
 import apiPath from "../constants/apiPath";
+import { useDispatch } from "react-redux";
+import { setToken, setUser, logout as resetAppAuth } from "../redux/slices/appSlice";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const getStoredUser = () => {
+    try {
+      const raw = localStorage.getItem("userProfile");
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  };
+  const storedToken = localStorage.getItem("token");
+  const storedUser = getStoredUser();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!storedToken);
   const [loading, setLoading] = useState(false);
-  const [session, setSession] = useState({ token: null });
-  const [userProfile, setUserProfile] = useState();
+  const [session, setSession] = useState({ token: storedToken || null });
+  const [userProfile, setUserProfile] = useState(storedUser || null);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [refreshProfile, setRefreshProfile] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -25,10 +38,13 @@ export const AuthProvider = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const fetchUser = async (user) => {
+  const fetchUser = async () => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
       const headers = {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       };
       const response = await axios.get(apiPath.baseURL + `/${apiPath.profile}`, {
@@ -39,27 +55,50 @@ export const AuthProvider = ({ children }) => {
       if (result) {
         setIsLoggedIn(true);
         setUserProfile(result);
+        setSession({ token });
+        localStorage.setItem("userProfile", JSON.stringify(result));
+        dispatch(setToken(token));
+        dispatch(setUser(result));
       }
     } catch (error) {
       console.log(error);
-      if (!error?.response?.data?.status) {
+      const statusCode = error?.response?.status;
+      const message = error?.response?.data?.message;
+      const isUnauthorized = statusCode === 401 || message === "Un-Authorized User";
+
+      // Only clear session for explicit auth failures.
+      if (isUnauthorized) {
         localStorage.removeItem("token");
         localStorage.removeItem("userProfile");
+        setIsLoggedIn(false);
+        setSession({ token: null });
+        setUserProfile(null);
+        dispatch(resetAppAuth());
       }
     }
   };
 
   useEffect(() => {
     let token = localStorage.getItem("token");
-    if (!token) return;
-
-    let user = JSON.parse(localStorage.getItem("userProfile"));
-    if (user) {
-      fetchUser(user);
+    if (!token) {
+      setIsLoggedIn(false);
+      setSession({ token: null });
+      setUserProfile(null);
+      dispatch(resetAppAuth());
+      return;
     }
+
+    const user = getStoredUser();
+    setIsLoggedIn(true);
     setSession({ token: token });
+    setUserProfile(user || null);
+    dispatch(setToken(token));
+    if (user) dispatch(setUser(user));
+
+    // Revalidate profile in background and refresh local user data.
+    fetchUser();
     setRefreshProfile(false);
-  }, [refreshProfile]);
+  }, [refreshProfile, dispatch]);
 
   const login = () => {
     setIsLoggedIn(true);
@@ -72,6 +111,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     setSession({ token: null });
     setUserProfile(null);
+    dispatch(resetAppAuth());
     ShowToast("Logout Successfully", Severty.SUCCESS);
     navigate("/login-diary");
   };

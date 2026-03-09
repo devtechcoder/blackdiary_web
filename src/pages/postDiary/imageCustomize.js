@@ -225,45 +225,67 @@ const ImageCustomize = ({ fileType, value, imageType, btnName, onChange, size = 
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 image-customize-panel">
       <ImgCrop quality={1} modalTitle="Crop Image" showGrid>
-        <Upload listType="picture" maxCount={1} beforeUpload={beforeUpload} onChange={handleImgChange} onRemove={onRemove} fileList={file} {...props}>
-          {file && file.length > 0 && file !== "" ? null : <Button icon={<UploadOutlined />}> {btnName ? `Upload ${btnName}` : ""}</Button>}
+        <Upload className="publish-image-upload" listType="picture" maxCount={1} beforeUpload={beforeUpload} onChange={handleImgChange} onRemove={onRemove} fileList={file} {...props}>
+          {file && file.length > 0 && file !== "" ? null : (
+            <Button
+              icon={<UploadOutlined />}
+              className="!h-11 !rounded-[10px] !border !border-[#3a3a3a] !bg-[#151515] !px-5 !font-medium !text-[#e9e9e9] transition-all duration-300 hover:!border-[#D4AF37]/60 hover:!text-[#D4AF37]"
+            >
+              {btnName ? `Upload ${btnName}` : ""}
+            </Button>
+          )}
         </Upload>
       </ImgCrop>
 
       {basePreview ? (
-        <div className="rounded-md border border-gray-300 p-3">
-          <p className="mb-2 font-medium text-gray-800">Edit Like Instagram</p>
-          <div className="relative w-full overflow-hidden rounded-md bg-black">
-            <img src={basePreview} alt="preview" className="mx-auto max-h-[360px] w-auto" />
+        <div className="rounded-xl border border-[#2f2f2f] bg-[#0f0f0f] p-3 sm:p-4">
+          <p className="mb-3 text-base font-semibold text-[#f0f0f0]">Edit Image</p>
+          <div className="relative w-full overflow-hidden rounded-xl border border-[#2a2a2a] bg-black">
+            <img src={basePreview} alt="preview" className="mx-auto max-h-[360px] min-h-[220px] w-auto object-contain sm:max-h-[420px]" />
             {text.trim() ? <div style={editorStyle}>{text}</div> : null}
           </div>
 
           <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
             <div className="md:col-span-2">
-              <label className="mb-1 block text-sm text-gray-700">Text on image</label>
-              <Input value={text} onChange={(e) => setText(e.target.value)} placeholder="Write text on image" maxLength={120} />
+              <label className="mb-1 block text-sm font-medium text-[#cfcfcf]">Text on image</label>
+              <Input
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Write text on image"
+                maxLength={120}
+                className="!h-11 !rounded-[10px] !border-[#313131] !bg-[#0d0d0d] !text-[#ececec] !shadow-none hover:!border-[#D4AF37]/60 focus:!border-[#D4AF37]"
+              />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm text-gray-700">Text Color</label>
-              <input type="color" value={textColor} onChange={(e) => setTextColor(e.target.value)} className="h-10 w-full cursor-pointer rounded border border-gray-300" />
+              <label className="mb-1 block text-sm font-medium text-[#cfcfcf]">Text Color</label>
+              <input type="color" value={textColor} onChange={(e) => setTextColor(e.target.value)} className="h-11 w-full cursor-pointer rounded-[10px] border border-[#313131] bg-[#0d0d0d] p-1" />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm text-gray-700">Font Size</label>
-              <Slider min={16} max={80} value={fontSize} onChange={setFontSize} />
+              <div className="mb-1 flex items-center justify-between">
+                <label className="block text-sm font-medium text-[#cfcfcf]">Font Size</label>
+                <span className="text-xs text-[#9e9e9e]">{fontSize}px</span>
+              </div>
+              <Slider className="publish-slider" min={16} max={80} value={fontSize} onChange={setFontSize} />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm text-gray-700">Horizontal Position</label>
-              <Slider min={0} max={100} value={xPercent} onChange={setXPercent} />
+              <div className="mb-1 flex items-center justify-between">
+                <label className="block text-sm font-medium text-[#cfcfcf]">Horizontal Position</label>
+                <span className="text-xs text-[#9e9e9e]">{xPercent}%</span>
+              </div>
+              <Slider className="publish-slider" min={0} max={100} value={xPercent} onChange={setXPercent} />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm text-gray-700">Vertical Position</label>
-              <Slider min={0} max={100} value={yPercent} onChange={setYPercent} />
+              <div className="mb-1 flex items-center justify-between">
+                <label className="block text-sm font-medium text-[#cfcfcf]">Vertical Position</label>
+                <span className="text-xs text-[#9e9e9e]">{yPercent}%</span>
+              </div>
+              <Slider className="publish-slider" min={0} max={100} value={yPercent} onChange={setYPercent} />
             </div>
           </div>
         </div>

@@ -60,14 +60,27 @@ function WriteShayari() {
 
   const OnSubmit = (values) => {
     const payload = new FormData();
-    payload.append("author", userProfile?._id || "");
-    payload.append("type", type || "");
-    Object.entries(values || {}).forEach(([key, fieldValue]) => {
-      if (key === "image" || fieldValue === undefined || fieldValue === null || fieldValue === "") {
+    const appendValue = (key, fieldValue) => {
+      if (fieldValue === undefined || fieldValue === null || fieldValue === "") return;
+
+      if (Array.isArray(fieldValue)) {
+        fieldValue.forEach((item) => {
+          if (item !== undefined && item !== null && item !== "") {
+            payload.append(key, item);
+          }
+        });
         return;
       }
 
       payload.append(key, fieldValue);
+    };
+
+    appendValue("author", userProfile?._id || "");
+    appendValue("type", type || "");
+
+    Object.entries(values || {}).forEach(([key, fieldValue]) => {
+      if (key === "image") return;
+      appendValue(key, fieldValue);
     });
 
     if (type === "shayari") {
@@ -77,11 +90,12 @@ function WriteShayari() {
       }
       payload.append("content", content);
     } else {
-      if (!image) {
+      const selectedImage = values?.image || image;
+      if (!selectedImage) {
         ShowToast("Please upload an image for your post.", Severty.WARNING);
         return;
       }
-      payload.append("image", image);
+      payload.append("image", selectedImage);
     }
     mutate(payload);
   };
@@ -92,62 +106,103 @@ function WriteShayari() {
   }, [categoryId, form]);
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8 bg-white text-white rounded-lg shadow-lg">
-      <h1 className="text-2xl md:text-3xl text-black font-bold mb-6">{type === "shayari" ? "Write Shayari" : "Create Post"}</h1>
-      <Form form={form} onFinish={OnSubmit} autoComplete="off" layout="vertical" disabled={isSubmitting}>
-        <div className="space-y-6">
-          <Row gutter={[16, 0]}>
-            <SelectInput
-              label="Category"
-              name="category"
-              placeholder="Select Category"
-              options={categories}
-              rules={true}
-              loading={categoriesLoading}
-              showSearch
-              filterOption={(input, option) => option.label.toLowerCase().includes(input.toLowerCase())}
-            />
-            <MultiSelect
-              label="Sub Category (Optional)"
-              name="sub_category_id"
-              placeholder="Select Sub Category"
-              options={subCategories ?? []}
-              rules={false}
-              loading={subCategoriesLoading}
-              disabled={!categoryId}
-              showSearch
-              filterOption={(input, option) => option.label.toLowerCase().includes(input.toLowerCase())}
-            />
-            <MultiSelect
-              label="Occasion (Optional)"
-              name="occasion_ids"
-              placeholder="Select Occasions"
-              options={occasions}
-              loading={occasionsLoading}
-              showSearch
-              filterOption={(input, option) => option.label.toLowerCase().includes(input.toLowerCase())}
-              colProps={{ md: 24 }}
-            />
-          </Row>
-          {type === "shayari" ? (
-            <Form.Item label="Content">
-              <CaptionInput value={content} onChange={setContent} />
-            </Form.Item>
-          ) : (
-            <Form.Item name="image" className="text-white" label="Image" rules={[{ required: true, message: "Please upload an image for your post." }]}>
-              <ImageCustomize size={10} fileType={FileType} btnName={"Choose Image"} imageType="Image" isDimension={true} />
-            </Form.Item>
-          )}
-          <div className="flex justify-end gap-4 mt-8">
-            <Button onClick={() => navigate(-1)} className="bg-gray-700 text-white hover:bg-gray-600 border-gray-700">
-              Back
-            </Button>
-            <Button type="primary" htmlType="submit" loading={isSubmitting} className="bg-green-500 hover:bg-green-600 border-green-500">
-              Publish
-            </Button>
-          </div>
+    <div className="mx-auto w-full max-w-5xl px-2 py-2 md:px-4 md:py-4">
+      <section className="rounded-2xl border border-[#262626] bg-[#111111] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.45)] sm:p-6 md:p-8">
+        <div className="mb-6 border-b border-[#272727] pb-4">
+          <h1 className="text-3xl font-semibold tracking-tight text-[#f7f7f7] md:text-4xl">{type === "shayari" ? "Write Shayari" : "Create Post"}</h1>
+          <p className="mt-2 text-sm text-[#a8a8a8]">{type === "shayari" ? "Share your thoughts with style and emotion." : "Publish a visual post for your audience."}</p>
         </div>
-      </Form>
+
+        <Form
+          form={form}
+          onFinish={OnSubmit}
+          autoComplete="off"
+          layout="vertical"
+          disabled={isSubmitting}
+          className="publish-form [&_.ant-form-item]:mb-5 [&_.ant-form-item-label>label]:!text-base [&_.ant-form-item-label>label]:!font-medium [&_.ant-form-item-label>label]:!text-[#e8e8e8] [&_.ant-select-single_.ant-select-selector]:!h-11 [&_.ant-select-single_.ant-select-selector]:!rounded-[10px] [&_.ant-select-single_.ant-select-selector]:!border-[#313131] [&_.ant-select-single_.ant-select-selector]:!bg-[#0d0d0d] [&_.ant-select-single_.ant-select-selector]:!px-3 [&_.ant-select-multiple_.ant-select-selector]:!min-h-[44px] [&_.ant-select-multiple_.ant-select-selector]:!h-auto [&_.ant-select-multiple_.ant-select-selector]:!rounded-[10px] [&_.ant-select-multiple_.ant-select-selector]:!border-[#313131] [&_.ant-select-multiple_.ant-select-selector]:!bg-[#0d0d0d] [&_.ant-select-multiple_.ant-select-selector]:!px-2 [&_.ant-select-multiple_.ant-select-selector]:!py-1 [&_.ant-select-selection-placeholder]:!text-[#7f7f7f] [&_.ant-select-selection-item]:!text-[#ececec] [&_.ant-select-arrow]:!text-[#8f8f8f] [&_.ant-select-focused_.ant-select-selector]:!border-[#D4AF37] [&_.custom-ant-input]:!h-11 [&_.custom-ant-input]:!rounded-[10px] [&_.custom-ant-input]:!border-[#313131] [&_.custom-ant-input]:!bg-[#0d0d0d] [&_.custom-ant-input]:!text-[#ececec] [&_.custom-ant-input]:!shadow-none [&_.custom-ant-input:hover]:!border-[#D4AF37]/70 [&_.notranslate.public-DraftEditor-content]:!min-h-[150px] [&_.notranslate.public-DraftEditor-content]:!rounded-[12px] [&_.notranslate.public-DraftEditor-content]:!border-[#313131] [&_.notranslate.public-DraftEditor-content]:!bg-[#0d0d0d] [&_.notranslate.public-DraftEditor-content]:!px-4 [&_.notranslate.public-DraftEditor-content]:!py-3 [&_.rdw-editor-main]:!text-[#ececec]"
+        >
+          <div className="space-y-6">
+            <Row gutter={[16, 0]}>
+              <SelectInput
+                label="Category"
+                name="category"
+                placeholder="Select Category"
+                options={categories}
+                rules={true}
+                loading={categoriesLoading}
+                showSearch
+                popupClassName="publish-select-dropdown"
+                colProps={{ xs: 24, md: 12 }}
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  String(option?.label || "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+              />
+              <MultiSelect
+                label="Sub Category (Optional)"
+                name="sub_category_id"
+                placeholder="Select Sub Category"
+                options={subCategories ?? []}
+                rules={false}
+                loading={subCategoriesLoading}
+                disabled={!categoryId}
+                showSearch
+                popupClassName="publish-select-dropdown"
+                colProps={{ xs: 24, md: 12 }}
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  String(option?.label || "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+              />
+              <MultiSelect
+                label="Occasion (Optional)"
+                name="occasion_ids"
+                placeholder="Select Occasions"
+                options={occasions}
+                loading={occasionsLoading}
+                showSearch
+                popupClassName="publish-select-dropdown"
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  String(option?.label || "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                colProps={{ md: 24 }}
+              />
+            </Row>
+            {type === "shayari" ? (
+              <Form.Item label="Content">
+                <CaptionInput value={content} onChange={setContent} />
+              </Form.Item>
+            ) : (
+              <Form.Item name="image" className="text-white" label="Image" rules={[{ required: true, message: "Please upload an image for your post." }]}>
+                <ImageCustomize size={10} fileType={FileType} btnName={"Choose Image"} imageType="Image" isDimension={true} />
+              </Form.Item>
+            )}
+            <div className="mt-8 flex justify-end gap-3">
+              <Button
+                onClick={() => navigate(-1)}
+                className="!h-11 !rounded-[10px] !border !border-[#3a3a3a] !bg-[#1b1f29] !px-6 !font-medium !text-[#ececec] transition-all duration-300 hover:!border-[#D4AF37]/60 hover:!text-[#D4AF37]"
+              >
+                Back
+              </Button>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isSubmitting}
+                className="!h-11 !rounded-[10px] !border-0 !bg-[#D4AF37] !px-7 !font-semibold !text-[#151515] shadow-[0_10px_24px_rgba(212,175,55,0.24)] transition-all duration-300 hover:!bg-[#e2bf50] hover:shadow-[0_14px_28px_rgba(212,175,55,0.32)]"
+              >
+                Publish
+              </Button>
+            </div>
+          </div>
+        </Form>
+      </section>
     </div>
   );
 }

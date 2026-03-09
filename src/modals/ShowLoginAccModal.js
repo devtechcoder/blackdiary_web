@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Form, Modal, Avatar, Spin } from "antd";
-import lang from "../helper/langHelper";
+import { Modal, Avatar, Spin } from "antd";
 import apiPath from "../constants/apiPath";
 import { Severty, ShowToast } from "../helper/toast";
 import useRequest from "../hooks/useRequest";
@@ -57,37 +56,54 @@ const ShowLoginAccModal = ({ show, hide, data }) => {
   };
 
   return (
-    <Modal width={400} open={show} footer={null} onCancel={hide} centered className="custom-modal" title={<div className="text-center text-xl font-bold text-white">Choose an account</div>}>
-      <div className="p-2 text-white">
-        <div className="flex flex-col gap-3 my-4">
+    <Modal width={440} open={show} footer={null} onCancel={hide} centered className="custom-modal login-account-modal" closable={!loading}>
+      <div className="p-1 text-white">
+        <div className="mb-5 text-center">
+          <h2 className="text-[30px] font-semibold tracking-tight text-[#f7f7f7]">Choose an account</h2>
+          <p className="mt-1 text-sm text-[#a8a8a8]">Continue with the account you want to sign in with</p>
+        </div>
+
+        <div className="max-h-[300px] space-y-3 overflow-y-auto pr-1">
           {accounts.map((acc) => (
-            <div
+            <button
               key={acc._id}
+              type="button"
               onClick={() => !loading && onLogin(acc)}
-              className="flex items-center justify-between gap-4 p-3 bg-neutral-800 border border-neutral-700 rounded-lg cursor-pointer hover:bg-neutral-700 transition-all"
+              disabled={loading}
+              className="group flex w-full items-center justify-between rounded-xl border border-[#3a3a3a] bg-[#171717] px-4 py-3 text-left transition-all duration-200 hover:border-[#4d4d4d] hover:bg-[#1d1d1d] disabled:cursor-not-allowed disabled:opacity-80"
             >
-              <div className="flex items-center gap-4">
-                <Avatar size={48} src={acc.image}>
+              <div className="flex items-center gap-3">
+                <Avatar size={48} src={acc.image} className="!bg-[#2b2b2b] !text-[#f1f1f1]">
                   {!acc.image && acc.name?.[0]}
                 </Avatar>
-                <div>
-                  <div className="font-semibold">{acc.name}</div>
-                  <div className="text-neutral-400 text-sm">@{acc.user_name}</div>
+                <div className="min-w-0">
+                  <div className="truncate text-base font-semibold text-[#f3f3f3]">{acc.name}</div>
+                  <div className="truncate text-sm text-[#a7a7a7]">@{acc.user_name}</div>
                 </div>
               </div>
-              {loading && selectedAccountId === acc._id && <Spin />}
-            </div>
+              <div className="ml-4 flex h-6 w-6 items-center justify-center">
+                {loading && selectedAccountId === acc._id ? (
+                  <Spin size="small" />
+                ) : (
+                  <span className="text-lg text-[#777] transition-colors duration-200 group-hover:text-[#d4af37]">{">"}</span>
+                )}
+              </div>
+            </button>
           ))}
         </div>
-        <button
-          onClick={() => {
-            hide();
-            navigate("/login");
-          }}
-          className="w-full text-center py-2 text-neutral-300 hover:text-white hover:underline"
-        >
-          Log in with another account
-        </button>
+
+        <div className="mt-5 border-t border-[#2a2a2a] pt-4">
+          <button
+            type="button"
+            onClick={() => {
+              hide();
+              navigate("/login");
+            }}
+            className="w-full rounded-lg border border-transparent py-2 text-center text-sm font-medium text-[#cfcfcf] transition-all duration-200 hover:border-[#353535] hover:bg-[#141414] hover:text-[#f3f3f3]"
+          >
+            Use another account
+          </button>
+        </div>
       </div>
     </Modal>
   );

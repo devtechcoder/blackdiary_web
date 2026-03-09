@@ -133,11 +133,14 @@ export const useGetApi = ({ queryKey, endpoint, enabled = true, params = {}, hea
 export const usePostApi = ({ endpoint, onSuccess, onError }) => {
   const { logout } = useContext(AuthContext);
 
-  const postData = async (formData) => {
+  const postData = async (payload) => {
     const token = localStorage.getItem("token");
-    const response = await axios.post(`${apiPath.baseURL}/${endpoint}`, formData, {
+    const isFormData = payload instanceof FormData;
+
+    const response = await axios.post(`${apiPath.baseURL}/${endpoint}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
+        ...(isFormData ? { "Content-Type": "multipart/form-data" } : {}),
       },
     });
     return response.data;
