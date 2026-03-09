@@ -1,23 +1,25 @@
-import { Button } from "antd";
 import React, { useState, useEffect } from "react";
-import { FaCog } from "react-icons/fa";
 import Main from "../../components/layout/Main";
 import { useAuthContext } from "../../context/AuthContext";
-import Prouser from "../../assets/images/user.png";
 import { useNavigate, useParams } from "react-router";
 import ProfileActionModal from "../../modals/ProfileActionModal";
-import { Helmet } from "react-helmet-async";
-import { SEO } from "../../constants/seo";
 import apiPath from "../../constants/apiPath";
 import { useGetApi } from "../../hooks/useRequest";
 import Loader from "../../components/Loader";
 import { getOriginalUserName } from "../../helper/functions";
-import { FollowIcon } from "../../components/ButtonField";
-import MyFeed from "./myFeed";
+import ProfileHeader from "../../components/profile/ProfileHeader";
+import ProfileStats from "../../components/profile/ProfileStats";
+import TabsNavigation from "../../components/profile/TabsNavigation";
+import ShayariGrid from "../../components/profile/ShayariGrid";
 
 const Profile = () => {
   const { isLoggedIn, userProfile: loggedInUserProfile } = useAuthContext();
   const [show, setShow] = useState(false);
+  const [activeTab, setActiveTab] = useState("shayari");
+  const [feedMeta, setFeedMeta] = useState({
+    shayari: { totalDocs: 0 },
+    post: { totalDocs: 0 },
+  });
   const navigate = useNavigate();
   const { username } = useParams();
   const [profileData, setProfileData] = useState(null);
@@ -37,6 +39,8 @@ const Profile = () => {
 
   // Determine if the logged-in user is viewing their own profile
   const isOwnProfile = isLoggedIn && loggedInUserProfile?.user_name === profileData?.user_name;
+  const totalPosts = (feedMeta?.shayari?.totalDocs || 0) + (feedMeta?.post?.totalDocs || 0);
+  const totalLikes = profileData?.total_likes || profileData?.totalLikes || profileData?.likes || 0;
 
   if (isLoading) {
     return (
@@ -64,53 +68,52 @@ const Profile = () => {
 
   return (
     <Main>
-      <div className="max-w-4xl mx-auto p-4 text-white">
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-8">
-          {/* Profile Image */}
-          <div className="flex-shrink-0">
-            <div className="w-28 h-28 md:w-36 md:h-36 rounded-full border-2 border-gray-700 bg-black shadow-lg overflow-hidden">
-              <img src={profileData?.image ?? Prouser} alt="Profile" className="w-full h-full object-cover" />
-            </div>
-          </div>
+      <div className="mx-auto max-w-5xl space-y-6 px-2 pb-4 text-white md:px-4">
+        <ProfileHeader
+          profileData={profileData}
+          isOwnProfile={isOwnProfile}
+          totalPosts={totalPosts}
+          onEditProfile={() => navigate(`/account/edit-profile/${profileData?.user_name}/${profileData?._id}`)}
+          onOpenSettings={() => setShow(true)}
+          onFollowersClick={() => navigate(`/view-follow/follower/${profileData?._id}/${profileData?.user_name}`)}
+          onFollowingClick={() => navigate(`/view-follow/following/${profileData?._id}/${profileData?.user_name}`)}
+        />
 
-          {/* Profile Info */}
-          <div className="flex-1 flex flex-col items-center sm:items-start">
-            <div className="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
-              <div className="flex flex-col">
-                <h3 className="font-semibold text-lg">{profileData?.user_name ?? ""}</h3>
-                <h2 className="text-2xl font-light">{profileData?.name ?? ""}</h2>
-              </div>
-              {isOwnProfile ? (
-                <>
-                  <Button className="bg-gray-800 text-white border-gray-700 hover:bg-gray-700" onClick={() => navigate(`/account/edit-profile/${profileData?.user_name}/${profileData?._id}`)}>
-                    Edit profile
-                  </Button>
-                  <FaCog className="text-xl cursor-pointer hover:text-gray-400" onClick={() => setShow(true)} />
-                </>
-              ) : (
-                <FollowIcon userId={profileData?._id} />
-              )}
-            </div>
-            {/* Posts, Followers, Following */}
-            <div className="flex gap-4 md:gap-8 mt-4 text-sm md:text-base">
-              <div>
-                <strong>8</strong> posts
-              </div>
-              <div className="cursor-pointer" onClick={() => navigate(`/view-follow/follower/${profileData?._id}/${profileData?.user_name}`)}>
-                <strong>{profileData?.followers || 0}</strong> followers
-              </div>
-              <div className="cursor-pointer" onClick={() => navigate(`/view-follow/following/${profileData?._id}/${profileData?.user_name}`)}>
-                <strong>{profileData?.following || 0}</strong> following
-              </div>
-            </div>
-            <div className="mt-4 text-center sm:text-left">
-              <p className="text-sm text-gray-400">Writer</p>
-              <p className="text-sm mt-1 whitespace-pre-wrap">{profileData?.bio}</p>
-            </div>
+        <section className="rounded-3xl border border-[#2b2b2b] bg-gradient-to-br from-[#131313] via-[#101010] to-[#0c0c0c] p-5 md:p-6">
+          <p className="mb-3 whitespace-pre-wrap font-['Playfair_Display'] text-lg leading-relaxed text-[#f4f4f4]">
+            {profileData?.bio || "Raat ki tanhaiyon mein alfaaz roshni ban kar utarte hain."}
+          </p>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-[#3a3a3a] bg-[#171717] px-3 py-1 text-xs text-[#d5d5d5]">{profileData?.location || "In the mood of midnight poetry"}</span>
+            <span className="rounded-full border border-[#E6B422]/40 bg-[#261e0f] px-3 py-1 text-xs text-[#f5d98e]">
+              "{profileData?.favorite_quote || "Har lafz mein ek dhadkan basti hai."}"
+            </span>
           </div>
+        </section>
+
+        <ProfileStats
+          totalPosts={totalPosts}
+          followers={profileData?.followers || 0}
+          following={profileData?.following || 0}
+          totalLikes={totalLikes}
+        />
+
+        <div className="space-y-5">
+          <TabsNavigation activeTab={activeTab} onChange={setActiveTab} />
+          <ShayariGrid
+            userId={profileData?._id}
+            activeTab={activeTab}
+            onMetaChange={(type, meta) => {
+              setFeedMeta((prev) => ({
+                ...prev,
+                [type]: {
+                  ...prev[type],
+                  ...meta,
+                },
+              }));
+            }}
+          />
         </div>
-
-        <MyFeed userId={profileData?._id} />
       </div>
       {show && <ProfileActionModal show={show} hide={() => setShow(false)} />}
     </Main>
