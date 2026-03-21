@@ -19,10 +19,8 @@ const ShayariGrid = ({ userId, activeTab = "shayari", onMetaChange }) => {
   const navigate = useNavigate();
 
   const endpoint = activeTab === "shayari" ? apiPath.getShayari : apiPath.getPost;
-  const queryKey = useMemo(() => ["profile-feed", userId, activeTab, pagination.current], [userId, activeTab, pagination.current]);
-
   const { data, isFetching } = useGetApi({
-    queryKey,
+    queryKey: ["profile-feed", userId, activeTab, pagination.current],
     endpoint: `${endpoint}?page=${pagination.current}&pageSize=${pagination.pageSize}&author=${userId}`,
     enabled: Boolean(userId) && hasMore,
   });

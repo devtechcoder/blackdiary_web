@@ -25,7 +25,7 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(null);
 
   // API hook to fetch the profile data for the user in the URL
-  const { data, isLoading, isError, error, refetch } = useGetApi({
+  const { data, isLoading, isError, error } = useGetApi({
     queryKey: ["get-user-profile", username],
     endpoint: `${apiPath.common.getUserProfile}?q=${getOriginalUserName(username)}`,
     enabled: !!username, // Only run if a username is present in the URL
