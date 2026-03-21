@@ -4,6 +4,7 @@ import logo from "../../assets/images/icon/logo.png";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../../context/AuthContext";
 import { NavLink } from "react-router-dom";
+import AppImage from "../AppImage";
 
 function PublicHeader({ showDrawer, isMobile }) {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function PublicHeader({ showDrawer, isMobile }) {
     <div className="premium-navbar h-20 px-4 md:px-6 flex items-center justify-between sticky top-0 z-50">
       {/* Left Side */}
       <div className="flex items-center gap-4 flex-1">
-        <img src={logo} alt="Logo" className="h-8 cursor-pointer" onClick={() => navigate("/")} />
+        <AppImage src={logo} alt="Logo" width={32} height={32} className="h-8 w-8 cursor-pointer object-contain" onClick={() => navigate("/")} />
         {!isMobile && (
           <div className="hidden md:flex items-center gap-5 ml-6">
             <NavLink to="/" className={({ isActive }) => `premium-nav-link ${isActive ? "active" : ""}`}>

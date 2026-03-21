@@ -4,6 +4,7 @@ import logo from "../../assets/images/icon/logo.png";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../../context/AuthContext";
 import { NavLink } from "react-router-dom";
+import AppImage from "../AppImage";
 
 function Header({ showDrawer, isMobile, isVisible }) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Header({ showDrawer, isMobile, isVisible }) {
     >
       {/* Left Side */}
       <div className="flex items-center gap-4 flex-1">
-        <img src={logo} alt="Logo" className="h-8 cursor-pointer" onClick={() => navigate("/")} />
+        <AppImage src={logo} alt="Logo" width={32} height={32} className="h-8 w-8 cursor-pointer object-contain" onClick={() => navigate("/")} />
 
         {!isMobile && (
           <>

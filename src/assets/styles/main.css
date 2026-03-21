@@ -11,17 +11,111 @@
   --bd-text-secondary: #cfcfcf;
   --bd-gold: #d4af37;
   --bd-gold-hover: #ffd700;
-  --bd-border: #2a2a2a;
+  --bd-border: rgba(212, 175, 55, 0.42);
   --bd-footer-bg: #0b0b0b;
   --bd-footer-text: #aaaaaa;
+}
+
+.border,
+.border-t,
+.border-r,
+.border-b,
+.border-l,
+.border-x,
+.border-y,
+.border-2,
+.border-t-2,
+.border-r-2,
+.border-b-2,
+.border-l-2,
+.border-dashed,
+.border-solid,
+[class^="border-gray-"],
+[class*=" border-gray-"],
+[class^="border-zinc-"],
+[class*=" border-zinc-"],
+[class^="border-white"],
+[class*=" border-white"],
+[class^="border-neutral-"],
+[class*=" border-neutral-"],
+[class^="border-\[#"],
+[class*=" border-\[#"],
+[class^="border-\[rgba"],
+[class*=" border-\[rgba"] {
+  border-color: var(--bd-border) !important;
+}
+
+/* Keep Bootstrap's `.border` utility aligned with the site's gold palette. */
+.border {
+  border-color: var(--bd-border) !important;
+}
+
+.hover\:border-\[\#D4AF37\]\/70:hover,
+.hover\:border-\[\#D4AF37\]\/60:hover,
+.hover\:border-\[\#D4AF37\]:hover,
+.hover\:border-\[\#FFD700\]:hover,
+.hover\:border-gray-500:hover,
+.hover\:border-green-500:hover,
+.focus\:border-green-500:focus,
+.focus\:border-black:focus,
+.focus-within\:ring-\[\#d4af37\]:focus-within {
+  border-color: var(--bd-gold-hover) !important;
+}
+
+.home-category-pill {
+  border: 1px solid transparent !important;
+}
+
+.home-category-pill:hover {
+  border-color: rgba(212, 175, 55, 0.55) !important;
+}
+
+.home-category-pill.is-active {
+  border-color: transparent !important;
+}
+
+button,
+input,
+select,
+textarea,
+[role="button"] {
+  outline: none !important;
+}
+
+button:focus,
+button:focus-visible,
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+a:focus,
+a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 html,
 body,
 #root {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
   background: var(--bd-bg);
   color: var(--bd-text-primary);
   font-family: "Inter", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -36,7 +130,12 @@ h6,
 }
 
 * {
-  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    opacity 0.3s ease;
 }
 
 /* Keep Select popup stable (prevent flicker/hide in nested layouts) */
@@ -239,6 +338,13 @@ a:hover {
   border-color: var(--bd-border) !important;
 }
 
+.border-gray-300,
+.border-white,
+.border-white\/10,
+.border-white\/20 {
+  border-color: var(--bd-border) !important;
+}
+
 .premium-navbar {
   background: var(--bd-bg) !important;
   color: var(--bd-text-primary) !important;
@@ -274,6 +380,38 @@ a:hover {
 
 .premium-footer a:hover {
   color: var(--bd-gold) !important;
+}
+
+.occasion-card {
+  background: #161616 !important;
+  border: 1px solid rgba(212, 175, 55, 0.72) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+.occasion-card:hover {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.22) !important;
+}
+
+.occasion-card-media {
+  height: 176px;
+}
+
+.occasion-card-body {
+  min-height: 168px;
+}
+
+.occasion-card-button {
+  border: 1px solid #d4af37 !important;
+  background: #d4af37 !important;
+  color: #0d0d0d !important;
+}
+
+.occasion-card-button:hover {
+  border-color: #ffd700 !important;
+  background: #ffd700 !important;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.45) !important;
 }
 
 /* Premium react-slick arrows */

@@ -1,35 +1,31 @@
 import { useState, useEffect } from "react";
-import { Layout, Drawer } from "antd";
-import Sidenav from "./Sidenav";
+import { Layout } from "antd";
 import PublicHeader from "./publicHeader";
 import Footer from "./Footer";
-import BottomNav from "./BottomNav";
 
 const { Content } = Layout;
 
 function PublicLayout({ children }) {
-  const [visible, setVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const hasWindow = typeof window !== "undefined";
+  const [isMobile, setIsMobile] = useState(hasWindow ? window.innerWidth < 768 : false);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < 768);
   };
 
   useEffect(() => {
+    if (!hasWindow) return undefined;
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const showDrawer = () => setVisible(true);
-
   return (
-    <Layout className="layout-dashboard h-screen overflow-hidden bg-[#0d0d0d]">
-      <PublicHeader showDrawer={showDrawer} isMobile={isMobile} />
-
-      <Layout className="h-[calc(100vh-64px)] overflow-hidden flex flex-col flex-1">
-        <Content className="overflow-y-auto p-4 text-white bg-[#0d0d0d] flex-grow">
-          <div className="bd-container">
-            {children}
+    <Layout className="layout-dashboard min-h-screen bg-[#0d0d0d]">
+      <PublicHeader isMobile={isMobile} />
+      <Layout className="flex flex-col flex-1 bg-[#0d0d0d]">
+        <Content className="p-4 text-white bg-[#0d0d0d] flex flex-col flex-1">
+          <div className="bd-container flex flex-col flex-1">
+            <div className="flex-1">{children}</div>
             <Footer />
           </div>
         </Content>

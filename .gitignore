@@ -7,6 +7,7 @@
 node_modules/
 dist/
 build/
+.next/
 
 # Environment variables (important for security)
 .env

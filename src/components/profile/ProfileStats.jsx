@@ -14,7 +14,7 @@ const ProfileStats = ({ totalPosts = 0, followers = 0, following = 0, totalLikes
       {items.map((item) => (
         <article
           key={item.label}
-          className="rounded-2xl border border-[#2b2b2b] bg-gradient-to-br from-[#151515] via-[#101010] to-[#0d0d0d] p-4 shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
+          className="rounded-2xl border border-[#D4AF37] bg-gradient-to-br from-[#151515] via-[#101010] to-[#0d0d0d] p-4 shadow-[0_8px_28px_rgba(0,0,0,0.35)]"
         >
           <div className="mb-1 flex items-center justify-between">
             <p className="text-xs uppercase tracking-[0.2em] text-[#8e8e8e]">{item.label}</p>

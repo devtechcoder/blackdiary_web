@@ -1,13 +1,31 @@
 import React, { useState } from "react";
-import { HomeOutlined, SearchOutlined, PlusOutlined, HeartOutlined, UserOutlined, LoginOutlined, FileTextOutlined, CompassOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { HomeOutlined, SearchOutlined, PlusOutlined, HeartOutlined, UserOutlined, LoginOutlined, FileTextOutlined, CompassOutlined } from "@ant-design/icons";
 import { Layout, Modal } from "antd"; // Import Modal
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import apiPath from "../../constants/apiPath";
 import logowithoutbrand from "../../assets/images/allLogo/logowithoutbrand.png";
 import CreatePostOption from "../../modals/createPostOption";
+import AppImage from "../AppImage";
 
 const { Sider } = Layout;
+
+function SidebarChevron({ collapsed }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-[18px] w-[18px]"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {collapsed ? <path d="M9 6l6 6-6 6" /> : <path d="M15 6l-6 6 6 6" />}
+    </svg>
+  );
+}
 
 function Sidenav() {
   const [collapsed, setCollapsed] = useState(false);
@@ -40,19 +58,26 @@ function Sidenav() {
   };
 
   return (
-    <Sider width={250} collapsible collapsed={collapsed} onCollapse={setCollapsed} trigger={null} className="bg-[#0B0B0B] text-white border-r border-[#2a2a2a]">
-      <div className="flex items-center justify-between px-[18px] py-4 border-b border-[rgba(255,255,255,0.08)]">
+    <Sider
+      width={250}
+      collapsible
+      collapsed={collapsed}
+      onCollapse={setCollapsed}
+      trigger={null}
+      className="bg-[#0B0B0B] text-white border-none outline-none sticky top-0 h-screen overflow-y-auto shrink-0"
+    >
+      <div className="flex items-center justify-between px-[18px] py-4 border-none outline-none">
         <div className="flex items-center gap-[10px] min-w-0">
-          {!collapsed && <img src={logowithoutbrand} alt="Logo" className="w-8 h-8 object-contain" />}
+          {!collapsed && <AppImage src={logowithoutbrand} alt="Logo" width={32} height={32} className="h-8 w-8 object-contain" />}
           {!collapsed && <span className="truncate text-[18px] font-semibold text-white">Black Diary</span>}
         </div>
         <button
           type="button"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           onClick={() => setCollapsed(!collapsed)}
-          className="h-8 w-8 min-w-[32px] rounded-full border border-[#D4AF37] text-[#D4AF37] flex items-center justify-center hover:bg-[rgba(212,175,55,0.15)] transition-colors duration-300"
+          className="flex h-10 w-10 min-w-[40px] items-center justify-center rounded-full border border-[rgba(212,175,55,0.24)] bg-[#151515] text-[#D4AF37] shadow-[0_0_14px_rgba(212,175,55,0.08)] transition-colors duration-300 hover:bg-[rgba(212,175,55,0.12)]"
         >
-          {collapsed ? <RightOutlined /> : <LeftOutlined />}
+          <SidebarChevron collapsed={collapsed} />
         </button>
       </div>
 
@@ -87,7 +112,7 @@ function Sidenav() {
         )} */}
         {isLoggedIn ? (
           <div onClick={() => navigate(`/@${userProfile?.user_name}`)} className={getNavItemClass(`/@${userProfile?.user_name}`)}>
-            {userProfile?.image ? <img src={apiPath.assetURL + userProfile?.image} alt="Profile" className="w-10 h-10 rounded-full object-cover" /> : <UserOutlined style={{ fontSize: "22px" }} />}
+            {userProfile?.image ? <AppImage src={apiPath.assetURL + userProfile?.image} alt="Profile" width={40} height={40} className="h-10 w-10 rounded-full object-cover" /> : <UserOutlined style={{ fontSize: "22px" }} />}
             {!collapsed && <span className="font-semibold">Profile</span>}
           </div>
         ) : (

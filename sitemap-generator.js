@@ -15,7 +15,7 @@ async function generateSitemap() {
   sitemap.end();
 
   const xml = await streamToPromise(sitemap);
-  const dest = resolve(__dirname, "build", "sitemap.xml");
+  const dest = resolve(__dirname, "public", "sitemap.xml");
   createWriteStream(dest).write(xml);
   console.log("✅ Sitemap generated at:", dest);
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router";
@@ -10,7 +12,10 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
+  const hasWindow = typeof window !== "undefined";
+
   const getStoredUser = () => {
+    if (!hasWindow) return null;
     try {
       const raw = localStorage.getItem("userProfile");
       return raw ? JSON.parse(raw) : null;
@@ -18,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       return null;
     }
   };
-  const storedToken = localStorage.getItem("token");
+  const storedToken = hasWindow ? localStorage.getItem("token") : null;
   const storedUser = getStoredUser();
 
   const [isLoggedIn, setIsLoggedIn] = useState(!!storedToken);
@@ -27,13 +32,14 @@ export const AuthProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(storedUser || null);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [refreshProfile, setRefreshProfile] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(hasWindow ? window.innerWidth < 768 : false);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < 768);
   };
 
   useEffect(() => {
+    if (!hasWindow) return undefined;
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -79,6 +85,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (!hasWindow) return;
+
     let token = localStorage.getItem("token");
     if (!token) {
       setIsLoggedIn(false);

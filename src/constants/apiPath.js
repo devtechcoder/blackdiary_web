@@ -81,7 +81,7 @@ let apiPath = {
     getCms: "common/get-cms",
     getMasters: "common/get-masters",
     getSettings: "common/get-settings",
-    getSeo: "common/get-seo",
+    getSeo: "seo",
   },
 };
 

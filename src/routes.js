@@ -36,7 +36,7 @@ import {
   Feed,
   ViewFollowList,
   GoAds,
-} from "./pages/Index";
+} from "./pageComponents/Index";
 
 export const publicRoutes = [
   { path: "/login-diary", component: LoginPage, exact: true },
@@ -50,6 +50,7 @@ export const publicRoutes = [
   { path: "/occasion", component: ViewAllOccasion, exact: true },
   { path: "/occasion/details/:slug?/:id?", component: OccasionDetails, exact: true },
   { path: "/sub-category/details/:slug?/:id?", component: SubCategoryDetails, exact: true },
+  { path: "/sub-categories", component: ViewAllSubCategory, exact: true },
   { path: "/search/sub-category", component: ViewAllSubCategory, exact: true },
   { path: "/leadership", component: Leadership, exact: true },
   { path: "/about-us", component: AboutUs, exact: true },

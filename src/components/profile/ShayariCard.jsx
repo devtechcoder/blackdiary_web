@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { FiBookmark, FiEye, FiHeart } from "react-icons/fi";
+import AppImage from "../AppImage";
 
 const gradients = [
   "from-[#1f2f4a] via-[#17273c] to-[#111a29]",
@@ -36,7 +37,7 @@ const ShayariCard = ({ item, type = "shayari", assetURL, onOpen }) => {
       onClick={onOpen}
     >
       {type === "post" && imageSrc ? (
-        <img src={imageSrc} alt="Post" className="h-full w-full object-cover" />
+        <AppImage src={imageSrc} alt="Post" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
       ) : (
         <div className={`flex h-full items-center justify-center bg-gradient-to-br ${gradientClass} p-5`}>
           <p className="line-clamp-6 text-center font-['Playfair_Display'] text-base leading-relaxed text-white md:text-lg">{content || "Dil ki khamoshi bhi ek shayari hoti hai."}</p>

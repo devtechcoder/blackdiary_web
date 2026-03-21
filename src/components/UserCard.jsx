@@ -1,4 +1,5 @@
 import React from "react";
+import AppImage from "./AppImage";
 import Prouser from "../assets/images/user.png";
 
 const UserCard = ({ user, isFollowing = false, loading = false, onToggleFollow, onOpenProfile }) => {
@@ -8,9 +9,11 @@ const UserCard = ({ user, isFollowing = false, loading = false, onToggleFollow, 
       <div className="pointer-events-none absolute bottom-0 right-0 h-16 w-40 rounded-tl-[48px] bg-gradient-to-l from-[#FFD700] via-[#D4AF37] to-transparent opacity-70" />
 
       <button className="relative mb-5 block w-fit cursor-pointer rounded-full" onClick={onOpenProfile} type="button">
-        <img
+        <AppImage
           src={user?.profileImage || Prouser}
           alt={user?.name || "Poet"}
+          width={96}
+          height={96}
           className="h-24 w-24 rounded-full border-2 border-[#D4AF37] object-cover shadow-[0_0_0_4px_rgba(212,175,55,0.16)]"
         />
       </button>

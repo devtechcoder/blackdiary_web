@@ -1,5 +1,29 @@
 import black_white_logo from "../assets/images/brand/favicon.png";
 
+const createSEOEntry = ({ title, description, keywords, url }) => ({
+  primary: {
+    title,
+    description,
+    keywords,
+  },
+  openGraph: {
+    title,
+    description,
+    image: black_white_logo,
+    url,
+    type: "website",
+    site_name: "Black Diary",
+  },
+  twitter: {
+    title,
+    description,
+    image: black_white_logo,
+    url,
+    type: "website",
+    site_name: "Black Diary",
+  },
+});
+
 export const SEO = {
   common: {
     title: "Black Diary Shayari – Best Hindi Shayari, Attitude, Love & Sad Quotes",
@@ -240,4 +264,218 @@ export const SEO = {
       site_name: "Black Diary",
     },
   },
+
+
+  viewAllSubCategoryPage: createSEOEntry({
+    title: "Browse Shayari Categories - Black Diary",
+    description: "Black Diary par sabhi Shayari categories aur sub-categories browse karein aur apne mood ke hisaab se content explore karein.",
+    keywords: "shayari sub categories, browse shayari topics, hindi shayari categories, black diary categories",
+    url: "https://blackdiary.vercel.app/sub-categories",
+  }),
+
+  profilePage: createSEOEntry({
+    title: "Profile - Black Diary",
+    description: "Black Diary writer profile dekhein, unki Shayari, posts, followers aur poetic identity explore karein.",
+    keywords: "black diary profile, writer profile, poet profile, user shayari profile",
+    url: "https://blackdiary.vercel.app/",
+  }),
+
+  searchPage: createSEOEntry({
+    title: "Search - Black Diary",
+    description: "Black Diary par accounts, occasions, albums aur Shayari search karein aur nayi poetic discoveries tak pahunchein.",
+    keywords: "search shayari, search poets, black diary search, discover shayari accounts",
+    url: "https://blackdiary.vercel.app/search",
+  }),
+
+  feedPage: createSEOEntry({
+    title: "Feed - Black Diary",
+    description: "Black Diary feed me trending Shayari aur posts padhein, like karein aur naye alfaazon ko discover karein.",
+    keywords: "shayari feed, posts feed, trending shayari, black diary feed",
+    url: "https://blackdiary.vercel.app/feed",
+  }),
+
+  diaryByTypePage: createSEOEntry({
+    title: "Diary Collections - Black Diary",
+    description: "Black Diary par type-based diary collections browse karein aur apni pasand ki Shayari aur posts dekhein.",
+    keywords: "diary by type, shayari collection, liked diaries, trending diaries, black diary",
+    url: "https://blackdiary.vercel.app/diary-by-type",
+  }),
+
+  postDiaryPage: createSEOEntry({
+    title: "Publish Shayari - Black Diary",
+    description: "Black Diary par apni Shayari, quotes aur poetry publish karein aur poetic community ke saath share karein.",
+    keywords: "publish shayari, write shayari online, create poetry post, black diary publish",
+    url: "https://blackdiary.vercel.app/publish",
+  }),
+
+  loginDiaryPage: createSEOEntry({
+    title: "Login - Black Diary",
+    description: "Black Diary account me login karein aur apni Shayari journey continue karein.",
+    keywords: "black diary login, login diary, shayari account login",
+    url: "https://blackdiary.vercel.app/login-diary",
+  }),
+
+  signUpDiaryPage: createSEOEntry({
+    title: "Sign Up - Black Diary",
+    description: "Black Diary par naya account banayein aur Shayari, quotes aur poetry world ka hissa banein.",
+    keywords: "black diary signup, sign up diary, poetry account signup",
+    url: "https://blackdiary.vercel.app/signUp-diary",
+  }),
+
+  leadershipPage: createSEOEntry({
+    title: "Leadership - Black Diary",
+    description: "Black Diary ki leadership team aur vision ke baare me jaaniye jo poetry platform ko shape deti hai.",
+    keywords: "black diary leadership, company leadership, poetry platform team",
+    url: "https://blackdiary.vercel.app/leadership",
+  }),
+
+  aboutUsPage: createSEOEntry({
+    title: "About Us - Black Diary",
+    description: "Black Diary ke mission, vision aur Hindi Shayari community ke liye hum kya build kar rahe hain, ye jaaniye.",
+    keywords: "about black diary, black diary mission, shayari platform about us",
+    url: "https://blackdiary.vercel.app/about-us",
+  }),
+
+  brandPage: createSEOEntry({
+    title: "Brand - Black Diary",
+    description: "Black Diary brand identity, visual language aur poetic platform ki branding philosophy explore karein.",
+    keywords: "black diary brand, brand identity, black diary logo, poetry platform branding",
+    url: "https://blackdiary.vercel.app/brand",
+  }),
+
+  workingAtBlackDiaryPage: createSEOEntry({
+    title: "Working at Black Diary - Black Diary",
+    description: "Black Diary ke saath work culture, opportunities aur creative environment ke baare me jaaniye.",
+    keywords: "working at black diary, careers black diary, creative jobs, poetry startup culture",
+    url: "https://blackdiary.vercel.app/working-at-black-diary",
+  }),
+
+  safetySupportPage: createSEOEntry({
+    title: "Safety Support - Black Diary",
+    description: "Black Diary par support aur safety resources dekhein taaki aap platform ko secure tareeke se use kar saken.",
+    keywords: "black diary support, safety support, shayari platform help",
+    url: "https://blackdiary.vercel.app/safety-support",
+  }),
+
+  safetyToolsPage: createSEOEntry({
+    title: "Safety Tools - Black Diary",
+    description: "Black Diary safety tools aur reporting features ke baare me jaaniye jo platform experience ko secure banate hain.",
+    keywords: "safety tools, black diary safety, reporting tools, secure poetry platform",
+    url: "https://blackdiary.vercel.app/safety-tools",
+  }),
+
+  privacyToolsPage: createSEOEntry({
+    title: "Privacy Tools - Black Diary",
+    description: "Black Diary par privacy tools aur account visibility controls ko samjhein aur apna data better manage karein.",
+    keywords: "privacy tools, black diary privacy, account privacy controls, user privacy",
+    url: "https://blackdiary.vercel.app/privacy-tools",
+  }),
+
+  accountSecurityPage: createSEOEntry({
+    title: "Account Security - Black Diary",
+    description: "Black Diary account security settings aur protection tips ke saath apna profile safe rakhein.",
+    keywords: "account security, black diary security, secure account tips, shayari account security",
+    url: "https://blackdiary.vercel.app/account-security",
+  }),
+
+  privacyPolicyPage: createSEOEntry({
+    title: "Privacy Policy - Black Diary",
+    description: "Black Diary privacy policy padhein aur samjhein ki hum aapke data ko kaise collect, use aur protect karte hain.",
+    keywords: "privacy policy, black diary privacy policy, user data policy",
+    url: "https://blackdiary.vercel.app/privacy-policy",
+  }),
+
+  termsAndConditionsPage: createSEOEntry({
+    title: "Terms and Conditions - Black Diary",
+    description: "Black Diary terms and conditions padhein aur platform ke usage rules aur guidelines ko samjhein.",
+    keywords: "terms and conditions, black diary terms, platform rules, shayari platform terms",
+    url: "https://blackdiary.vercel.app/terms-and-conditions",
+  }),
+
+  sitemapPage: createSEOEntry({
+    title: "Sitemap - Black Diary",
+    description: "Black Diary website ke important sections aur pages ka sitemap browse karein.",
+    keywords: "black diary sitemap, website pages, shayari sitemap",
+    url: "https://blackdiary.vercel.app/sitemap",
+  }),
+
+  contactUsPage: createSEOEntry({
+    title: "Contact Us - Black Diary",
+    description: "Black Diary team se contact karein aur support, feedback ya business queries bhejein.",
+    keywords: "contact black diary, support black diary, feedback, contact us",
+    url: "https://blackdiary.vercel.app/contact-us",
+  }),
+
+  goAdsPage: createSEOEntry({
+    title: "Ads and Promotions - Black Diary",
+    description: "Black Diary promotions aur advertising related content explore karein.",
+    keywords: "black diary ads, promotions, advertising page",
+    url: "https://blackdiary.vercel.app/go",
+  }),
+
+  editProfilePage: createSEOEntry({
+    title: "Edit Profile - Black Diary",
+    description: "Black Diary profile details, display info aur personal identity settings update karein.",
+    keywords: "edit profile, black diary profile settings, update profile",
+    url: "https://blackdiary.vercel.app/account/edit-profile",
+  }),
+
+  qrCodeDownloadPage: createSEOEntry({
+    title: "QR Code - Black Diary",
+    description: "Black Diary profile QR code generate ya download karein aur apna poetic profile share karein.",
+    keywords: "profile qr code, black diary qr, share profile qr",
+    url: "https://blackdiary.vercel.app/qr",
+  }),
+
+  loginActivityPage: createSEOEntry({
+    title: "Login Activity - Black Diary",
+    description: "Black Diary account ki login activity aur active sessions monitor karein.",
+    keywords: "login activity, active sessions, black diary account access",
+    url: "https://blackdiary.vercel.app/account/login-activity",
+  }),
+
+  notificationPermissionPage: createSEOEntry({
+    title: "Notification Settings - Black Diary",
+    description: "Black Diary notification permissions aur alerts preferences manage karein.",
+    keywords: "notification settings, black diary notifications, alerts preferences",
+    url: "https://blackdiary.vercel.app/account/notification-permission",
+  }),
+
+  blockAccountPage: createSEOEntry({
+    title: "Blocked Accounts - Black Diary",
+    description: "Black Diary par blocked accounts list manage karein aur apni interaction safety control karein.",
+    keywords: "blocked accounts, black diary block list, account safety",
+    url: "https://blackdiary.vercel.app/account/block-account",
+  }),
+
+  accountPrivacyPage: createSEOEntry({
+    title: "Account Privacy - Black Diary",
+    description: "Black Diary account privacy settings manage karein aur apne profile visibility controls update karein.",
+    keywords: "account privacy, black diary privacy settings, profile visibility",
+    url: "https://blackdiary.vercel.app/account/privacy-account",
+  }),
+
+  manageAccountPage: createSEOEntry({
+    title: "Manage Account - Black Diary",
+    description: "Black Diary account controls, preferences aur management options ko ek jagah se access karein.",
+    keywords: "manage account, black diary account settings, user preferences",
+    url: "https://blackdiary.vercel.app/account/manage-account",
+  }),
+
+  personalDetailsPage: createSEOEntry({
+    title: "Personal Details - Black Diary",
+    description: "Black Diary account ke personal details aur identity information ko review ya update karein.",
+    keywords: "personal details, account details, black diary profile info",
+    url: "https://blackdiary.vercel.app/account/personal-details",
+  }),
+
+  viewFollowListPage: createSEOEntry({
+    title: "Followers and Following - Black Diary",
+    description: "Black Diary par followers aur following lists browse karein aur poetic community connections dekhein.",
+    keywords: "followers list, following list, black diary social connections, poet followers",
+    url: "https://blackdiary.vercel.app/view-follow",
+  }),
+
 };
+
+export const DEFAULT_SEO = SEO.common;
