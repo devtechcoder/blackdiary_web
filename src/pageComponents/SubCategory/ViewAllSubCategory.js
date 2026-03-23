@@ -57,10 +57,10 @@ const resolveCountLabel = (item) => {
 };
 
 const CategorySkeleton = () => (
-  <div className="animate-pulse rounded-3xl border border-[rgba(255,215,0,0.08)] bg-[#171717] p-4">
-    <div className="mb-5 h-5 w-32 rounded-full bg-[#262626]" />
-    <div className="h-40 rounded-2xl bg-[linear-gradient(135deg,#1d1d1d_0%,#141414_100%)]" />
-    <div className="mt-4 h-4 w-24 rounded-full bg-[#242424]" />
+  <div className="animate-pulse rounded-[26px] border border-[rgba(255,215,0,0.08)] bg-[#171717] p-3.5">
+    <div className="mb-4 h-10 w-40 rounded-2xl bg-[#262626]" />
+    <div className="h-36 rounded-[18px] bg-[linear-gradient(135deg,#1d1d1d_0%,#141414_100%)]" />
+    <div className="mt-3 h-4 w-24 rounded-full bg-[#242424]" />
   </div>
 );
 
@@ -100,7 +100,7 @@ const ViewAllSubCategory = () => {
                 <div className="mb-4 h-12 w-56 animate-pulse rounded-full bg-[#1D1D1D]" />
                 <div className="h-5 w-72 animate-pulse rounded-full bg-[#191919]" />
               </div>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5">
                 {Array.from({ length: 8 }).map((_, index) => (
                   <CategorySkeleton key={index} />
                 ))}
@@ -153,31 +153,28 @@ const ViewAllSubCategory = () => {
                 <p className="mt-3 text-sm text-[#9D9D9D]">The emotional archives are empty right now. Check back in a moment.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5">
                 {cards.map((item, idx) => (
                   <button
                     key={item?._id || idx}
                     type="button"
                     onClick={() => navigate(`/sub-category/details/${item?.name}/${item?._id}`)}
-                    className="group relative overflow-hidden rounded-2xl border border-[rgba(255,215,0,0.14)] bg-[#1A1A1A] p-4 text-left transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(255,215,0,0.38)] hover:shadow-[0_0_25px_rgba(255,215,0,0.15)]"
+                    className="group relative overflow-hidden rounded-[26px] border border-[rgba(255,215,0,0.14)] bg-[#1A1A1A] p-3.5 text-left transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(255,215,0,0.38)] hover:shadow-[0_0_25px_rgba(255,215,0,0.15)]"
                     style={{ boxShadow: `0 18px 42px -28px ${item.theme.glow}` }}
                   >
                     <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${item.theme.overlay}`} />
                     <div className={`pointer-events-none absolute inset-0 opacity-70 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(255,215,0,0.14),transparent_35%)]`} />
                     <div className={`pointer-events-none absolute -bottom-10 right-0 h-36 w-36 rounded-full bg-gradient-to-tr ${item.theme.aura} blur-3xl`} />
 
-                    <div className="relative flex h-full min-h-[290px] flex-col justify-between">
+                    <div className="relative flex h-full min-h-[240px] flex-col justify-between">
                       <div>
-                        <span className="inline-flex rounded-full border border-[rgba(255,215,0,0.12)] bg-[rgba(255,215,0,0.05)] px-3 py-1 text-[10px] font-medium uppercase tracking-[0.24em] text-[#C9A227]">
-                          Category
-                        </span>
-                        <h2 className="poetic-heading mt-5 max-w-[11ch] text-3xl leading-tight text-[#F8F5ED]">{item?.name}</h2>
+                        <h2 className="poetic-heading max-w-[11ch] text-[2rem] leading-[1.08] text-[#F8F5ED]">{item?.name}</h2>
                       </div>
 
-                      <div className="relative mt-8 overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.04)] bg-[#121212]">
+                      <div className="relative mt-5 overflow-hidden rounded-[18px] border border-[rgba(255,255,255,0.04)] bg-[#121212]">
                         <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(8,8,8,0.08)_0%,rgba(8,8,8,0.32)_48%,rgba(8,8,8,0.82)_100%)]" />
                         <div className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.06),transparent_44%)]" />
-                        <div className="relative h-40 overflow-hidden">
+                        <div className="relative h-32 overflow-hidden md:h-36">
                           <AppImage
                             src={item?.image}
                             alt={item?.name}
@@ -188,7 +185,7 @@ const ViewAllSubCategory = () => {
                         </div>
                       </div>
 
-                      <div className="relative mt-5 flex items-center justify-between gap-3">
+                      <div className="relative mt-4 flex items-center justify-between gap-3">
                         <p className="text-sm font-medium text-[#B9B9B9]">{item.countLabel}</p>
                         <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D4AF37] transition-transform duration-300 group-hover:translate-x-1">
                           Open

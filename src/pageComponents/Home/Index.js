@@ -10,6 +10,7 @@ import Prouser from "../../assets/images/user.png";
 import { OccasionSlider, PoetSlider, SubCategorySlider } from "../Common/Slider";
 import { ViewSliderDairy } from "../Common/Section";
 import AppImage from "../../components/AppImage";
+import DiariesSection from "./DiariesSection";
 
 const HOME_PILLS = ["All", "Sher", "Shayari", "Ghazal", "Nazm", "Story", "Meme"];
 const CATEGORY_ALIAS = {
@@ -158,59 +159,12 @@ function LandingIndex() {
             <OccasionSlider data={homeData?.occasions ?? []} title={"Special Moments Shayari"} />
             <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Albums featuring diary you like"} type={"liked"} />
             <ViewSliderDairy data={homeData?.trendingDiary ?? []} title={"Trending Diaries"} type={"recently_viewed"} />
-            <TopDiarySection />
+            <DiariesSection />
           </section>
         </div>
       </section>
     </Main>
   );
 }
-
-const TopDiarySection = () => {
-  const navigate = useNavigate();
-  const [list, setList] = useState([]);
-  const [pagination] = useState({ current: 1, pageSize: 10 });
-
-  const { response: data, loading: isLoading } = useRequest(`${apiPath.getHomeTopDiary}?page=${pagination.current}&pageSize=${pagination.pageSize}`);
-
-  useEffect(() => {
-    if (data?.status) {
-      setList(data?.data?.docs ?? []);
-    }
-  }, [data]);
-
-  if (isLoading) {
-    return (
-      <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}>
-        {Array.from({ length: 2 }).map((_, index) => (
-          <div key={index} className="h-[180px] animate-pulse rounded-[18px] border-none outline-none bg-[#161616]" />
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <section>
-      <div className="mb-5 flex items-center justify-between gap-2">
-        <h3 className="poetic-heading text-2xl font-semibold text-[#F5F5F5] md:text-3xl">Diaries</h3>
-        <button type="button" className="text-sm font-medium text-[#D4AF37] hover:text-[#FFD700]" onClick={() => navigate(`/sub-category/details`)}>
-          Show All {"->"}
-        </button>
-      </div>
-
-      <div className="space-y-4">
-        {list?.map((item, index) => (
-          <article
-            key={item?._id || index}
-            className="rounded-[18px] border-none outline-none bg-[#161616] p-5 transition-all duration-300 hover:-translate-y-[6px] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)]"
-          >
-            <p className="mb-4 text-sm leading-relaxed text-[#F5F5F5]" dangerouslySetInnerHTML={{ __html: item?.content || "" }} />
-            <LikeShareActionIcon item={item} />
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-};
 
 export default LandingIndex;

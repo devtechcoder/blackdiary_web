@@ -26,7 +26,7 @@ export const ViewActionIcon = () => {
   );
 };
 
-export const LikeShareActionIcon = ({ item }) => {
+export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true, showLabels = variant === "diary" }) => {
   const { language } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [isLiked, setIsLiked] = useState(item?.is_liked || false);
@@ -70,17 +70,30 @@ export const LikeShareActionIcon = ({ item }) => {
       console.log(`Error: ${err}`);
     }
   };
+  const isDiaryVariant = variant === "diary";
+
+  const actionButtonClass = isDiaryVariant
+    ? "group flex items-center gap-2 rounded-full border border-[rgba(255,215,0,0.12)] bg-[rgba(255,255,255,0.03)] px-3 py-2 text-[12px] font-medium text-[#c4c4c4] transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(255,215,0,0.26)] hover:bg-[rgba(255,215,0,0.06)] hover:text-[#fff0bf]"
+    : "flex items-center gap-1 transition hover:text-green-400";
+
   return (
     <div className="w-full">
-      <div className="flex items-center justify-start sm:justify-start gap-4 sm:gap-6 text-zinc-400">
-        <button className={`flex items-center gap-1 ${isLiked ? "text-green-400" : "hover:text-green-400 transition"}`} onClick={onLike} disabled={loading} loading={loading}>
-          <FaHeart /> <span className="hidden sm:inline">Like</span>
+      <div className={`flex flex-wrap items-center justify-start gap-3 ${isDiaryVariant ? "" : "sm:gap-6"} ${isDiaryVariant ? "text-[#b9b9b9]" : "text-zinc-400"}`}>
+        <button
+          type="button"
+          className={`${actionButtonClass} ${isLiked ? (isDiaryVariant ? "border-[rgba(255,215,0,0.34)] bg-[rgba(255,215,0,0.08)] text-[#ffe38a]" : "text-green-400") : ""}`}
+          onClick={onLike}
+          disabled={loading}
+          loading={loading}
+        >
+          <FaHeart /> <span className={showLabels ? "" : "hidden sm:inline"}>Like</span>
         </button>
-        <button className="flex items-center gap-1 hover:text-green-400 transition" onClick={() => setIsCommentModalVisible(true)}>
-          <FaComment /> <span className="hidden sm:inline">Comment</span>
+        <button type="button" className={actionButtonClass} onClick={() => setIsCommentModalVisible(true)}>
+          <FaComment /> <span className={showLabels ? "" : "hidden sm:inline"}>Comment</span>
         </button>
         <button
-          className="flex items-center gap-1 hover:text-green-400 transition"
+          type="button"
+          className={actionButtonClass}
           onClick={() => {
             const temp = document.createElement("div");
             temp.innerHTML = item?.content || "";
@@ -98,11 +111,12 @@ export const LikeShareActionIcon = ({ item }) => {
             handleShare(shareData);
           }}
         >
-          <FaShareAlt /> <span className="hidden sm:inline">Share</span>
+          <FaShareAlt /> <span className={showLabels ? "" : "hidden sm:inline"}>Share</span>
         </button>
 
         <button
-          className="flex items-center gap-1 hover:text-green-400 transition"
+          type="button"
+          className={actionButtonClass}
           onClick={() => {
             // Strip HTML using a dummy div
             const tempElement = document.createElement("div");
@@ -114,22 +128,24 @@ export const LikeShareActionIcon = ({ item }) => {
             message.success("Copied to clipboard!");
           }}
         >
-          <FaCopy /> <span className="hidden sm:inline">Copy</span>
+          <FaCopy /> <span className={showLabels ? "" : "hidden sm:inline"}>Copy</span>
         </button>
       </div>
 
-      <div className="text-white mt-2">
-        <p className="font-medium text-sm">{totalLikes} likes</p>
-        <p className="text-sm">
-          {!!item?.content && (
-            <>
-              <span className="font-medium mr-2">{item.author?.user_name || "Unknown User"}</span>
-              <span className="text-gray-400">{item.content ? `${stripHtml(item.content).substring(0, 50)}...` : ""}</span>
-            </>
-          )}{" "}
-        </p>
-        <p className="text-gray-500 text-xs mt-1 uppercase">{dayjs(item?.created_at).fromNow()}</p>
-      </div>
+      {showMeta ? (
+        <div className={`text-white ${isDiaryVariant ? "mt-4" : "mt-2"}`}>
+          <p className={`${isDiaryVariant ? "text-xs uppercase tracking-[0.24em] text-[#9f8d61]" : "font-medium text-sm"}`}>{isDiaryVariant ? `${totalLikes} appreciations` : `${totalLikes} likes`}</p>
+          <p className={`text-sm ${isDiaryVariant ? "mt-2 leading-6 text-[#d6d6d6]" : ""}`}>
+            {!!item?.content && (
+              <>
+                <span className="font-medium mr-2">{item.author?.user_name || "Unknown User"}</span>
+                <span className={isDiaryVariant ? "text-[#8e8e8e]" : "text-gray-400"}>{item.content ? `${stripHtml(item.content).substring(0, 80)}...` : ""}</span>
+              </>
+            )}{" "}
+          </p>
+          <p className={`${isDiaryVariant ? "mt-2 text-[11px] uppercase tracking-[0.22em] text-[#6f6f6f]" : "text-gray-500 text-xs mt-1 uppercase"}`}>{dayjs(item?.created_at).fromNow()}</p>
+        </div>
+      ) : null}
 
       <CommentModal postId={item?._id} visible={isCommentModalVisible} onClose={() => setIsCommentModalVisible(false)} />
     </div>

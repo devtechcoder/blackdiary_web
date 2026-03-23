@@ -3,6 +3,7 @@ import { generateSEOMetadata } from "./seo";
 import { getSeoFallbackByRoute, normalizeSeoSlug } from "../seo/routes";
 
 const SEO_REVALIDATE_SECONDS = 300;
+const SEO_FETCH_TIMEOUT_MS = 2000;
 
 const getApiBaseUrl = () => {
   if (process.env.REACT_APP_API_BASE_URL) {
@@ -22,16 +23,20 @@ const joinUrl = (baseUrl, pathName) => {
   return `${normalizedBaseUrl}${normalizedPathName}`;
 };
 
+const shouldSkipRemoteSeoFetch = () =>
+  process.env.DISABLE_REMOTE_SEO_FETCH === "true" || process.env.npm_lifecycle_event === "build";
+
 const fetchSeoBySlug = cache(async (slug) => {
   const normalizedSlug = normalizeSeoSlug(slug);
   const baseUrl = getApiBaseUrl();
 
-  if (!baseUrl) {
+  if (!baseUrl || shouldSkipRemoteSeoFetch()) {
     return null;
   }
 
   try {
     const response = await fetch(joinUrl(baseUrl, `/seo/${encodeURIComponent(normalizedSlug)}`), {
+      signal: AbortSignal.timeout(SEO_FETCH_TIMEOUT_MS),
       next: {
         revalidate: SEO_REVALIDATE_SECONDS,
         tags: [`seo:${normalizedSlug}`],

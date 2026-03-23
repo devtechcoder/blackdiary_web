@@ -3,10 +3,22 @@ import Image from "next/image";
 
 const isString = (value) => typeof value === "string";
 
+const stripInvalidPrefix = (value = "") => value.replace(/^(undefined|null)+/i, "");
+
+const isAbsoluteUrl = (value) => /^https?:\/\//i.test(value);
+
 const resolveImageSrc = (src) => {
   if (!src) return "";
-  if (isString(src)) return src;
-  return src?.src || "";
+
+  const rawValue = isString(src) ? src : src?.src || "";
+  const normalizedValue = stripInvalidPrefix(rawValue).trim();
+
+  if (!normalizedValue) return "";
+  if (normalizedValue.startsWith("/")) return normalizedValue;
+  if (normalizedValue.startsWith("data:")) return normalizedValue;
+  if (isAbsoluteUrl(normalizedValue)) return normalizedValue;
+
+  return "";
 };
 
 const shouldSkipOptimization = (src) => {

@@ -15,6 +15,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "api-ap-south-mum-1.openstack.acecloudhosting.com",
+        port: "8080",
+      },
+      {
+        protocol: "https",
         hostname: "**",
       },
       {
