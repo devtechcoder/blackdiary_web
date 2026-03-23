@@ -1,0 +1,36 @@
+// Minimal list of public route paths for sitemap generation.
+// This avoids importing the app's React components and assets when
+// running the generator from Node during `npm run build`.
+
+module.exports = [
+  "/login-diary",
+  "/login",
+  "/signup",
+  "/signUp-diary",
+  "/signUp-otp/:id?",
+  "/",
+  "/poets/details/:slug?/:id?",
+  "/poets",
+  "/occasion",
+  "/occasion/details/:slug?/:id?",
+  "/sub-category/details/:slug?/:id?",
+  "/sub-categories",
+  "/search/sub-category",
+  "/leadership",
+  "/about-us",
+  "/brand",
+  "/working-at-black-diary",
+  "/safety-support",
+  "/safety-tools",
+  "/privacy-tools",
+  "/account-security",
+  "/privacy-policy",
+  "/terms-and-conditions",
+  "/sitemap",
+  "/contact-us",
+  "/search",
+  "/:username/:id?",
+  "/feed",
+  "/view-follow/:type/:userId/:user_name?",
+  "/go",
+];

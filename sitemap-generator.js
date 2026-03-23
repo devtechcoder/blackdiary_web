@@ -1,15 +1,17 @@
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { createWriteStream } = require("fs");
 const { resolve } = require("path");
-const { publicRoutes } = require("./src/routes");
+
+// Use a minimal, CommonJS-only list of paths to avoid importing React
+// components and assets (images/CSS) when running this script under Node.
+const publicRoutes = require("./src/sitemap-paths");
 
 async function generateSitemap() {
-  const sitemap = new SitemapStream({
-    hostname: "https://blackdiary.vercel.app",
-  });
+  const sitemap = new SitemapStream({ hostname: "https://blackdiary.vercel.app" });
 
   publicRoutes.forEach((route) => {
-    sitemap.write({ url: route.path });
+    // route may be a string path
+    sitemap.write({ url: typeof route === "string" ? route : route.path });
   });
 
   sitemap.end();
