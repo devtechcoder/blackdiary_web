@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Card, Avatar, Input, Spin } from "antd";
-import { HeartOutlined, HeartFilled, MessageOutlined, SendOutlined, MoreOutlined, BookOutlined } from "@ant-design/icons";
-import Main from "../../components/layout/Main";
+import { Spin } from "antd";
+import { HiSparkles } from "react-icons/hi2";
 import apiPath from "../../constants/apiPath";
 import { useGetApi } from "../../hooks/useRequest";
 import dayjs from "dayjs";
@@ -9,60 +8,142 @@ import Prouser from "../../assets/images/user.png";
 import { FollowIcon, LikeShareActionIcon } from "../../components/ButtonField";
 import { useNavigate } from "react-router";
 import AppImage from "../../components/AppImage";
+import { stripHtml } from "../../helper/functions";
 
-const PostCard = ({ post }) => {
-  const navigate = useNavigate();
-  return (
-    <Card className="w-full max-w-lg bg-[#121212] border border-gray-800 rounded-lg mb-6" bodyStyle={{ padding: 0 }}>
-      {/* Post Header */}
-      <div className="flex items-center justify-between p-3">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate(`/@${post.author?.user_name}`)}>
-          <Avatar src={post.author?.image || Prouser} />
-          <span className="text-white font-semibold">{post.author?.user_name || "Unknown User"}</span>
-        </div>
-        <div className="flex items-center gap-4">
-          {!post?.is_follow && <FollowIcon userId={post?.author?._id} hideButton={post?.is_follow || false} />}
-
-          <MoreOutlined className="text-white text-xl cursor-pointer" />
+const PostSkeleton = () => (
+  <div className="mx-auto w-full max-w-[54rem] animate-pulse overflow-hidden rounded-[28px] border border-[rgba(255,215,0,0.1)] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-4 sm:p-5">
+    <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center gap-3">
+        <div className="h-12 w-12 rounded-full bg-[rgba(255,255,255,0.08)]" />
+        <div className="space-y-2">
+          <div className="h-3 w-28 rounded-full bg-[rgba(255,255,255,0.08)]" />
+          <div className="h-3 w-20 rounded-full bg-[rgba(255,255,255,0.05)]" />
         </div>
       </div>
+      <div className="h-10 w-24 rounded-full bg-[rgba(255,215,0,0.12)]" />
+    </div>
+    <div className="mt-5 aspect-[4/5] rounded-[24px] bg-[rgba(255,255,255,0.05)]" />
+    <div className="mt-5 h-12 rounded-full bg-[rgba(255,255,255,0.05)]" />
+  </div>
+);
 
-      {/* Post Image */}
-      {post.image && <AppImage src={post.image} alt="Post" width={680} height={680} className="h-auto w-full bg-gray-900 object-cover" />}
+const EmptyState = () => (
+  <div className="mx-auto w-full max-w-[54rem] rounded-[28px] border border-[rgba(255,215,0,0.12)] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] px-5 py-12 text-center">
+    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[rgba(255,215,0,0.16)] bg-[rgba(255,215,0,0.06)] text-[#f1d785]">
+      <HiSparkles className="text-2xl" />
+    </div>
+    <h3 className="poetic-heading mt-5 text-3xl text-[#fff2cc]">No posts to show</h3>
+    <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[#aea38b]">Visual stories will appear here once creators publish new moments.</p>
+  </div>
+);
 
-      {/* Post Actions */}
-      <div className="p-3">
-        <div className="flex justify-between items-center text-white text-xl">
-          <div className="flex gap-4">
-            <LikeShareActionIcon item={post} />
+const ErrorState = () => (
+  <div className="mx-auto w-full max-w-[54rem] rounded-[28px] border border-[rgba(255,120,120,0.18)] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] px-5 py-12 text-center">
+    <h3 className="poetic-heading text-3xl text-[#ffe0d6]">Posts could not load</h3>
+    <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[#c8b0a9]">Something went wrong while loading posts. Please refresh and try again.</p>
+  </div>
+);
+
+const PostCard = ({ post, index }) => {
+  const navigate = useNavigate();
+  const authorName = post?.author?.name || post?.author?.user_name || post?.author?.username || "Unknown User";
+  const authorHandle = String(post?.author?.user_name || post?.author?.username || authorName).replace(/^@/, "");
+  const timeAgo = post?.created_at ? dayjs(post.created_at).fromNow() : "Freshly posted";
+  const plainText = stripHtml(post?.content || "");
+
+  return (
+    <article className="group mx-auto w-full max-w-[54rem] overflow-hidden rounded-[30px] border border-[rgba(255,215,0,0.14)] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-[1px] shadow-[0_20px_60px_rgba(0,0,0,0.28)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+      <div className="relative overflow-hidden rounded-[29px] bg-[linear-gradient(180deg,rgba(14,14,14,0.98),rgba(8,8,8,0.98))]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,215,0,0.1),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_25%,transparent_78%,rgba(255,215,0,0.03))]" />
+
+        <div className="relative border-b border-[rgba(255,215,0,0.08)] px-4 py-3.5 sm:px-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-center gap-3">
+              <button type="button" className="flex min-w-0 items-center gap-3 text-left" onClick={() => navigate(`/@${authorHandle}`)}>
+                <AppImage src={post?.author?.image || Prouser} alt={authorName} width={50} height={50} className="h-12 w-12 rounded-full border border-[rgba(255,215,0,0.18)] object-cover" />
+                <div className="min-w-0">
+                  <p className="truncate text-base font-semibold text-[#fff2cf]">{authorName}</p>
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#958660]">
+                    <span className="truncate">@{authorHandle}</span>
+                    <span className="h-1 w-1 rounded-full bg-[rgba(255,215,0,0.45)]" />
+                    <span>{timeAgo}</span>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+              {!post?.is_follow && (
+                <FollowIcon
+                  userId={post?.author?._id}
+                  hideButton={post?.is_follow || false}
+                  classname="rounded-full bg-[#d4af37] px-4 py-2 text-sm font-semibold text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f2cb57]"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="relative p-3 sm:p-4">
+          <div className="overflow-hidden rounded-[26px] border border-[rgba(255,215,0,0.08)] bg-[rgba(255,255,255,0.02)]">
+            {post.image ? (
+              <AppImage src={post.image} alt="Post" width={1200} height={1200} className="h-auto max-h-[46vh] w-full bg-[#0f0f0f] object-cover sm:max-h-[52vh] lg:max-h-[58vh]" />
+            ) : (
+              <div className="flex aspect-[4/3] items-center justify-center bg-[linear-gradient(135deg,#171717,#0c0c0c)] px-6 text-center sm:aspect-[16/10]">
+                <p className="poetic-heading text-2xl leading-[1.6] text-[#f7efd9] sm:text-3xl">A visual post without media still deserves a graceful canvas.</p>
+              </div>
+            )}
+          </div>
+
+          {plainText ? (
+            <div className="mt-3 rounded-[22px] border border-[rgba(255,215,0,0.08)] bg-[rgba(255,255,255,0.02)] px-4 py-3.5 sm:px-5">
+              <p className="text-sm leading-7 text-[#d9d1bd] sm:text-[15px]">{plainText}</p>
+            </div>
+          ) : null}
+          <div className="mt-4 rounded-[24px] border border-[rgba(255,215,0,0.08)] bg-[rgba(255,255,255,0.02)] p-4 sm:p-5">
+            <LikeShareActionIcon item={post} variant="diary" showMeta={false} showLabels />
           </div>
         </div>
       </div>
-    </Card>
+    </article>
   );
 };
 
 const PostPage = () => {
   const [posts, setPosts] = useState([]);
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 });
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 6, total: 0 });
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef();
 
-  const { data, isFetching, isError, error } = useGetApi({
+  const { data, isFetching, isError } = useGetApi({
     queryKey: ["post", pagination.current],
     endpoint: `${apiPath.getPost}?page=${pagination.current}&pageSize=${pagination.pageSize}`,
-    enabled: hasMore, // Only fetch if there's more data
+    enabled: hasMore,
   });
 
   useEffect(() => {
     if (data?.status && !isError) {
-      const newDocs = data.data.docs;
-      setPosts((prev) => [...prev, ...newDocs]);
+      const newDocs = data?.data?.docs ?? [];
+
+      setPosts((prev) => {
+        const existingIds = new Set(prev.map((item) => item?._id));
+        const merged = [...prev];
+
+        newDocs.forEach((item) => {
+          if (!existingIds.has(item?._id)) {
+            merged.push(item);
+          }
+        });
+
+        return merged;
+      });
+
       setPagination((prev) => ({
         ...prev,
-        total: data.data.totalDocs,
+        total: data?.data?.totalDocs ?? 0,
       }));
-      if (data.data.page >= data.data.totalPages) {
+
+      if (data?.data?.page >= data?.data?.totalPages) {
         setHasMore(false);
       }
     }
@@ -72,40 +153,53 @@ const PostPage = () => {
     (node) => {
       if (isFetching) return;
       if (observer.current) observer.current.disconnect();
+
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           setPagination((prev) => ({ ...prev, current: prev.current + 1 }));
         }
       });
+
       if (node) observer.current.observe(node);
     },
     [isFetching, hasMore],
   );
 
   return (
-    <>
-      <div className="flex justify-center w-full bg-black text-white">
-        <div className="flex flex-col items-center w-full px-4">
-          {posts.map((post, index) => {
-            if (posts.length === index + 1) {
-              return (
-                <div ref={lastPostElementRef} key={post._id} className="w-full max-w-lg">
-                  <PostCard post={post} />
-                </div>
-              );
-            } else {
-              return <PostCard key={post._id} post={post} />;
-            }
-          })}
+    <section className="w-full">
+      <div className="space-y-5 sm:space-y-6">
+        {isError && posts.length === 0 ? <ErrorState /> : null}
 
-          {isFetching && <Spin size="large" className="my-4" />}
+        {posts.map((post, index) => {
+          const card = <PostCard key={post?._id || index} post={post} index={index} />;
 
-          {!hasMore && posts.length > 0 && <p className="text-gray-500 my-4">You've reached the end!</p>}
+          if (posts.length === index + 1) {
+            return (
+              <div ref={lastPostElementRef} key={post?._id || index}>
+                {card}
+              </div>
+            );
+          }
 
-          {!isFetching && posts.length === 0 && <p className="text-gray-500 my-4">No posts to show.</p>}
-        </div>
+          return card;
+        })}
+
+        {isFetching && (
+          <div className="space-y-5 sm:space-y-6">
+            {Array.from({ length: posts.length ? 1 : 2 }).map((_, index) => (
+              <PostSkeleton key={index} />
+            ))}
+            <div className="flex justify-center">
+              <Spin size="large" />
+            </div>
+          </div>
+        )}
+
+        {!isFetching && !isError && posts.length === 0 ? <EmptyState /> : null}
+
+        {!hasMore && posts.length > 0 ? <p className="py-2 text-center text-sm uppercase tracking-[0.22em] text-[#746b58]">You have reached the end of the feed</p> : null}
       </div>
-    </>
+    </section>
   );
 };
 

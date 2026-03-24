@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import dayjs from "dayjs";
-import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import { FaQuoteLeft } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi2";
 import { FiArrowRight } from "react-icons/fi";
@@ -69,7 +69,7 @@ const isTrendingEntry = (item, index) => {
 
 const DiarySkeletonCard = ({ index }) => (
   <div
-    className="relative overflow-hidden rounded-[30px] border border-[rgba(255,215,0,0.15)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-6 shadow-[0_22px_50px_rgba(0,0,0,0.24)] backdrop-blur-xl"
+    className="relative mx-auto w-full max-w-4xl overflow-hidden rounded-[30px] border border-[rgba(255,215,0,0.15)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-5 shadow-[0_22px_50px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:p-6"
     style={{ animationDelay: `${index * 90}ms` }}
   >
     <div className="absolute inset-0 -translate-x-full animate-[diaryShimmer_2.6s_linear_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent)]" />
@@ -146,7 +146,7 @@ const ExpandableDiaryContent = ({ content }) => {
         className="relative overflow-hidden"
       >
         <div
-          className="poetic-heading text-center text-[1.45rem] leading-[1.95] tracking-[0.02em] text-[#fbf4df] sm:text-[1.6rem]"
+          className="poetic-heading text-center text-[1.18rem] leading-[1.85] tracking-[0.02em] text-[#fbf4df] sm:text-[1.4rem] md:text-[1.6rem]"
           dangerouslySetInnerHTML={{ __html: content || "" }}
         />
         {!expanded && isLongContent ? <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,rgba(8,8,8,0),rgba(8,8,8,0.96))]" /> : null}
@@ -170,7 +170,7 @@ const ExpandableDiaryContent = ({ content }) => {
 
 const DiaryCard = ({ item, index }) => {
   const authorName = item?.author?.name || item?.author?.user_name || item?.author?.username || "Unknown User";
-  const authorHandle = item?.author?.user_name || item?.author?.username || authorName;
+  const authorHandle = String(item?.author?.user_name || item?.author?.username || authorName).replace(/^@/, "");
   const createdAt = item?.created_at || item?.createdAt;
   const plainText = stripHtml(item?.content || "");
   const readTime = getReadTime(item?.content);
@@ -180,20 +180,20 @@ const DiaryCard = ({ item, index }) => {
     <m.article
       variants={CARD_VARIANTS}
       whileHover={{
-        y: -8,
-        scale: 1.022,
+        y: -5,
+        scale: 1.01,
         transition: cardHoverTransition,
       }}
-      className="group relative"
+      className="group relative mx-auto w-full max-w-4xl"
     >
       <div className="absolute inset-0 rounded-[32px] bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.16),transparent_56%)] opacity-50 blur-2xl transition-opacity duration-500 group-hover:opacity-90" />
       <div className="relative overflow-hidden rounded-[30px] border border-[rgba(255,215,0,0.18)] bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] p-[1px] shadow-[0_25px_60px_rgba(0,0,0,0.34)] backdrop-blur-2xl">
         <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(255,215,0,0.12),transparent_24%,transparent_74%,rgba(255,215,0,0.08))] opacity-70" />
-        <div className="relative flex h-full flex-col rounded-[29px] bg-[linear-gradient(180deg,rgba(12,12,12,0.98),rgba(8,8,8,0.98))] p-5 sm:p-6">
+        <div className="relative flex h-full flex-col rounded-[29px] bg-[linear-gradient(180deg,rgba(12,12,12,0.98),rgba(8,8,8,0.98))] p-4 sm:p-6">
           <div className="absolute -left-6 top-14 h-24 w-24 rounded-full bg-[rgba(255,215,0,0.06)] blur-3xl" />
           <div className="absolute -right-8 top-6 h-28 w-28 rounded-full bg-[rgba(255,215,0,0.08)] blur-3xl" />
 
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="flex min-w-0 items-center gap-3">
               <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[rgba(255,215,0,0.28)] bg-[rgba(255,255,255,0.03)] shadow-[0_0_22px_rgba(255,215,0,0.12)]">
                 <AppImage
@@ -217,14 +217,14 @@ const DiaryCard = ({ item, index }) => {
             </div>
 
             {showTrending ? (
-              <div className="font-poppins inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[rgba(255,215,0,0.22)] bg-[rgba(255,215,0,0.09)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ffe08c] shadow-[0_0_18px_rgba(255,215,0,0.08)]">
+              <div className="font-poppins inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border border-[rgba(255,215,0,0.22)] bg-[rgba(255,215,0,0.09)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ffe08c] shadow-[0_0_18px_rgba(255,215,0,0.08)]">
                 <HiSparkles className="text-sm" />
                 Trending
               </div>
             ) : null}
           </div>
 
-          <div className="relative mt-6 flex-1 rounded-[26px] border border-[rgba(255,215,0,0.12)] bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.012))] px-5 py-6 sm:px-6">
+          <div className="relative mt-5 flex-1 rounded-[22px] border border-[rgba(255,215,0,0.12)] bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.012))] px-4 py-5 sm:mt-6 sm:rounded-[26px] sm:px-6 sm:py-6 lg:px-7">
             <FaQuoteLeft className="absolute left-5 top-5 text-lg text-[rgba(255,215,0,0.24)]" />
             <div className="pt-5">
               <ExpandableDiaryContent content={item?.content || ""} />
@@ -238,9 +238,9 @@ const DiaryCard = ({ item, index }) => {
           </div>
 
           <div className="mt-5 border-t border-[rgba(255,215,0,0.12)] pt-5">
-            <div className="font-poppins mb-4 flex items-center justify-between gap-3 text-xs text-[#baa97e]">
+            <div className="font-poppins mb-4 flex flex-col gap-2 text-xs text-[#baa97e] sm:flex-row sm:items-center sm:justify-between sm:gap-3">
               <p className="uppercase tracking-[0.22em]">{`${item?.total_likes ?? 0} appreciations`}</p>
-              <p className="text-right text-[#8c815f]">{showTrending ? "Voices readers are revisiting" : "A quiet note worth reading slowly"}</p>
+              <p className="text-left text-[#8c815f] sm:text-right">{showTrending ? "Voices readers are revisiting" : "A quiet note worth reading slowly"}</p>
             </div>
             <LikeShareActionIcon item={item} variant="diary" showMeta={false} showLabels />
           </div>
@@ -266,8 +266,7 @@ const DiariesSection = () => {
     <LazyMotion features={domAnimation}>
       <m.section
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.12 }}
+        animate="visible"
         variants={SECTION_VARIANTS}
         className="relative isolate overflow-hidden rounded-[34px] border border-[rgba(255,215,0,0.14)] bg-[linear-gradient(180deg,#0a0a0a_0%,#050505_100%)] px-4 py-8 shadow-[0_30px_100px_rgba(0,0,0,0.42)] sm:px-5 md:px-8 md:py-10"
       >
@@ -275,11 +274,11 @@ const DiariesSection = () => {
         <div className="absolute inset-0 opacity-[0.06] [background-image:radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
         <FloatingParticles />
 
-        <div className="relative">
+        <div className="relative mx-auto max-w-5xl">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
               <p className="font-poppins text-[11px] uppercase tracking-[0.34em] text-[#9f8e63]">The digital diary</p>
-              <h3 className="poetic-heading mt-3 text-4xl font-semibold text-[#fff6dd] sm:text-5xl">Diaries</h3>
+              <h3 className="poetic-heading mt-3 text-[2.3rem] font-semibold text-[#fff6dd] sm:text-5xl">Diaries</h3>
               <p className="font-poppins mt-3 text-sm leading-7 text-[#b8af97] sm:text-[15px]">Where emotions find words</p>
               <div className="mt-5 flex items-center gap-3">
                 <div className="h-px w-24 bg-[linear-gradient(90deg,rgba(255,215,0,0),rgba(255,215,0,0.9),rgba(255,215,0,0))]" />
@@ -296,14 +295,14 @@ const DiariesSection = () => {
               onClick={() => navigate("/sub-category/details")}
               whileHover={{ x: 4 }}
               whileTap={{ scale: 0.98 }}
-              className="font-poppins inline-flex items-center justify-center gap-2 self-start rounded-full border border-[rgba(255,215,0,0.2)] bg-[rgba(255,255,255,0.04)] px-5 py-3 text-sm font-semibold text-[#ffe7a4] backdrop-blur-xl transition-all duration-300 hover:border-[rgba(255,215,0,0.38)] hover:bg-[rgba(255,215,0,0.08)] hover:shadow-[0_0_30px_rgba(255,215,0,0.12)] md:self-auto"
+              className="font-poppins inline-flex w-full items-center justify-center gap-2 self-start rounded-full border border-[rgba(255,215,0,0.2)] bg-[rgba(255,255,255,0.04)] px-5 py-3 text-sm font-semibold text-[#ffe7a4] backdrop-blur-xl transition-all duration-300 hover:border-[rgba(255,215,0,0.38)] hover:bg-[rgba(255,215,0,0.08)] hover:shadow-[0_0_30px_rgba(255,215,0,0.12)] sm:w-auto md:self-auto"
             >
               View All
               <FiArrowRight className="text-base" />
             </m.button>
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 flex flex-col gap-4 sm:gap-5">
             {isLoading
               ? Array.from({ length: 6 }).map((_, index) => <DiarySkeletonCard key={index} index={index} />)
               : list?.map((item, index) => <DiaryCard key={item?._id || index} item={item} index={index} />)}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Main from "../../components/layout/Main";
 import apiPath from "../../constants/apiPath";
 import { useNavigate } from "react-router";

@@ -26,7 +26,7 @@ export const ViewActionIcon = () => {
   );
 };
 
-export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true, showLabels = variant === "diary" }) => {
+export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true, showLabels = variant === "diary", fullWidth = true }) => {
   const { language } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [isLiked, setIsLiked] = useState(item?.is_liked || false);
@@ -77,7 +77,7 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
     : "flex items-center gap-1 transition hover:text-green-400";
 
   return (
-    <div className="w-full">
+    <div className={fullWidth ? "w-full" : "w-auto"}>
       <div className={`flex flex-wrap items-center justify-start gap-3 ${isDiaryVariant ? "" : "sm:gap-6"} ${isDiaryVariant ? "text-[#b9b9b9]" : "text-zinc-400"}`}>
         <button
           type="button"

@@ -4,7 +4,6 @@ import { Layout, Modal } from "antd"; // Import Modal
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import apiPath from "../../constants/apiPath";
-import logowithoutbrand from "../../assets/images/allLogo/logowithoutbrand.png";
 import CreatePostOption from "../../modals/createPostOption";
 import AppImage from "../AppImage";
 
@@ -23,6 +22,25 @@ function SidebarChevron({ collapsed }) {
       strokeLinejoin="round"
     >
       {collapsed ? <path d="M9 6l6 6-6 6" /> : <path d="M15 6l-6 6 6 6" />}
+    </svg>
+  );
+}
+
+function SidebarLogoMark({ collapsed }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 100 100"
+      className={collapsed ? "h-8 w-8 shrink-0" : "h-9 w-9 shrink-0"}
+      fill="none"
+      stroke="#ffffff"
+      strokeWidth="6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M50 10 L90 90 H10 Z" />
+      <path d="M50 10 V90" />
+      <path d="M10 90 L50 60 L90 90" />
     </svg>
   );
 }
@@ -67,10 +85,10 @@ function Sidenav() {
       className="bg-[#0B0B0B] text-white border-none outline-none sticky top-0 h-screen overflow-y-auto shrink-0"
     >
       <div className="flex items-center justify-between px-[18px] py-4 border-none outline-none">
-        <div className="flex items-center gap-[10px] min-w-0">
-          {!collapsed && <AppImage src={logowithoutbrand} alt="Logo" width={32} height={32} className="h-8 w-8 object-contain" />}
+        <button type="button" onClick={() => navigate("/")} className="flex min-w-0 items-center gap-3 text-left">
+          <SidebarLogoMark collapsed={collapsed} />
           {!collapsed && <span className="truncate text-[18px] font-semibold text-white">Black Diary</span>}
-        </div>
+        </button>
         <button
           type="button"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
