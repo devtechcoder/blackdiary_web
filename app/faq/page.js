@@ -22,7 +22,6 @@ const joinUrl = (baseUrl, pathName) => {
   return `${normalizedBaseUrl}${normalizedPathName}`;
 };
 
-const stripHtml = (value = "") => value.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
 const sortFaqsByPriority = (faqs = []) => [...faqs].sort((a, b) => (a?.priority || 1) - (b?.priority || 1));
 
 const fetchFaqs = async () => {
@@ -62,26 +61,5 @@ export async function generateMetadata() {
 
 export default async function FaqPage() {
   const faqs = sortFaqsByPriority(await fetchFaqs());
-  const schema =
-    faqs.length > 0
-      ? {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((item) => ({
-            "@type": "Question",
-            name: item?.question || "",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: stripHtml(item?.answer || ""),
-            },
-          })),
-        }
-      : null;
-
-  return (
-    <>
-      {schema ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} /> : null}
-      <PageComponent initialFaqs={faqs} />
-    </>
-  );
+  return <PageComponent initialFaqs={faqs} />;
 }

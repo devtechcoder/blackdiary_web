@@ -1,4 +1,5 @@
 import Script from "next/script";
+import RouteSchema from "../components/SEO/RouteSchema";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -43,29 +44,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <div className="app-shell">
+          <RouteSchema />
           <ClientRoot>{children}</ClientRoot>
         </div>
-
-        <Script
-          id="structured-data"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "Black Diary",
-              url: "https://blackdiary.vercel.app/",
-              potentialAction: {
-                "@type": "SearchAction",
-                target: "https://blackdiary.vercel.app/search?q={search_term_string}",
-                "query-input": "required name=search_term_string",
-              },
-              description: "Write and share Shayari, Quotes, and Ghazals with poetry lovers.",
-              sameAs: ["https://instagram.com/black_diary.in"],
-            }),
-          }}
-          strategy="afterInteractive"
-        />
         <Script src="https://t.contentsquare.net/uxa/dc3706aa854f8.js" strategy="afterInteractive" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-7TPVTC5M3X" strategy="afterInteractive" />
         <Script
