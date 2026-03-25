@@ -24,6 +24,7 @@ export const SEO_ROUTE_FALLBACKS = {
   "/contact-us": SEO.contactUsPage,
   "/diary-by-type": SEO.diaryByTypePage,
   "/feed": SEO.feedPage,
+  "/faq": SEO.faqPage,
   "/go": SEO.goAdsPage,
   "/leadership": SEO.leadershipPage,
   "/login": SEO.login,

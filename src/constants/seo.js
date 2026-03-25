@@ -378,6 +378,13 @@ export const SEO = {
     url: "https://blackdiary.vercel.app/account-security",
   }),
 
+  faqPage: createSEOEntry({
+    title: "FAQ - Black Diary",
+    description: "Black Diary ke frequently asked questions padhein aur platform, content aur usage se jude quick answers paayen.",
+    keywords: "black diary faq, help center, frequently asked questions, black diary support",
+    url: "https://blackdiary.vercel.app/faq",
+  }),
+
   privacyPolicyPage: createSEOEntry({
     title: "Privacy Policy - Black Diary",
     description: "Black Diary privacy policy padhein aur samjhein ki hum aapke data ko kaise collect, use aur protect karte hain.",

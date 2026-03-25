@@ -176,6 +176,11 @@ function Footer() {
                   Special Moments
                 </Link>
               </li>
+              <li>
+                <Link to="/faq" className={footerLinkClass}>
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
 
