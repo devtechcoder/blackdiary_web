@@ -138,7 +138,7 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
           <p className={`text-sm ${isDiaryVariant ? "mt-2 leading-6 text-[#d6d6d6]" : ""}`}>
             {!!item?.content && (
               <>
-                <span className="font-medium mr-2">{item.author?.user_name || "Unknown User"}</span>
+                <span className="font-medium mr-2">{item.author?.user_name || item.author?.username || item.author?.name || "Unknown User"}</span>
                 <span className={isDiaryVariant ? "text-[#8e8e8e]" : "text-gray-400"}>{item.content ? `${stripHtml(item.content).substring(0, 80)}...` : ""}</span>
               </>
             )}{" "}

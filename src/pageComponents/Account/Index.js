@@ -10,7 +10,6 @@ import { useGetApi } from "../../hooks/useRequest";
 import Loader from "../../components/Loader";
 import { getOriginalUserName } from "../../helper/functions";
 import ProfileHeader from "../../components/profile/ProfileHeader";
-import ProfileStats from "../../components/profile/ProfileStats";
 import TabsNavigation from "../../components/profile/TabsNavigation";
 import ShayariGrid from "../../components/profile/ShayariGrid";
 
@@ -35,14 +34,13 @@ const Profile = () => {
 
   useEffect(() => {
     if (data?.status && !isError) {
-      setProfileData(data.data);
+      setProfileData(data?.data?._id ? data.data : null);
     }
   }, [data, isError]);
 
   // Determine if the logged-in user is viewing their own profile
   const isOwnProfile = isLoggedIn && loggedInUserProfile?.user_name === profileData?.user_name;
   const totalPosts = (feedMeta?.shayari?.totalDocs || 0) + (feedMeta?.post?.totalDocs || 0);
-  const totalLikes = profileData?.total_likes || profileData?.totalLikes || profileData?.likes || 0;
 
   if (isLoading) {
     return (
@@ -79,25 +77,6 @@ const Profile = () => {
           onOpenSettings={() => setShow(true)}
           onFollowersClick={() => navigate(`/view-follow/follower/${profileData?._id}/${profileData?.user_name}`)}
           onFollowingClick={() => navigate(`/view-follow/following/${profileData?._id}/${profileData?.user_name}`)}
-        />
-
-        <section className="rounded-3xl border border-[#D4AF37] bg-gradient-to-br from-[#131313] via-[#101010] to-[#0c0c0c] p-5 md:p-6">
-          <p className="mb-3 whitespace-pre-wrap font-['Playfair_Display'] text-lg leading-relaxed text-[#f4f4f4]">
-            {profileData?.bio || "Raat ki tanhaiyon mein alfaaz roshni ban kar utarte hain."}
-          </p>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-[#D4AF37] bg-[#171717] px-3 py-1 text-xs text-[#d5d5d5]">{profileData?.location || "In the mood of midnight poetry"}</span>
-            <span className="rounded-full border border-[#D4AF37] bg-[#261e0f] px-3 py-1 text-xs text-[#f5d98e]">
-              "{profileData?.favorite_quote || "Har lafz mein ek dhadkan basti hai."}"
-            </span>
-          </div>
-        </section>
-
-        <ProfileStats
-          totalPosts={totalPosts}
-          followers={profileData?.followers || 0}
-          following={profileData?.following || 0}
-          totalLikes={totalLikes}
         />
 
         <div className="space-y-5">

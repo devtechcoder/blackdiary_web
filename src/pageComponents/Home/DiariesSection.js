@@ -11,7 +11,7 @@ import { useRequest } from "../../hooks/useReduxRequest";
 import apiPath from "../../constants/apiPath";
 import AppImage from "../../components/AppImage";
 import { LikeShareActionIcon } from "../../components/ButtonField";
-import { stripHtml } from "../../helper/functions";
+import { resolveAssetUrl, stripHtml } from "../../helper/functions";
 import Prouser from "../../assets/images/user.png";
 
 const SECTION_VARIANTS = {
@@ -171,6 +171,7 @@ const ExpandableDiaryContent = ({ content }) => {
 const DiaryCard = ({ item, index }) => {
   const authorName = item?.author?.name || item?.author?.user_name || item?.author?.username || "Unknown User";
   const authorHandle = String(item?.author?.user_name || item?.author?.username || authorName).replace(/^@/, "");
+  const authorImage = item?.author?.image ? resolveAssetUrl(item.author.image, apiPath.assetURL) : Prouser;
   const createdAt = item?.created_at || item?.createdAt;
   const plainText = stripHtml(item?.content || "");
   const readTime = getReadTime(item?.content);
@@ -197,7 +198,7 @@ const DiaryCard = ({ item, index }) => {
             <div className="flex min-w-0 items-center gap-3">
               <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[rgba(255,215,0,0.28)] bg-[rgba(255,255,255,0.03)] shadow-[0_0_22px_rgba(255,215,0,0.12)]">
                 <AppImage
-                  src={item?.author?.image || Prouser}
+                  src={authorImage}
                   alt={authorName}
                   width={48}
                   height={48}

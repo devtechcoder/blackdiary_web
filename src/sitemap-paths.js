@@ -9,7 +9,6 @@ module.exports = [
   "/signUp-diary",
   "/signUp-otp/:id?",
   "/",
-  "/poets/details/:slug?/:id?",
   "/poets",
   "/occasion",
   "/occasion/details/:slug?/:id?",

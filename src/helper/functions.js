@@ -90,3 +90,14 @@ export const stripHtml = (html) => {
   const doc = new DOMParser().parseFromString(html, "text/html");
   return doc.body.textContent || "";
 };
+
+export const resolveAssetUrl = (url, assetURL = "") => {
+  if (!url) return "";
+  if (typeof url !== "string") return url;
+  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) return url;
+
+  const normalizedAssetURL = String(assetURL || "").replace(/\/+$/, "");
+  const normalizedUrl = url.startsWith("/") ? url : `/${url}`;
+
+  return normalizedAssetURL ? `${normalizedAssetURL}${normalizedUrl}` : normalizedUrl;
+};

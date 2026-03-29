@@ -10,6 +10,7 @@ import { AuthProvider } from "../context/AuthContext";
 import { AppContextProvider } from "../context/AppContext";
 import ScrollToTop from "../components/ScrollToTop";
 import Loader from "../components/Loader";
+import ChatBot from "../../components/ChatBot";
 import apiPath from "../constants/apiPath";
 import { useRequest } from "../hooks/useReduxRequest";
 import { setUser } from "../redux/slices/appSlice";
@@ -91,6 +92,7 @@ const AppProviders = ({ children }) => {
                 {children}
               </Suspense>
             </BootstrapData>
+            <ChatBot />
           </QueryClientProvider>
         </AppContextProvider>
       </AuthProvider>

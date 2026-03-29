@@ -50,6 +50,7 @@ let apiPath = {
   //shayari Apis
   getShayari: "app/shayari",
   getPost: "app/post",
+  chatBot: "app/chat",
 
   //Diary Apis
   getDiary: "app/diary",

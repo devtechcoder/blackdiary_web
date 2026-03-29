@@ -1,5 +1,4 @@
 import Home from "./Home/Index";
-import PoetDetails from "./Poet/PoetDetails";
 import ViewAllPoet from "./Poet/AllPoets";
 import ViewAllOccasion from "./Occasion/ViewAllOccasion";
 import OccasionDetails from "./Occasion/OccasionDetails";
@@ -48,7 +47,6 @@ export {
   EditProfile,
   LoginWithOtp,
   Home,
-  PoetDetails,
   ViewAllPoet,
   ViewAllOccasion,
   OccasionDetails,

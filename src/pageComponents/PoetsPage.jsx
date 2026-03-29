@@ -102,7 +102,7 @@ const PoetsPage = () => {
                     isFollowing={followState[user.id] ?? user.apiFollowing}
                     loading={!!followLoading[user.id]}
                     onToggleFollow={() => toggleFollow(user.id)}
-                    onOpenProfile={() => navigate(`/poets/details/${user.slug}/${user.id}`)}
+                    onOpenProfile={() => navigate(`/@${user.username}`)}
                   />
                 ))}
               </div>

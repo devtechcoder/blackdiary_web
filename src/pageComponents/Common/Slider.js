@@ -57,7 +57,7 @@ export const PoetSlider = ({ title }) => {
                   <AppImage src={item?.image ?? Prouser} alt={item?.name} fill sizes="144px" className="rounded-full object-cover transition-all duration-300 group-hover:brightness-75 z-0" />
                   <div
                     className="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-1 cursor-pointer"
-                    onClick={() => navigate(`/poets/details/${item?.name}/${item?._id}`)}
+                    onClick={() => navigate(`/@${item?.user_name || item?.username || item?.name?.replace(/\s+/g, "").toLowerCase() || "poet"}`)}
                   >
                     <ViewActionIcon />
                   </div>

@@ -32,7 +32,6 @@ export const SEO_ROUTE_FALLBACKS = {
   "/occasion": SEO.viewAllOccasionsPage,
   "/occasion/details": SEO.occasionDetailsPage,
   "/poets": SEO.AllPoetsPage,
-  "/poets/details": SEO.PoetDetailsPage,
   "/privacy-policy": SEO.privacyPolicyPage,
   "/privacy-tools": SEO.privacyToolsPage,
   "/profile": SEO.profilePage,

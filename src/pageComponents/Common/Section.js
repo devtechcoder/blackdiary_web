@@ -10,7 +10,7 @@ import AppImage from "../../components/AppImage";
 import { FaQuoteLeft } from "react-icons/fa";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi2";
-import { stripHtml } from "../../helper/functions";
+import { resolveAssetUrl, stripHtml } from "../../helper/functions";
 
 const getDiaryCarouselMeta = (type, title) => {
   if (type === "liked") {
@@ -150,7 +150,7 @@ export const ViewSliderDairy = ({ data, title, viewBtnName = "Show all", type })
                       <div className="relative overflow-hidden rounded-[27px] bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.07),transparent_28%),linear-gradient(180deg,rgba(18,18,18,0.98),rgba(11,11,11,0.98))] p-4 sm:p-5">
                         <div className="relative flex items-center gap-3">
                           <AppImage
-                            src={item?.author?.image || Prouser}
+                            src={item?.author?.image ? resolveAssetUrl(item.author.image, apiPath.assetURL) : Prouser}
                             alt="Profile"
                             width={44}
                             height={44}
@@ -220,7 +220,13 @@ export const ViewListDiary = ({ list }) => {
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
-                <AppImage src={item?.author?.image || Prouser} alt="Profile" width={40} height={40} className="h-10 w-10 rounded-full object-cover border border-[#D4AF37]" />
+                <AppImage
+                  src={item?.author?.image ? resolveAssetUrl(item.author.image, apiPath.assetURL) : Prouser}
+                  alt="Profile"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-full object-cover border border-[#D4AF37]"
+                />
                 <div>
                   <p className="text-sm font-semibold text-[#F5F5F5]">{item?.author?.username ?? (item?.author?.name || "Unknown")}</p>
                   <p className="text-xs text-[#9CA3AF]">{timeAgo && `Uploaded ${timeAgo}`}</p>

@@ -11,6 +11,7 @@ import { OccasionSlider, PoetSlider, SubCategorySlider } from "../Common/Slider"
 import { ViewSliderDairy } from "../Common/Section";
 import AppImage from "../../components/AppImage";
 import DiariesSection from "./DiariesSection";
+import { resolveAssetUrl } from "../../helper/functions";
 
 const HOME_PILLS = ["All", "Sher", "Shayari", "Ghazal", "Nazm", "Story", "Meme"];
 const CATEGORY_ALIAS = {
@@ -130,7 +131,7 @@ function LandingIndex() {
                   >
                     <div className="mb-4 flex items-center gap-3">
                       <AppImage
-                        src={item?.author?.image || Prouser}
+                        src={item?.author?.image ? resolveAssetUrl(item.author.image, apiPath.assetURL) : Prouser}
                         alt={item?.author?.name || item?.author?.user_name || "Author"}
                         width={44}
                         height={44}
@@ -138,7 +139,7 @@ function LandingIndex() {
                       />
                       <div>
                         <h4 className="text-sm font-semibold text-[#F5F5F5]">{item?.author?.name || item?.author?.user_name || "Unknown"}</h4>
-                        <p className="text-xs text-[#9CA3AF]">@{item?.author?.user_name || "poet"}</p>
+                        <p className="text-xs text-[#9CA3AF]">@{item?.author?.user_name || item?.author?.name || "poet"}</p>
                       </div>
                     </div>
 
