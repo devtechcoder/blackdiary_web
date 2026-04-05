@@ -3,7 +3,6 @@ import RouteSchema from "../components/SEO/RouteSchema";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "react-toastify/dist/ReactToastify.css";
 import "react-owl-carousel2/lib/styles.css";
 import "react-owl-carousel2/src/owl.theme.default.css";
 import "../src/assets/styles/main.css";

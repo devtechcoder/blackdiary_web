@@ -69,14 +69,18 @@ const Profile = () => {
   return (
     <Main>
       <div className="mx-auto max-w-5xl space-y-6 px-2 pb-4 text-white md:px-4">
+        {/*
+          Encode the username so the follow pages open reliably even if the handle
+          contains special characters.
+        */}
         <ProfileHeader
           profileData={profileData}
           isOwnProfile={isOwnProfile}
           totalPosts={totalPosts}
           onEditProfile={() => navigate(`/account/edit-profile/${profileData?.user_name}/${profileData?._id}`)}
           onOpenSettings={() => setShow(true)}
-          onFollowersClick={() => navigate(`/view-follow/follower/${profileData?._id}/${profileData?.user_name}`)}
-          onFollowingClick={() => navigate(`/view-follow/following/${profileData?._id}/${profileData?.user_name}`)}
+          onFollowersClick={`/view-follow/follower/${profileData?._id}/${encodeURIComponent(profileData?.user_name || "")}`}
+          onFollowingClick={`/view-follow/following/${profileData?._id}/${encodeURIComponent(profileData?.user_name || "")}`}
         />
 
         <div className="space-y-5">

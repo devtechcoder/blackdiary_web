@@ -41,7 +41,7 @@ function Main({ children }) {
             <div className="bd-container flex flex-col flex-1">
               <div className="flex-1">
                 {React.Children.map(children, (child) => {
-                  if (React.isValidElement(child)) {
+                  if (React.isValidElement(child) && typeof child.type !== "string") {
                     return React.cloneElement(child, { isHeaderVisible: headerVisible });
                   }
                   return child;

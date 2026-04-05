@@ -3,21 +3,30 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ToastContainer } from "react-toastify";
+import { message, unstableSetRender } from "antd";
+import { createRoot } from "react-dom/client";
 
 import { store } from "../redux/store/index.jsx";
 import { AuthProvider } from "../context/AuthContext";
 import { AppContextProvider } from "../context/AppContext";
 import ScrollToTop from "../components/ScrollToTop";
-import Loader from "../components/Loader";
-import ChatBot from "../../components/ChatBot";
 import apiPath from "../constants/apiPath";
 import { useRequest } from "../hooks/useReduxRequest";
 import { setUser } from "../redux/slices/appSlice";
 import { setAllPageHeadings, setGeneralSettings, setSocialSettings } from "../redux/slices/masterDataSlice";
+import Loader from "../components/Loader";
+import ChatBot from "../../components/ChatBot";
 
 if (typeof window !== "undefined") {
   window.Buffer = window.Buffer || require("buffer").Buffer;
+  unstableSetRender((node, container) => {
+    const root = createRoot(container);
+    root.render(node);
+
+    return () => {
+      root.unmount();
+    };
+  });
 }
 
 const BootstrapData = ({ children }) => {
@@ -80,6 +89,14 @@ const BootstrapData = ({ children }) => {
 const AppProviders = ({ children }) => {
   const [queryClient] = useState(() => new QueryClient());
 
+  useEffect(() => {
+    message.config({
+      top: 80,
+      duration: 2,
+      maxCount: 1,
+    });
+  }, []);
+
   return (
     <Provider store={store}>
       <AuthProvider>
@@ -88,7 +105,6 @@ const AppProviders = ({ children }) => {
             <BootstrapData>
               <Suspense fallback={<Loader />}>
                 <ScrollToTop />
-                <ToastContainer closeOnClick={false} />
                 {children}
               </Suspense>
             </BootstrapData>

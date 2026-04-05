@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Spin } from "antd";
 import { HiSparkles } from "react-icons/hi2";
 import apiPath from "../../constants/apiPath";
-import { useGetApi } from "../../hooks/useRequest";
+import { useGetApi, useRequest } from "../../hooks/useRequest";
 import dayjs from "dayjs";
 import Prouser from "../../assets/images/user.png";
-import { FollowIcon, LikeShareActionIcon } from "../../components/ButtonField";
+import { LikeShareActionIcon } from "../../components/ButtonField";
 import { useNavigate } from "react-router";
 import AppImage from "../../components/AppImage";
 import { stripHtml } from "../../helper/functions";
+import { Severty, ShowToast } from "../../helper/toast";
 
 const PostSkeleton = () => (
   <div className="mx-auto w-full max-w-[54rem] animate-pulse overflow-hidden rounded-[28px] border border-[rgba(255,215,0,0.1)] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-4 sm:p-5">
@@ -46,51 +47,81 @@ const ErrorState = () => (
 
 const PostCard = ({ post, index }) => {
   const navigate = useNavigate();
+  const { request } = useRequest();
   const authorName = post?.author?.name || post?.author?.user_name || post?.author?.username || "Unknown User";
   const authorHandle = String(post?.author?.user_name || post?.author?.username || authorName).replace(/^@/, "");
   const timeAgo = post?.created_at ? dayjs(post.created_at).fromNow() : "Freshly posted";
   const plainText = stripHtml(post?.content || "");
+  const [showFollowButton, setShowFollowButton] = useState(!Boolean(post?.is_follow));
+  const [followLoading, setFollowLoading] = useState(false);
+
+  useEffect(() => {
+    setShowFollowButton(!Boolean(post?.is_follow));
+  }, [post?._id, post?.is_follow]);
+
+  const handleFollowToggle = () => {
+    const authorId = post?.author?._id;
+    if (!authorId) return;
+
+    setFollowLoading(true);
+    request({
+      url: apiPath.toggleFollow,
+      method: "POST",
+      data: {
+        following_id: authorId,
+      },
+      onSuccess: (response) => {
+        setFollowLoading(false);
+        if (response?.status) {
+          setShowFollowButton(false);
+          ShowToast(response?.message || "Follow state updated", Severty.SUCCESS);
+        } else {
+          ShowToast(response?.message || "Unable to update follow state", Severty.ERROR);
+        }
+      },
+      onError: (error) => {
+        setFollowLoading(false);
+        ShowToast(error?.response?.data?.message || "Unable to update follow state", Severty.ERROR);
+      },
+    });
+  };
+
+  const followButtonClass = "flex shrink-0 items-center justify-center rounded-full bg-[#d4af37] px-3 py-1.5 text-xs font-semibold text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f2cb57] sm:px-4 sm:py-2 sm:text-sm";
 
   return (
     <article className="group mx-auto w-full max-w-[54rem] overflow-hidden rounded-[30px] border border-[rgba(255,215,0,0.14)] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-[1px] shadow-[0_20px_60px_rgba(0,0,0,0.28)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
       <div className="relative overflow-hidden rounded-[29px] bg-[linear-gradient(180deg,rgba(14,14,14,0.98),rgba(8,8,8,0.98))]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,215,0,0.1),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_25%,transparent_78%,rgba(255,215,0,0.03))]" />
 
-        <div className="relative border-b border-[rgba(255,215,0,0.08)] px-4 py-3.5 sm:px-5">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex min-w-0 items-center gap-3">
-              <button type="button" className="flex min-w-0 items-center gap-3 text-left" onClick={() => navigate(`/@${authorHandle}`)}>
-                <AppImage src={post?.author?.image || Prouser} alt={authorName} width={50} height={50} className="h-12 w-12 rounded-full border border-[rgba(255,215,0,0.18)] object-cover" />
-                <div className="min-w-0">
-                  <p className="truncate text-base font-semibold text-[#fff2cf]">{authorName}</p>
-                  <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#958660]">
-                    <span className="truncate">@{authorHandle}</span>
-                    <span className="h-1 w-1 rounded-full bg-[rgba(255,215,0,0.45)]" />
-                    <span>{timeAgo}</span>
-                  </div>
+        <div className="relative border-b border-[rgba(255,215,0,0.08)] px-4 py-2.5 sm:px-5 sm:py-3">
+          <div className="flex items-center justify-between gap-3">
+            <button type="button" className="flex min-w-0 flex-1 items-center gap-2 text-left sm:gap-3" onClick={() => navigate(`/@${authorHandle}`)}>
+              <AppImage src={post?.author?.image || Prouser} alt={authorName} width={50} height={50} className="h-10 w-10 rounded-full border border-[rgba(255,215,0,0.18)] object-cover sm:h-12 sm:w-12" />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-[#fff2cf] sm:text-base">{authorName}</p>
+                <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-[10px] uppercase tracking-[0.16em] text-[#958660] sm:mt-1 sm:gap-2 sm:text-[11px] sm:tracking-[0.18em]">
+                  <span className="truncate">@{authorHandle}</span>
+                  <span className="h-1 w-1 rounded-full bg-[rgba(255,215,0,0.45)]" />
+                  <span>{timeAgo}</span>
                 </div>
-              </button>
-            </div>
+              </div>
+            </button>
 
-            <div className="flex flex-wrap items-center gap-2 sm:justify-end">
-              {!post?.is_follow && (
-                <FollowIcon
-                  userId={post?.author?._id}
-                  hideButton={post?.is_follow || false}
-                  classname="rounded-full bg-[#d4af37] px-4 py-2 text-sm font-semibold text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f2cb57]"
-                />
-              )}
-            </div>
+            {!post?.is_own_post && post?.author?._id && showFollowButton ? (
+              <button type="button" onClick={handleFollowToggle} disabled={followLoading} className={followButtonClass}>
+                {followLoading ? "Please..." : "Follow"}
+              </button>
+            ) : null}
           </div>
         </div>
 
-        <div className="relative p-3 sm:p-4">
+        <div className="relative p-2.5 sm:p-3.5">
           <div className="overflow-hidden rounded-[26px] border border-[rgba(255,215,0,0.08)] bg-[rgba(255,255,255,0.02)]">
             {post.image ? (
               <AppImage src={post.image} alt="Post" width={1200} height={1200} className="h-auto max-h-[46vh] w-full bg-[#0f0f0f] object-cover sm:max-h-[52vh] lg:max-h-[58vh]" />
             ) : (
               <div className="flex aspect-[4/3] items-center justify-center bg-[linear-gradient(135deg,#171717,#0c0c0c)] px-6 text-center sm:aspect-[16/10]">
-                <p className="poetic-heading text-2xl leading-[1.6] text-[#f7efd9] sm:text-3xl">A visual post without media still deserves a graceful canvas.</p>
+                <p className="poetic-heading text-[1.15rem] leading-[1.5] text-[#f7efd9] sm:text-[1.55rem]">A visual post without media still deserves a graceful canvas.</p>
               </div>
             )}
           </div>
@@ -100,8 +131,8 @@ const PostCard = ({ post, index }) => {
               <p className="text-sm leading-7 text-[#d9d1bd] sm:text-[15px]">{plainText}</p>
             </div>
           ) : null}
-          <div className="mt-4 rounded-[24px] border border-[rgba(255,215,0,0.08)] bg-[rgba(255,255,255,0.02)] p-4 sm:p-5">
-            <LikeShareActionIcon item={post} variant="diary" showMeta={false} showLabels />
+          <div className="mt-3 rounded-[24px] border border-[rgba(255,215,0,0.08)] bg-[rgba(255,255,255,0.02)] p-3 sm:p-4">
+            <LikeShareActionIcon item={post} variant="diary" showMeta={false} showLabels showLikeCount />
           </div>
         </div>
       </div>
@@ -167,7 +198,7 @@ const PostPage = () => {
 
   return (
     <section className="w-full">
-      <div className="space-y-5 sm:space-y-6">
+      <div className="space-y-4 sm:space-y-5">
         {isError && posts.length === 0 ? <ErrorState /> : null}
 
         {posts.map((post, index) => {

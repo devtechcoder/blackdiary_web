@@ -3,49 +3,52 @@ import { message } from "antd";
 export const Severty = {
   SUCCESS: "success",
   ERROR: "error",
+  WARNING: "warning",
+  INFO: "info",
+};
+
+const toastOptions = {
+  duration: 2,
 };
 
 export const ShowToast = (msg, type) => {
+  if (!msg) return;
+
   switch (type) {
     case "success":
-      message.success(msg);
+      message.open({
+        type: "success",
+        content: msg,
+        ...toastOptions,
+      });
       break;
     case "error":
-      message.error(msg);
+      message.open({
+        type: "error",
+        content: msg,
+        ...toastOptions,
+      });
+      break;
+    case "warning":
+      message.open({
+        type: "warning",
+        content: msg,
+        ...toastOptions,
+      });
+      break;
+    case "info":
+      message.open({
+        type: "info",
+        content: msg,
+        ...toastOptions,
+      });
       break;
     default:
-      // You can add a default message type here if needed, e.g., message.info(msg)
+      message.open({
+        type: "info",
+        content: msg,
+        ...toastOptions,
+      });
       break;
   }
 };
-
-// export const ShowToast = (message, type) => {
-//   switch (type) {
-//     case "success":
-//       toast.success(message, {
-//         position: "top-right",
-//         autoClose: 1000,
-//         hideProgressBar: false,
-//         closeOnClick: false,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//         theme: "colored",
-//       });
-//       break;
-//     case "error":
-//       toast.error(message, {
-//         position: "top-right",
-//         autoClose: 1000,
-//         hideProgressBar: false,
-//         closeOnClick: false,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//         theme: "colored",
-//       });
-//       break;
-//     default:
-//       break;
-//   }
-// };

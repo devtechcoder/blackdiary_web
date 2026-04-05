@@ -5,7 +5,6 @@ import React, { Suspense, useEffect } from "react";
 
 import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/Loader";
-import { ToastContainer } from "react-toastify";
 import PrivateRoute from "./components/PrivateRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { publicRoutes, privateRoutes } from "./routes";
@@ -84,7 +83,6 @@ function App() {
           <Suspense fallback={<Loader />}>
             <BrowserRouter>
               <ScrollToTop />
-              <ToastContainer closeOnClick={false} />
               <AppRoutes />
               {/* <Analytics /> */}
             </BrowserRouter>

@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Button } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import useRequest, { useGetApi } from "../../hooks/useRequest";
 import { useNavigate, useParams } from "react-router";
@@ -9,12 +8,12 @@ import apiPath from "../../constants/apiPath";
 import { Severty, ShowToast } from "../../helper/toast";
 import Loader from "../../components/Loader";
 import { maskEmail, maskPhone } from "../../helper/functions";
-import OtpInput from "react-otp-input";
 import { useAuthContext } from "../../context/AuthContext";
 import sideLogo from "../../assets/images/brand/login-logo.png";
 const LoginWithOtp = () => {
   const { setIsLoggedIn, setUserProfile } = useAuthContext();
   const [otp, setOtp] = useState("");
+  const otpRefs = useRef([]);
   const { request } = useRequest();
   const [verifyLoading, setVerifyLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
@@ -33,6 +32,42 @@ const LoginWithOtp = () => {
     enabled: userId ? true : false,
   });
 
+  const focusOtpInput = (index) => {
+    const nextIndex = Math.max(0, Math.min(5, index));
+    otpRefs.current[nextIndex]?.focus();
+    otpRefs.current[nextIndex]?.select?.();
+  };
+
+  const handleOtpChange = (index, value) => {
+    const digit = value.replace(/\D/g, "").slice(-1);
+    const otpChars = otp.padEnd(6, "").split("");
+    otpChars[index] = digit || "";
+    const nextOtp = otpChars.join("").slice(0, 6);
+
+    setOtp(nextOtp);
+    setError("");
+
+    if (digit && index < 5) {
+      focusOtpInput(index + 1);
+    }
+  };
+
+  const handleOtpKeyDown = (index, event) => {
+    if (event.key === "Backspace" && !otp[index] && index > 0) {
+      focusOtpInput(index - 1);
+    }
+  };
+
+  const handleOtpPaste = (event) => {
+    event.preventDefault();
+    const pasted = event.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    if (!pasted) return;
+
+    setOtp(pasted);
+    setError("");
+    focusOtpInput(Math.min(pasted.length, 6) - 1);
+  };
+
   useEffect(() => {
     if (data?.status) setUserData(data?.data);
   }, [data]);
@@ -41,7 +76,7 @@ const LoginWithOtp = () => {
   }, [userId]);
 
   const verifyOtp = () => {
-    if (otp.length !== 6 || otp.includes(" ")) {
+    if (!/^\d{6}$/.test(otp)) {
       return setError("Please enter all 6 digits.");
     }
     setVerifyLoading(true);
@@ -143,39 +178,46 @@ const LoginWithOtp = () => {
               </div>
 
               <div className="mb-3 flex justify-center">
-                <OtpInput
-                  value={otp}
-                  onChange={(val) => {
-                    setOtp(val);
-                    setError("");
-                  }}
-                  numInputs={6}
-                  inputType="number"
-                  shouldAutoFocus
-                  containerStyle="otp-input-row"
-                  renderInput={(props) => <input {...props} className="otp-input otp-input-gold" />}
-                />
+                <div className="otp-input-row">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <input
+                      key={index}
+                      ref={(el) => {
+                        otpRefs.current[index] = el;
+                      }}
+                      value={otp[index] || ""}
+                      onChange={(event) => handleOtpChange(index, event.target.value)}
+                      onKeyDown={(event) => handleOtpKeyDown(index, event)}
+                      onPaste={handleOtpPaste}
+                      maxLength={1}
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      autoFocus={index === 0}
+                      className="otp-input otp-input-gold"
+                      aria-label={`OTP digit ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
               {error && <p className="mb-3 text-center text-sm text-red-400">{error}</p>}
 
-              <Button
+              <button
+                type="button"
                 onClick={reSendOtp}
-                loading={resendLoading}
                 disabled={resendLoading || verifyLoading}
                 className="!mb-4 !h-11 !w-full !rounded-[10px] !border !border-[#4a4a4a] !bg-[#0b0b0b] !text-base !font-medium !text-[#f0f0f0] transition-all duration-300 hover:!border-[#D4AF37]/70 hover:!text-[#D4AF37]"
               >
-                Resend code
-              </Button>
+                {resendLoading ? "Sending..." : "Resend code"}
+              </button>
 
-              <Button
-                htmlType="button"
+              <button
+                type="button"
                 onClick={verifyOtp}
-                loading={verifyLoading}
                 disabled={verifyLoading || resendLoading}
                 className="!h-11 !w-full !rounded-[10px] !border-0 !bg-[#D4AF37] !text-base !font-semibold !text-[#131313] shadow-[0_12px_28px_rgba(212,175,55,0.22)] transition-all duration-300 hover:!bg-[#e1bd4f] hover:shadow-[0_16px_32px_rgba(212,175,55,0.3)]"
               >
-                Submit
-              </Button>
+                {verifyLoading ? "Submitting..." : "Submit"}
+              </button>
 
               <div className="my-5 flex items-center justify-center gap-2 text-sm text-[#8f8f8f]">
                 <div className="flex-grow border-t border-[#3a3a3a]" />

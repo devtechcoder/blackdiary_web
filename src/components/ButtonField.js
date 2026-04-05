@@ -26,7 +26,7 @@ export const ViewActionIcon = () => {
   );
 };
 
-export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true, showLabels = variant === "diary", fullWidth = true }) => {
+export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true, showLabels = variant === "diary", fullWidth = true, showLikeCount = false }) => {
   const { language } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [isLiked, setIsLiked] = useState(item?.is_liked || false);
@@ -73,23 +73,25 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
   const isDiaryVariant = variant === "diary";
 
   const actionButtonClass = isDiaryVariant
-    ? "group flex items-center gap-2 rounded-full border border-[rgba(255,215,0,0.12)] bg-[rgba(255,255,255,0.03)] px-3 py-2 text-[12px] font-medium text-[#c4c4c4] transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(255,215,0,0.26)] hover:bg-[rgba(255,215,0,0.06)] hover:text-[#fff0bf]"
+    ? "group flex h-10 w-full items-center justify-center gap-2 rounded-full border border-[rgba(255,215,0,0.12)] bg-[rgba(255,255,255,0.03)] px-2 text-[12px] font-medium text-[#c4c4c4] transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(255,215,0,0.26)] hover:bg-[rgba(255,255,255,0.06)] hover:text-[#fff0bf] sm:w-auto sm:justify-start sm:px-3"
     : "flex items-center gap-1 transition hover:text-green-400";
+
+  const labelClassName = showLabels ? "hidden sm:inline" : "hidden";
 
   return (
     <div className={fullWidth ? "w-full" : "w-auto"}>
-      <div className={`flex flex-wrap items-center justify-start gap-3 ${isDiaryVariant ? "" : "sm:gap-6"} ${isDiaryVariant ? "text-[#b9b9b9]" : "text-zinc-400"}`}>
+      <div className={`grid grid-cols-4 gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-start ${isDiaryVariant ? "text-[#b9b9b9]" : "text-zinc-400 sm:gap-6"}`}>
         <button
           type="button"
           className={`${actionButtonClass} ${isLiked ? (isDiaryVariant ? "border-[rgba(255,215,0,0.34)] bg-[rgba(255,215,0,0.08)] text-[#ffe38a]" : "text-green-400") : ""}`}
           onClick={onLike}
           disabled={loading}
-          loading={loading}
         >
-          <FaHeart /> <span className={showLabels ? "" : "hidden sm:inline"}>Like</span>
+          <FaHeart /> <span className={labelClassName}>Like</span>
+          {showLikeCount && totalLikes > 0 ? <span className="text-[11px] font-semibold text-[#ffe7a4]">{totalLikes}</span> : null}
         </button>
         <button type="button" className={actionButtonClass} onClick={() => setIsCommentModalVisible(true)}>
-          <FaComment /> <span className={showLabels ? "" : "hidden sm:inline"}>Comment</span>
+          <FaComment /> <span className={labelClassName}>Comment</span>
         </button>
         <button
           type="button"
@@ -99,8 +101,8 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
             temp.innerHTML = item?.content || "";
             const plainText = temp.textContent || temp.innerText || "";
 
-            const title = encodeURIComponent("Black Diary – Shayari");
-            const text = encodeURIComponent(`${plainText}\n\nRead this Shayari on Black Diary 💫`);
+            const title = encodeURIComponent("Black Diary - Shayari");
+            const text = encodeURIComponent(`${plainText}\n\nRead this Shayari on Black Diary`);
             const baseUrl = window.location.origin + "/sub-category/details";
 
             const shareUrl = `${baseUrl}?title=${title}&text=${text}`;
@@ -111,7 +113,7 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
             handleShare(shareData);
           }}
         >
-          <FaShareAlt /> <span className={showLabels ? "" : "hidden sm:inline"}>Share</span>
+          <FaShareAlt /> <span className={labelClassName}>Share</span>
         </button>
 
         <button
@@ -128,7 +130,7 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
             message.success("Copied to clipboard!");
           }}
         >
-          <FaCopy /> <span className={showLabels ? "" : "hidden sm:inline"}>Copy</span>
+          <FaCopy /> <span className={labelClassName}>Copy</span>
         </button>
       </div>
 
@@ -190,10 +192,9 @@ export const FollowIcon = ({ userId, classname, hideButton = false, buttonName =
     <>
       {!!showButton && (
         <button
-          className={classname ? classname : "bg-green-500 text-white font-semibold px-3 py-1 rounded-md text-sm hover:bg-green-600 transition-colors duration-200"}
+          className={classname ? classname : "lg:flex items-center justify-center bg-green-500 text-white font-semibold px-3 py-1 rounded-md text-sm hover:bg-green-600 transition-colors duration-200"}
           onClick={onFollow}
           disabled={loading}
-          loading={loading}
         >
           {buttonName}
         </button>

@@ -145,7 +145,7 @@ function LandingIndex() {
 
                     <div className="mb-4 min-h-[84px] text-sm leading-relaxed text-[#F5F5F5]" dangerouslySetInnerHTML={{ __html: item?.content || "" }} />
 
-                    <LikeShareActionIcon item={item} />
+                    <LikeShareActionIcon item={item} showMeta={false} />
                   </article>
                 ))}
               </div>
