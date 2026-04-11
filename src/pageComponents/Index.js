@@ -18,6 +18,7 @@ import NotificationPermission from "./Account/ProfileAction/NotificationPermissi
 import BlockAccount from "./Account/ProfileAction/BlockAccount";
 import AccountPrivacy from "./Account/ProfileAction/AccountPrivacy";
 import ManageAccount from "./Account/ProfileAction/ManageAccount";
+import PasswordSecurity from "./Account/ProfileAction/PasswordSecurity";
 import PersonalDetails from "./Account/ProfileAction/PersonalDetails";
 import Leadership from "./footer/leadership";
 import AboutUs from "./footer/aboutUs";
@@ -56,6 +57,7 @@ export {
   SignUpPage,
   NotificationPermission,
   ManageAccount,
+  PasswordSecurity,
   DiaryByType,
   Leadership,
   AboutUs,

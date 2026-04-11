@@ -6,6 +6,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import apiPath from "../../constants/apiPath";
 import CreatePostOption from "../../modals/createPostOption";
 import AppImage from "../AppImage";
+import { resolveAssetUrl } from "../../helper/functions";
 
 const { Sider } = Layout;
 
@@ -130,7 +131,11 @@ function Sidenav() {
         )} */}
         {isLoggedIn ? (
           <div onClick={() => navigate(`/@${userProfile?.user_name}`)} className={getNavItemClass(`/@${userProfile?.user_name}`)}>
-            {userProfile?.image ? <AppImage src={apiPath.assetURL + userProfile?.image} alt="Profile" width={40} height={40} className="h-10 w-10 rounded-full object-cover" /> : <UserOutlined style={{ fontSize: "22px" }} />}
+            {userProfile?.image ? (
+              <AppImage src={resolveAssetUrl(userProfile?.image, apiPath.assetURL)} alt="Profile" width={40} height={40} className="h-10 w-10 rounded-full object-cover" />
+            ) : (
+              <UserOutlined style={{ fontSize: "22px" }} />
+            )}
             {!collapsed && <span className="font-semibold">Profile</span>}
           </div>
         ) : (

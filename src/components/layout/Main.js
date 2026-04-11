@@ -56,7 +56,7 @@ function Main({ children }) {
         <div className="flex w-full min-h-screen">
           <Sidenav />
           <main className="flex-1 min-w-0 bg-[#0d0d0d] flex flex-col">
-            <div className="flex-1 overflow-y-auto text-white bg-[#0d0d0d]">
+            <div className="flex-1 text-white bg-[#0d0d0d]">
               <div className="p-4">
                 <div className="bd-container w-full mx-auto min-h-full">{children}</div>
               </div>

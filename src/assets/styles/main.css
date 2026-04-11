@@ -418,6 +418,177 @@ a:hover {
   box-shadow: 0 0 12px rgba(255, 215, 0, 0.45) !important;
 }
 
+.account-privacy-page .account-privacy-switch.ant-switch {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(212, 175, 55, 0.32) !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18) !important;
+}
+
+.account-privacy-page .account-privacy-switch.ant-switch:hover:not(.ant-switch-disabled) {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.account-privacy-page .account-privacy-switch.ant-switch .ant-switch-handle::before {
+  background-color: #f2f2f2 !important;
+}
+
+.account-privacy-page .account-privacy-switch.ant-switch.ant-switch-checked {
+  background: linear-gradient(135deg, #d4af37 0%, #f4d787 100%) !important;
+  border-color: #d4af37 !important;
+}
+
+.account-privacy-page .account-privacy-switch.ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+  background: linear-gradient(135deg, #e3be4d 0%, #ffd86d 100%) !important;
+}
+
+.account-privacy-page .account-privacy-switch.ant-switch.ant-switch-checked .ant-switch-handle::before {
+  background-color: #141414 !important;
+}
+
+.account-notification-page .account-notification-switch.ant-switch {
+  min-width: 46px !important;
+  height: 26px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(212, 175, 55, 0.28) !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16) !important;
+}
+
+.account-notification-page .account-notification-switch.ant-switch:hover:not(.ant-switch-disabled) {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.account-notification-page .account-notification-switch.ant-switch .ant-switch-handle::before {
+  background-color: #f1f1f1 !important;
+}
+
+.account-notification-page .account-notification-switch.ant-switch.ant-switch-checked {
+  background: linear-gradient(135deg, #d4af37 0%, #f4d787 100%) !important;
+  border-color: #d4af37 !important;
+}
+
+.account-notification-page .account-notification-switch.ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+  background: linear-gradient(135deg, #e0ba4a 0%, #ffd86d 100%) !important;
+}
+
+.account-notification-page .account-notification-switch.ant-switch.ant-switch-checked .ant-switch-handle::before {
+  background-color: #121212 !important;
+}
+
+.account-notification-page .account-notification-spin .ant-spin-text {
+  color: #f4d787 !important;
+}
+
+.account-notification-page .account-notification-enable-all.ant-btn {
+  background: transparent !important;
+  color: #f4d787 !important;
+  border-color: rgba(212, 175, 55, 0.35) !important;
+}
+
+.account-notification-page .account-notification-enable-all.ant-btn:hover,
+.account-notification-page .account-notification-enable-all.ant-btn:focus,
+.account-notification-page .account-notification-enable-all.ant-btn:focus-visible {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #ffd86d !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.12), 0 0 16px rgba(212, 175, 55, 0.12) !important;
+}
+
+.account-upload-photo-btn.ant-btn {
+  height: 48px !important;
+  min-width: 240px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(212, 175, 55, 0.32) !important;
+  background: linear-gradient(135deg, #d4af37 0%, #f4d787 100%) !important;
+  color: #101010 !important;
+  font-weight: 600 !important;
+  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.18) !important;
+}
+
+.account-upload-photo-btn.ant-btn:hover,
+.account-upload-photo-btn.ant-btn:focus,
+.account-upload-photo-btn.ant-btn:focus-visible {
+  background: linear-gradient(135deg, #e3be4d 0%, #ffd86d 100%) !important;
+  color: #0f0f0f !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 14px 28px rgba(212, 175, 55, 0.24) !important;
+}
+
+.account-upload-preview {
+  aspect-ratio: 1 / 1;
+}
+
+.edit-profile-modal-footer-btn.ant-btn {
+  background: transparent !important;
+  color: #f4d787 !important;
+  border-color: rgba(212, 175, 55, 0.22) !important;
+}
+
+.edit-profile-modal-footer-btn.ant-btn:hover,
+.edit-profile-modal-footer-btn.ant-btn:focus,
+.edit-profile-modal-footer-btn.ant-btn:focus-visible {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #ffd86d !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.12), 0 0 16px rgba(212, 175, 55, 0.12) !important;
+}
+
+.edit-profile-modal-primary-btn.ant-btn {
+  background: linear-gradient(135deg, #d4af37 0%, #f4d787 100%) !important;
+  color: #101010 !important;
+  border-color: #d4af37 !important;
+}
+
+.edit-profile-modal-primary-btn.ant-btn:hover,
+.edit-profile-modal-primary-btn.ant-btn:focus,
+.edit-profile-modal-primary-btn.ant-btn:focus-visible {
+  background: linear-gradient(135deg, #e3be4d 0%, #ffd86d 100%) !important;
+  color: #0f0f0f !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 14px 28px rgba(212, 175, 55, 0.24) !important;
+}
+
+.edit-profile-modal .ant-modal-close {
+  top: 12px !important;
+  inset-inline-end: 12px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 9999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #f4d787 !important;
+  background: rgba(17, 17, 17, 0.88) !important;
+  border: 1px solid rgba(212, 175, 55, 0.18) !important;
+  z-index: 20 !important;
+}
+
+.edit-profile-modal .ant-modal-close:hover {
+  color: #ffd86d !important;
+  background: rgba(21, 21, 21, 0.96) !important;
+  border-color: rgba(212, 175, 55, 0.32) !important;
+}
+
+.edit-profile-modal .ant-modal-close-x {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.edit-profile-modal .ant-modal-close-icon {
+  font-size: 16px !important;
+}
+
+@media (max-width: 640px) {
+  .edit-profile-modal .ant-modal-close {
+    top: 10px !important;
+    inset-inline-end: 10px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
 /* Premium react-slick arrows */
 .slick-slider .slick-prev,
 .slick-slider .slick-next {
@@ -561,6 +732,97 @@ a:hover {
   color: white !important;
   border-color: #3f3f46 !important;
   box-shadow: none !important;
+}
+
+.edit-profile-page .ant-form-item-label > label {
+  color: #f5f5f5 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+}
+
+.edit-profile-page .ant-form-item-explain {
+  color: #f7c9c9 !important;
+}
+
+.edit-profile-page .ant-input,
+.edit-profile-page .ant-input-affix-wrapper,
+.edit-profile-page .ant-input-textarea,
+.edit-profile-page .ant-input-textarea textarea,
+.edit-profile-page .ant-select-selector {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #2f2f2f !important;
+  box-shadow: none !important;
+}
+
+.edit-profile-page .ant-input::placeholder,
+.edit-profile-page .ant-input-textarea textarea::placeholder,
+.edit-profile-page .ant-select-selection-placeholder {
+  color: #8f8f8f !important;
+}
+
+.edit-profile-page .ant-input:hover,
+.edit-profile-page .ant-input-affix-wrapper:hover,
+.edit-profile-page .ant-input-textarea:hover,
+.edit-profile-page .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: rgba(212, 175, 55, 0.55) !important;
+}
+
+.edit-profile-page .ant-input:focus,
+.edit-profile-page .ant-input-focused,
+.edit-profile-page .ant-input-affix-wrapper-focused,
+.edit-profile-page .ant-select-focused .ant-select-selector {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12) !important;
+}
+
+.edit-profile-page .ant-select-selection-item {
+  color: #ffffff !important;
+}
+
+.edit-profile-page .ant-select-single .ant-select-selector {
+  min-height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding-inline: 14px !important;
+}
+
+.edit-profile-page .ant-select-single .ant-select-selection-wrap,
+.edit-profile-page .ant-select-single .ant-select-selection-search,
+.edit-profile-page .ant-select-single .ant-select-selection-placeholder {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+
+.edit-profile-page .ant-switch {
+  background: #3a3a3a !important;
+}
+
+.edit-profile-page .ant-switch-checked {
+  background: #d4af37 !important;
+}
+
+.edit-profile-page .ant-btn-primary {
+  color: #0d0d0d !important;
+}
+
+.edit-profile-select-dropdown {
+  background: #111111 !important;
+  border: 1px solid rgba(212, 175, 55, 0.22) !important;
+  border-radius: 18px !important;
+  overflow: hidden;
+}
+
+.edit-profile-select-dropdown .ant-select-item {
+  color: #f5f5f5 !important;
+}
+
+.edit-profile-select-dropdown .ant-select-item-option-active,
+.edit-profile-select-dropdown .ant-select-item-option-selected {
+  background: rgba(212, 175, 55, 0.12) !important;
+  color: #f4d787 !important;
 }
 
 /* --- Password Input Customization --- */
@@ -786,6 +1048,202 @@ div:where(.css-dev-only-do-not-override-mc1tut).ant-typography-h5 > textarea,
 .custom-modal .ant-modal-footer {
   background: transparent !important;
   border: none !important;
+}
+
+.account-profile-modal .ant-modal-close {
+  top: 12px !important;
+  inset-inline-end: 12px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 9999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #f4d787 !important;
+  background: rgba(17, 17, 17, 0.88) !important;
+  border: 1px solid rgba(212, 175, 55, 0.14) !important;
+  z-index: 20 !important;
+}
+
+.account-profile-modal .ant-modal-close:hover {
+  color: #ffd86d !important;
+  background: rgba(21, 21, 21, 0.96) !important;
+  border-color: rgba(212, 175, 55, 0.32) !important;
+}
+
+.account-profile-modal .ant-modal-close-x {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.account-profile-modal .ant-modal-close-icon {
+  font-size: 16px !important;
+}
+
+/* Personal details modal fields */
+.personal-details-modal .ant-input,
+.personal-details-modal .ant-input-affix-wrapper,
+.personal-details-modal .ant-picker {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: rgba(212, 175, 55, 0.18) !important;
+  box-shadow: none !important;
+}
+
+.personal-details-modal .ant-input::placeholder,
+.personal-details-modal .ant-picker-input > input::placeholder {
+  color: #8f8f8f !important;
+}
+
+.personal-details-modal .ant-input:hover,
+.personal-details-modal .ant-input-affix-wrapper:hover,
+.personal-details-modal .ant-picker:hover {
+  border-color: rgba(212, 175, 55, 0.38) !important;
+}
+
+.personal-details-modal .ant-input:focus,
+.personal-details-modal .ant-input-focused,
+.personal-details-modal .ant-input-affix-wrapper-focused,
+.personal-details-modal .ant-picker-focused {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12) !important;
+}
+
+.personal-details-modal .ant-picker-input > input {
+  color: #ffffff !important;
+}
+
+@media (max-width: 640px) {
+  .account-profile-modal .ant-modal-close {
+    top: 10px !important;
+    inset-inline-end: 10px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+.account-edit-modal .ant-modal-content {
+  border: 1px solid rgba(212, 175, 55, 0.18) !important;
+  max-height: calc(100vh - 24px) !important;
+  overflow: hidden !important;
+}
+
+.account-edit-modal .ant-modal-body {
+  max-height: calc(100vh - 24px) !important;
+  overflow-y: auto !important;
+}
+
+.account-edit-modal .account-edit-input {
+  min-height: 54px !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(212, 175, 55, 0.18) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 100%) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02) !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease !important;
+}
+
+.account-edit-modal .account-edit-input::placeholder {
+  color: #8e8e8e !important;
+}
+
+.account-edit-modal .account-edit-input:hover {
+  border-color: rgba(212, 175, 55, 0.35) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.account-edit-modal .account-edit-input:focus,
+.account-edit-modal .account-edit-input-focused {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.14) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.account-edit-modal .account-edit-submit.ant-btn-primary,
+.account-edit-modal .account-edit-submit.ant-btn-primary:hover,
+.account-edit-modal .account-edit-submit.ant-btn-primary:focus,
+.account-edit-modal .account-edit-submit.ant-btn-primary:active {
+  color: #0f0f0f !important;
+  background: linear-gradient(180deg, #f4d787 0%, #d4af37 100%) !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.18) !important;
+}
+
+.account-edit-modal .account-edit-submit.ant-btn-primary:hover {
+  background: linear-gradient(180deg, #f7e1a0 0%, #e1be4c 100%) !important;
+  border-color: #e1be4c !important;
+}
+
+.account-edit-modal .account-edit-submit.ant-btn-primary:focus-visible {
+  outline: 2px solid rgba(244, 215, 135, 0.55) !important;
+  outline-offset: 2px !important;
+}
+
+.account-security-page .account-security-input.ant-input-affix-wrapper {
+  min-height: 54px !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(212, 175, 55, 0.18) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 100%) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02) !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease !important;
+}
+
+.account-security-page .account-security-input.ant-input-affix-wrapper:hover {
+  border-color: rgba(212, 175, 55, 0.35) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.account-security-page .account-security-input.ant-input-affix-wrapper-focused,
+.account-security-page .account-security-input.ant-input-affix-wrapper:focus-within {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.14) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.account-security-page .account-security-input.ant-input-affix-wrapper input.ant-input {
+  background: transparent !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.account-security-page .account-security-input .ant-input-password-icon,
+.account-security-page .account-security-input .anticon {
+  color: #9a9a9a !important;
+}
+
+.account-security-page .account-security-input .ant-input-password-icon:hover,
+.account-security-page .account-security-input .anticon:hover {
+  color: #f4d787 !important;
+}
+
+.account-security-page .account-security-submit.ant-btn-primary,
+.account-security-page .account-security-submit.ant-btn-primary:hover,
+.account-security-page .account-security-submit.ant-btn-primary:focus,
+.account-security-page .account-security-submit.ant-btn-primary:active {
+  color: #0f0f0f !important;
+  background: linear-gradient(180deg, #f4d787 0%, #d4af37 100%) !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.18) !important;
+}
+
+.account-security-page .account-security-submit.ant-btn-primary:hover {
+  background: linear-gradient(180deg, #f7e1a0 0%, #e1be4c 100%) !important;
+  border-color: #e1be4c !important;
+}
+
+.account-security-page .account-security-submit.ant-btn-primary:focus-visible {
+  outline: 2px solid rgba(244, 215, 135, 0.55) !important;
+  outline-offset: 2px !important;
+}
+
+@media (max-width: 640px) {
+  .account-edit-modal .ant-modal-content {
+    border-radius: 22px !important;
+  }
 }
 
 .login-account-modal .ant-modal-content {

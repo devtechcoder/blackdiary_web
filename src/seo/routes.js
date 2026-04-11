@@ -17,6 +17,7 @@ export const SEO_ROUTE_FALLBACKS = {
   "/account/edit-profile": SEO.editProfilePage,
   "/account/login-activity": SEO.loginActivityPage,
   "/account/manage-account": SEO.manageAccountPage,
+  "/account/password-security": SEO.passwordSecurityPage,
   "/account/notification-permission": SEO.notificationPermissionPage,
   "/account/personal-details": SEO.personalDetailsPage,
   "/account/privacy-account": SEO.accountPrivacyPage,

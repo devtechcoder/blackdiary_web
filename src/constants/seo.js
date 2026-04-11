@@ -469,6 +469,13 @@ export const SEO = {
     url: "https://blackdiary.vercel.app/account/manage-account",
   }),
 
+  passwordSecurityPage: createSEOEntry({
+    title: "Password and Security - Black Diary",
+    description: "Black Diary account password update karein aur apni security settings manage karein.",
+    keywords: "password security, change password, black diary account security",
+    url: "https://blackdiary.vercel.app/account/password-security",
+  }),
+
   personalDetailsPage: createSEOEntry({
     title: "Personal Details - Black Diary",
     description: "Black Diary account ke personal details aur identity information ko review ya update karein.",
