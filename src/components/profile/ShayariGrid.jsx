@@ -1,16 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Spin } from "antd";
-import { useNavigate } from "react-router";
 import { useGetApi } from "../../hooks/useRequest";
 import apiPath from "../../constants/apiPath";
-import ShayariCard from "./ShayariCard";
+import ShayariFeedCard from "../../pageComponents/Common/ShayariFeedCard";
+import { PostCard } from "../../pageComponents/feed/post";
 
 const ShayariGrid = ({ userId, activeTab = "shayari", onMetaChange }) => {
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 8 });
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef(null);
-  const navigate = useNavigate();
 
   const endpoint = activeTab === "shayari" ? apiPath.getShayari : apiPath.getPost;
   const { data, isFetching } = useGetApi({
@@ -65,16 +64,11 @@ const ShayariGrid = ({ userId, activeTab = "shayari", onMetaChange }) => {
   }
 
   return (
-    <section className="space-y-8">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+    <section className="space-y-5">
+      <div className="space-y-4 sm:space-y-5">
         {items.map((item, index) => (
           <div key={item._id} ref={index === items.length - 1 ? lastItemRef : null}>
-            <ShayariCard
-              item={item}
-              type={activeTab}
-              assetURL={apiPath.assetURL}
-              onOpen={() => navigate(`/feed?type=${activeTab}&id=${item?._id}`)}
-            />
+            {activeTab === "shayari" ? <ShayariFeedCard shayari={item} index={index} /> : <PostCard post={item} index={index} likeType="post" />}
           </div>
         ))}
       </div>

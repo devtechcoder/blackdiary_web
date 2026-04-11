@@ -18,7 +18,7 @@ const StatPill = ({ label, value, onClick, to }) => {
 
   if (to) {
     return (
-      <Link to={to} className={`${statPillClassName} cursor-pointer`}>
+      <Link to={to} prefetch className={`${statPillClassName} cursor-pointer`}>
         {content}
       </Link>
     );
@@ -35,7 +35,7 @@ const ProfileHeader = ({
   profileData,
   isOwnProfile,
   totalPosts,
-  onEditProfile,
+  editProfileTo,
   onOpenSettings,
   onFollowersClick,
   onFollowingClick,
@@ -73,13 +73,9 @@ const ProfileHeader = ({
         <div className="flex items-center justify-center gap-3 md:justify-end">
           {isOwnProfile ? (
             <>
-              <button
-                type="button"
-                onClick={onEditProfile}
-                className="rounded-xl border border-[#D4AF37] bg-transparent px-5 py-2 text-sm font-semibold text-[#f4d787] transition-all duration-300 hover:border-[#FFD700] hover:bg-[#E6B422]/12"
-              >
+              <Link to={editProfileTo || "/account/edit-profile"} prefetch className="rounded-xl border border-[#D4AF37] bg-transparent px-5 py-2 text-sm font-semibold text-[#f4d787] transition-all duration-300 hover:border-[#FFD700] hover:bg-[#E6B422]/12">
                 Edit Profile
-              </button>
+              </Link>
               <button
                 type="button"
                 onClick={onOpenSettings}

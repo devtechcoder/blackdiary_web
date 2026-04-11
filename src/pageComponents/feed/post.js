@@ -45,7 +45,7 @@ const ErrorState = () => (
   </div>
 );
 
-const PostCard = ({ post, index }) => {
+const PostCard = ({ post, index, likeType = "post" }) => {
   const navigate = useNavigate();
   const { request } = useRequest();
   const authorName = post?.author?.name || post?.author?.user_name || post?.author?.username || "Unknown User";
@@ -131,8 +131,8 @@ const PostCard = ({ post, index }) => {
               <p className="text-sm leading-7 text-[#d9d1bd] sm:text-[15px]">{plainText}</p>
             </div>
           ) : null}
-          <div className="mt-3 rounded-[24px] border border-[rgba(255,215,0,0.08)] bg-[rgba(255,255,255,0.02)] p-3 sm:p-4">
-            <LikeShareActionIcon item={post} variant="diary" showMeta={false} showLabels showLikeCount />
+          <div className="mt-4 px-2 pb-1 sm:px-4">
+            <LikeShareActionIcon item={post} variant="diary" showMeta={false} showLabels showLikeCount compact fullWidth={false} type={likeType} />
           </div>
         </div>
       </div>
@@ -235,3 +235,4 @@ const PostPage = () => {
 };
 
 export default PostPage;
+export { PostCard };

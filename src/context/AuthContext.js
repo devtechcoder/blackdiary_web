@@ -114,6 +114,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = (navigate) => {
+    const token = localStorage.getItem("token");
+    if (hasWindow && token) {
+      fetch(`${apiPath.baseURL}/app/auth/logout`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        keepalive: true,
+      }).catch(() => {});
+    }
+
     localStorage.removeItem("token");
     localStorage.removeItem("userProfile");
     setIsLoggedIn(false);
@@ -121,7 +133,12 @@ export const AuthProvider = ({ children }) => {
     setUserProfile(null);
     dispatch(resetAppAuth());
     ShowToast("Logout Successfully", Severty.SUCCESS);
-    navigate("/login-diary");
+
+    if (typeof navigate === "function") {
+      navigate("/login-diary");
+    } else if (hasWindow) {
+      window.location.href = "/login-diary";
+    }
   };
 
   const refreshUser = () => {

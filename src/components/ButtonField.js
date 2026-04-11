@@ -26,7 +26,7 @@ export const ViewActionIcon = () => {
   );
 };
 
-export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true, showLabels = variant === "diary", fullWidth = true, showLikeCount = false }) => {
+export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true, showLabels = variant === "diary", fullWidth = true, showLikeCount = false, compact = false, type: typeOverride }) => {
   const { language } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [isLiked, setIsLiked] = useState(item?.is_liked || false);
@@ -34,7 +34,7 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const { request } = useRequest();
   const [searchParams] = useSearchParams();
-  const type = searchParams.get("type");
+  const type = typeOverride || searchParams.get("type");
 
   const onLike = (value) => {
     const payload = {
@@ -73,7 +73,7 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
   const isDiaryVariant = variant === "diary";
 
   const actionButtonClass = isDiaryVariant
-    ? "group flex h-10 w-full items-center justify-center gap-2 rounded-full border border-[rgba(255,215,0,0.12)] bg-[rgba(255,255,255,0.03)] px-2 text-[12px] font-medium text-[#c4c4c4] transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(255,215,0,0.26)] hover:bg-[rgba(255,255,255,0.06)] hover:text-[#fff0bf] sm:w-auto sm:justify-start sm:px-3"
+    ? `group flex ${compact ? "h-9" : "h-10"} w-full items-center justify-center gap-2 rounded-full border border-[rgba(255,215,0,0.12)] bg-[rgba(255,255,255,0.03)] ${compact ? "px-2 text-[11px]" : "px-2 text-[12px]"} font-medium text-[#c4c4c4] transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(255,215,0,0.26)] hover:bg-[rgba(255,255,255,0.06)] hover:text-[#fff0bf] sm:w-auto sm:justify-start sm:${compact ? "px-2.5" : "px-3"}`
     : "flex items-center gap-1 transition hover:text-green-400";
 
   const labelClassName = showLabels ? "hidden sm:inline" : "hidden";

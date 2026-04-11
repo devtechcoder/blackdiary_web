@@ -250,7 +250,7 @@ export default function ChatBot() {
   }
 
   return (
-    <div className="fixed bottom-3 right-3 z-[9999] sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-3 right-3 z-[9999] sm:bottom-6 sm:right-6 max-sm:bottom-20 max-sm:right-2">
       <AnimatePresence>
         {isOpen ? (
           <motion.div
@@ -371,11 +371,11 @@ export default function ChatBot() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 18 }}
             transition={{ duration: 0.2 }}
-            className="group relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#d4af37] text-[#080808] shadow-[0_18px_45px_rgba(212,175,55,0.35)]"
+            className="group relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#d4af37] text-[#080808] shadow-[0_18px_45px_rgba(212,175,55,0.35)] max-sm:h-11 max-sm:w-11 max-sm:shadow-[0_14px_36px_rgba(212,175,55,0.28)]"
             aria-label="Open chat"
           >
             <span className="absolute inset-0 rounded-full bg-[#d4af37] opacity-25 blur-md transition group-hover:opacity-40" />
-            <IconMessage className="relative h-6 w-6" />
+            <IconMessage className="relative h-6 w-6 max-sm:h-5 max-sm:w-5" />
           </motion.button>
         ) : null}
       </AnimatePresence>

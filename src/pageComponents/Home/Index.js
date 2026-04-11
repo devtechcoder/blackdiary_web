@@ -5,13 +5,10 @@ import Main from "../../components/layout/Main";
 import apiPath from "../../constants/apiPath";
 import { useNavigate } from "react-router";
 import { useRequest } from "../../hooks/useReduxRequest";
-import { LikeShareActionIcon } from "../../components/ButtonField";
-import Prouser from "../../assets/images/user.png";
 import { OccasionSlider, PoetSlider, SubCategorySlider } from "../Common/Slider";
 import { ViewSliderDairy } from "../Common/Section";
-import AppImage from "../../components/AppImage";
 import DiariesSection from "./DiariesSection";
-import { resolveAssetUrl } from "../../helper/functions";
+import DiaryHitCard from "../Common/DiaryHitCard";
 
 const HOME_PILLS = ["All", "Sher", "Shayari", "Ghazal", "Nazm", "Story", "Meme"];
 const CATEGORY_ALIAS = {
@@ -40,7 +37,7 @@ function LandingIndex() {
 
     return diaries.filter((item) => {
       const bucket = [
-        item?.category, // backend diary category (string)
+        item?.category,
         item?.type,
         item?.category_name,
         item?.sub_category_name,
@@ -93,65 +90,54 @@ function LandingIndex() {
             ))}
           </section>
 
-          <section>
-            <div className="mb-5 flex items-center justify-between gap-2">
-              <h3 className="poetic-heading text-2xl font-semibold text-[#F5F5F5] md:text-3xl">Today's Biggest Hits</h3>
-              <button type="button" className="text-sm font-medium text-[#D4AF37] hover:text-[#FFD700]" onClick={() => navigate("/feed?type=shayari")}>
+          <section className="rounded-[28px] border border-[rgba(255,215,0,0.12)] bg-[linear-gradient(180deg,rgba(18,18,18,0.98),rgba(10,10,10,0.98))] px-4 py-5 shadow-[0_18px_36px_rgba(0,0,0,0.28)] sm:px-5 sm:py-6">
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div className="max-w-2xl">
+                <h3 className="poetic-heading mt-2 text-[1.45rem] font-semibold leading-tight text-[#F5F5F5] sm:text-[1.7rem] md:text-[1.85rem]">
+                  Today's Biggest Hits
+                </h3>
+                <p className="mt-1 text-[12px] leading-5 text-[#9CA3AF] sm:text-[13px]">
+                  Small, clean cards for the posts readers are opening most right now.
+                </p>
+              </div>
+              <button
+                type="button"
+                className="self-start text-[12px] font-medium text-[#D4AF37] transition-colors duration-300 hover:text-[#FFD700] sm:mt-0"
+                onClick={() => navigate("/feed?type=shayari")}
+              >
                 Show All {"->"}
               </button>
             </div>
 
             {homeDataLoading ? (
-              <div
-                className="grid gap-6"
-                style={{
-                  gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-                }}
-              >
+              <div className="mx-auto grid max-w-3xl gap-4">
                 {Array.from({ length: 6 }).map((_, index) => (
-                  <div key={index} className="h-[260px] animate-pulse rounded-[18px] border-none outline-none bg-[#161616]" />
+                  <div key={index} className="animate-pulse rounded-[24px] border border-[rgba(255,215,0,0.08)] bg-[#161616] p-4 sm:p-5">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-[rgba(255,255,255,0.08)]" />
+                      <div className="min-w-0 flex-1 space-y-2">
+                        <div className="h-3 w-28 rounded-full bg-[rgba(255,255,255,0.08)]" />
+                        <div className="h-2.5 w-20 rounded-full bg-[rgba(255,255,255,0.05)]" />
+                      </div>
+                    </div>
+                    <div className="mt-4 space-y-2 rounded-[18px] bg-[rgba(255,255,255,0.03)] p-3">
+                      <div className="h-3 w-[95%] rounded-full bg-[rgba(255,255,255,0.08)]" />
+                      <div className="h-3 w-[82%] rounded-full bg-[rgba(255,255,255,0.07)]" />
+                      <div className="h-3 w-[68%] rounded-full bg-[rgba(255,255,255,0.05)]" />
+                    </div>
+                    <div className="mt-4 h-9 rounded-full bg-[rgba(255,255,255,0.05)]" />
+                  </div>
                 ))}
               </div>
             ) : (
-              <div
-                className="grid gap-6"
-                style={{
-                  gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-                }}
-              >
+              <div className="mx-auto grid max-w-3xl gap-4">
                 {filteredDiaries.map((item, index) => (
-                  <article
-                    key={item?._id || index}
-                    className="rounded-[18px] border-none outline-none bg-[#161616] p-5 transition-all duration-300 hover:-translate-y-[6px] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)]"
-                    style={{
-                      opacity: 0,
-                      animation: `slideUp 0.6s ease forwards`,
-                      animationDelay: `${index * 70}ms`,
-                    }}
-                  >
-                    <div className="mb-4 flex items-center gap-3">
-                      <AppImage
-                        src={item?.author?.image ? resolveAssetUrl(item.author.image, apiPath.assetURL) : Prouser}
-                        alt={item?.author?.name || item?.author?.user_name || "Author"}
-                        width={44}
-                        height={44}
-                        className="h-11 w-11 rounded-full border-none outline-none object-cover"
-                      />
-                      <div>
-                        <h4 className="text-sm font-semibold text-[#F5F5F5]">{item?.author?.name || item?.author?.user_name || "Unknown"}</h4>
-                        <p className="text-xs text-[#9CA3AF]">@{item?.author?.user_name || item?.author?.name || "poet"}</p>
-                      </div>
-                    </div>
-
-                    <div className="mb-4 min-h-[84px] text-sm leading-relaxed text-[#F5F5F5]" dangerouslySetInnerHTML={{ __html: item?.content || "" }} />
-
-                    <LikeShareActionIcon item={item} showMeta={false} />
-                  </article>
+                  <DiaryHitCard key={item?._id || index} item={item} index={index} />
                 ))}
               </div>
             )}
 
-            {!homeDataLoading && filteredDiaries.length === 0 && <p className="mt-4 text-sm text-[#9CA3AF]">No shayari found for this category.</p>}
+            {!homeDataLoading && filteredDiaries.length === 0 && <p className="mt-3 text-[12px] text-[#9CA3AF]">No shayari found for this category.</p>}
           </section>
 
           <section className="space-y-5">

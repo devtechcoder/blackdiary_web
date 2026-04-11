@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Main from "../../components/layout/Main";
 import { useAuthContext } from "../../context/AuthContext";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
+import { useRouter } from "next/navigation";
 import ProfileActionModal from "../../modals/ProfileActionModal";
 import apiPath from "../../constants/apiPath";
 import { useGetApi } from "../../hooks/useRequest";
@@ -21,7 +22,7 @@ const Profile = () => {
     shayari: { totalDocs: 0 },
     post: { totalDocs: 0 },
   });
-  const navigate = useNavigate();
+  const router = useRouter();
   const { username } = useParams();
   const [profileData, setProfileData] = useState(null);
 
@@ -37,6 +38,19 @@ const Profile = () => {
       setProfileData(data?.data?._id ? data.data : null);
     }
   }, [data, isError]);
+
+  useEffect(() => {
+    if (!profileData?.user_name || !profileData?._id) return;
+
+    const encodedUserName = encodeURIComponent(profileData.user_name);
+    const editProfilePath = `/account/edit-profile/${profileData.user_name}/${profileData._id}`;
+    const followersPath = `/view-follow/follower/${profileData._id}/${encodedUserName}`;
+    const followingPath = `/view-follow/following/${profileData._id}/${encodedUserName}`;
+
+    router.prefetch(editProfilePath);
+    router.prefetch(followersPath);
+    router.prefetch(followingPath);
+  }, [profileData, router]);
 
   // Determine if the logged-in user is viewing their own profile
   const isOwnProfile = isLoggedIn && loggedInUserProfile?.user_name === profileData?.user_name;
@@ -77,7 +91,7 @@ const Profile = () => {
           profileData={profileData}
           isOwnProfile={isOwnProfile}
           totalPosts={totalPosts}
-          onEditProfile={() => navigate(`/account/edit-profile/${profileData?.user_name}/${profileData?._id}`)}
+          editProfileTo={`/account/edit-profile/${profileData?.user_name}/${profileData?._id}`}
           onOpenSettings={() => setShow(true)}
           onFollowersClick={`/view-follow/follower/${profileData?._id}/${encodeURIComponent(profileData?.user_name || "")}`}
           onFollowingClick={`/view-follow/following/${profileData?._id}/${encodeURIComponent(profileData?.user_name || "")}`}

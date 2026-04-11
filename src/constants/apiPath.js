@@ -20,6 +20,8 @@ let apiPath = {
   editByAction: "app/auth/edit-by-action",
   sendOtp: "app/auth/send-otp",
   verifyOtp: "app/auth/verify-otp",
+  logout: "app/auth/logout",
+  loginActivity: "app/auth/login-activity",
   getOneUser: "app/auth/get-one",
 
   //Home

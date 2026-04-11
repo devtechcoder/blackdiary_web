@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router";
 import { LikeShareActionIcon } from "../../components/ButtonField";
-import Prouser from "../../assets/images/user.png";
 import Slider from "react-slick";
 import { useEffect, useRef, useState } from "react";
 import { useGetApi } from "../../hooks/useRequest";
 import apiPath from "../../constants/apiPath";
 import dayjs from "dayjs";
-import AppImage from "../../components/AppImage";
-import { FaQuoteLeft } from "react-icons/fa";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi2";
+import DiaryHitCard from "./DiaryHitCard";
+import AppImage from "../../components/AppImage";
+import Prouser from "../../assets/images/user.png";
 import { resolveAssetUrl, stripHtml } from "../../helper/functions";
 
 const getDiaryCarouselMeta = (type, title) => {
@@ -139,58 +139,9 @@ export const ViewSliderDairy = ({ data, title, viewBtnName = "Show all", type })
           {totalSlides ? (
             <Slider ref={sliderRef} className="bd-diary-slider" {...settings}>
               {data?.map((item, index) => {
-                const authorName = item?.author?.username || item?.author?.user_name || item?.author?.name || "Unknown";
-                const postedAt = item?.created_at || item?.createdAt;
-                const plainText = stripHtml(item?.content || "");
-                const timeAgo = postedAt ? dayjs(postedAt).fromNow() : "Freshly written";
-
                 return (
                   <div key={item?._id || index} className="px-2 pb-1">
-                    <article className="group mx-auto max-w-3xl overflow-hidden rounded-[28px] border border-[rgba(212,175,55,0.1)] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] p-[1px] shadow-[0_14px_32px_rgba(0,0,0,0.24)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.32)]">
-                      <div className="relative overflow-hidden rounded-[27px] bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.07),transparent_28%),linear-gradient(180deg,rgba(18,18,18,0.98),rgba(11,11,11,0.98))] p-4 sm:p-5">
-                        <div className="relative flex items-center gap-3">
-                          <AppImage
-                            src={item?.author?.image ? resolveAssetUrl(item.author.image, apiPath.assetURL) : Prouser}
-                            alt="Profile"
-                            width={44}
-                            height={44}
-                            className="h-11 w-11 rounded-full border border-[rgba(212,175,55,0.22)] object-cover"
-                          />
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center justify-between gap-3">
-                              <div className="min-w-0">
-                                <p className="truncate text-[1rem] font-semibold text-[#fbf1d4]">{authorName}</p>
-                                <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-[#978760]">{timeAgo}</p>
-                              </div>
-                              {type !== "liked" && carouselMeta.accent ? (
-                                <span className="inline-flex shrink-0 items-center rounded-full border border-[rgba(212,175,55,0.14)] bg-[rgba(212,175,55,0.06)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f0d98d]">
-                                  {carouselMeta.accent}
-                                </span>
-                              ) : null}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="relative mt-4 rounded-[22px] border border-[rgba(212,175,55,0.08)] bg-[rgba(255,255,255,0.02)] px-4 py-5 sm:px-5">
-                          <FaQuoteLeft className="absolute left-4 top-4 text-base text-[rgba(212,175,55,0.18)]" />
-                          <p
-                            className="poetic-heading pl-6 text-[1.02rem] leading-[1.75] text-[#f7efde] sm:text-[1.16rem] md:text-[1.24rem]"
-                            style={{
-                              display: "-webkit-box",
-                              WebkitLineClamp: 3,
-                              WebkitBoxOrient: "vertical",
-                              overflow: "hidden",
-                            }}
-                          >
-                            {plainText || "A quiet page from the diary is waiting here."}
-                          </p>
-                        </div>
-
-                        <div className="mt-4 border-t border-[rgba(212,175,55,0.08)] pt-4">
-                          <LikeShareActionIcon item={item} variant="diary" showMeta={false} showLabels fullWidth={true} />
-                        </div>
-                      </div>
-                    </article>
+                    <DiaryHitCard item={item} index={index} />
                   </div>
                 );
               })}
