@@ -16,6 +16,7 @@ import { setUser } from "../redux/slices/appSlice";
 import { setAllPageHeadings, setGeneralSettings, setSocialSettings } from "../redux/slices/masterDataSlice";
 import Loader from "../components/Loader";
 import ChatBot from "../../components/ChatBot";
+import AuthModal from "../components/AuthModal";
 
 if (typeof window !== "undefined") {
   window.Buffer = window.Buffer || require("buffer").Buffer;
@@ -106,6 +107,7 @@ const AppProviders = ({ children }) => {
               <Suspense fallback={<Loader />}>
                 <ScrollToTop />
                 {children}
+                <AuthModal />
               </Suspense>
             </BootstrapData>
             <ChatBot />

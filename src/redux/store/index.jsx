@@ -4,6 +4,8 @@ import appSlice from "../slices/appSlice";
 import searchSlice from "../slices/searchSlice";
 import loaderReducer, { updateLoading } from "../slices/loaderSlice";
 import masterDataReducer from "../slices/masterDataSlice";
+import authReducer from "../slices/authSlice";
+import modalReducer from "../slices/modalSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     search: searchSlice,
     loader: loaderReducer,
     masterData: masterDataReducer,
+    auth: authReducer,
+    modal: modalReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });

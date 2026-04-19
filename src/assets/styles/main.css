@@ -386,6 +386,23 @@ a:hover {
   color: var(--bd-gold) !important;
 }
 
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-img {
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15)); /* subtle glow */
+}
+
+.logo-text {
+  background: linear-gradient(90deg, #ffd700, #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .occasion-card {
   background: #161616 !important;
   border: 1px solid rgba(212, 175, 55, 0.72) !important;
@@ -490,7 +507,9 @@ a:hover {
   background: rgba(212, 175, 55, 0.08) !important;
   color: #ffd86d !important;
   border-color: #d4af37 !important;
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.12), 0 0 16px rgba(212, 175, 55, 0.12) !important;
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.12),
+    0 0 16px rgba(212, 175, 55, 0.12) !important;
 }
 
 .account-upload-photo-btn.ant-btn {
@@ -529,7 +548,9 @@ a:hover {
   background: rgba(212, 175, 55, 0.08) !important;
   color: #ffd86d !important;
   border-color: #d4af37 !important;
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.12), 0 0 16px rgba(212, 175, 55, 0.12) !important;
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.12),
+    0 0 16px rgba(212, 175, 55, 0.12) !important;
 }
 
 .edit-profile-modal-primary-btn.ant-btn {
@@ -1050,6 +1071,24 @@ div:where(.css-dev-only-do-not-override-mc1tut).ant-typography-h5 > textarea,
   border: none !important;
 }
 
+.auth-login-modal .ant-modal-content {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.auth-login-modal .ant-modal-body {
+  padding: 0 !important;
+}
+
+.auth-login-modal .ant-modal-close {
+  color: #8d8d8d !important;
+}
+
+.auth-login-modal .ant-modal-close:hover {
+  color: #f0f0f0 !important;
+}
+
 .account-profile-modal .ant-modal-close {
   top: 12px !important;
   inset-inline-end: 12px !important;
@@ -1143,7 +1182,11 @@ div:where(.css-dev-only-do-not-override-mc1tut).ant-typography-h5 > textarea,
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 100%) !important;
   color: #ffffff !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02) !important;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease !important;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease !important;
 }
 
 .account-edit-modal .account-edit-input::placeholder {
@@ -1189,7 +1232,11 @@ div:where(.css-dev-only-do-not-override-mc1tut).ant-typography-h5 > textarea,
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 100%) !important;
   color: #ffffff !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02) !important;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease !important;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease !important;
 }
 
 .account-security-page .account-security-input.ant-input-affix-wrapper:hover {

@@ -1,6 +1,9 @@
+"use client";
+
 import React, { useMemo, useState } from "react";
 import { FiBookmark, FiEye, FiHeart } from "react-icons/fi";
 import AppImage from "../AppImage";
+import useProtectedAction from "../../hooks/useProtectedAction";
 
 const gradients = [
   "from-[#1f2f4a] via-[#17273c] to-[#111a29]",
@@ -30,6 +33,14 @@ const ShayariCard = ({ item, type = "shayari", assetURL, onOpen }) => {
   const views = item?.total_views || item?.views || item?.total_comment || 0;
   const content = stripHtml(item?.content);
   const imageSrc = resolveImage(item?.image, assetURL);
+  const protectedLikeAction = useProtectedAction({
+    actionKey: `profile-like:${item?._id || "default"}`,
+    execute: () => setLiked((prev) => !prev),
+  });
+  const protectedSaveAction = useProtectedAction({
+    actionKey: `bookmark:${item?._id || "default"}`,
+    execute: () => setSaved((prev) => !prev),
+  });
 
   return (
     <article
@@ -61,7 +72,7 @@ const ShayariCard = ({ item, type = "shayari", assetURL, onOpen }) => {
             type="button"
             onClick={(event) => {
               event.stopPropagation();
-              setLiked((prev) => !prev);
+              protectedLikeAction();
             }}
             className={`grid h-8 w-8 place-items-center rounded-full border transition-all duration-300 ${liked ? "scale-110 border-[#E6B422] bg-[#E6B422]/20 text-[#ffd978]" : "border-white/25 bg-black/45 text-white"}`}
             aria-label="Like"
@@ -72,7 +83,7 @@ const ShayariCard = ({ item, type = "shayari", assetURL, onOpen }) => {
             type="button"
             onClick={(event) => {
               event.stopPropagation();
-              setSaved((prev) => !prev);
+              protectedSaveAction();
             }}
             className={`grid h-8 w-8 place-items-center rounded-full border transition-all duration-300 ${saved ? "border-[#E6B422] bg-[#E6B422]/20 text-[#ffd978]" : "border-white/25 bg-black/45 text-white"}`}
             aria-label="Save"

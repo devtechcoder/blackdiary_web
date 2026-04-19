@@ -5,7 +5,7 @@ import { QRCode } from "antd";
 import html2canvas from "html2canvas";
 import { Button } from "antd";
 import Main from "../../../components/layout/Main";
-import logo from "../../../assets/images/allLogo/black_white_logo.png";
+import logo from "../../../assets/images/allLogo/black_white_logo.svg";
 import { SEO } from "../../../constants/seo";
 import { useAuthContext } from "../../../context/AuthContext";
 import { WEB_LINK } from "../../../constants/Constants";

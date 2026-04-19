@@ -25,7 +25,7 @@ export const usePostRequest = () => {
 
       return response;
     } catch (error) {
-      if (error?.status === 401) handleLogout();
+      if (error?.status === 401 || error?.status === 403 || error?.data?.statusText === "JWT_EXPIRED" || error?.data?.message === "JWT_EXPIRED") handleLogout();
       else throw error;
     } finally {
       dispatch(updateLoading({ loading: false }));
@@ -52,7 +52,7 @@ export const useRequest = (url, options = { skip: false }) => {
 
     if (error) {
       console.log("errorerrorerror--->", error);
-      if (error?.status === 401) {
+      if (error?.status === 401 || error?.status === 403 || error?.data?.statusText === "JWT_EXPIRED" || error?.data?.message === "JWT_EXPIRED") {
         handleLogout();
       } else if (error?.status === 404) {
         ShowToast(error?.data?.message || "Not Found", Severty.ERROR);

@@ -5,12 +5,17 @@ import { Severty, ShowToast } from "../helper/toast";
 import useRequest from "../hooks/useRequest";
 import { useAuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../redux/slices/appSlice";
+import { setAuthState } from "../redux/slices/authSlice";
+import { getPostLoginRedirectPath } from "../utils/authRedirect";
 
 const ShowLoginAccModal = ({ show, hide, data }) => {
   const { setIsLoggedIn, setUserProfile } = useAuthContext();
   const accounts = data || [];
   const { request } = useRequest();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
 
@@ -35,9 +40,13 @@ const ShowLoginAccModal = ({ show, hide, data }) => {
           localStorage.setItem("userProfile", JSON.stringify(data.data.user));
 
           setUserProfile(data.data.user);
+          dispatch(setToken(data.data.token));
+          dispatch(setUser(data.data.user));
+          dispatch(setAuthState({ user: data.data.user }));
           ShowToast(data.message, Severty.SUCCESS);
           hide();
-          setTimeout(() => navigate("/"), 200);
+          const redirectTo = getPostLoginRedirectPath();
+          setTimeout(() => navigate(redirectTo), 200);
         } else {
           console.log("error", "err+++");
           ShowToast(data.message, Severty.ERROR);

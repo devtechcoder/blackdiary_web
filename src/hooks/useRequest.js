@@ -43,21 +43,19 @@ export const useRequest = () => {
       return response.data;
     } catch (err) {
       console.log(err, "Error");
-      if (err?.response?.code === "ERR_NETWORK") {
+      const isAuthError =
+        err?.response?.status === 401 ||
+        err?.response?.status === 403 ||
+        err?.response?.data?.statusText === "JWT_EXPIRED" ||
+        err?.response?.data?.message === "JWT_EXPIRED" ||
+        err?.response?.data?.message === "Un-Authorized User";
+
+      if (isAuthError) {
+        logout(undefined, { redirect: false, showToast: false, syncWithServer: false });
+      }
+
+      if (err?.code === "ERR_NETWORK") {
         console.log("ErrorNetwork");
-      }
-      if (err?.response?.status === 401) {
-        logout();
-      }
-      if (err?.response?.status === 403) {
-        logout();
-      }
-      if (err?.response?.data?.message === "jwt expired") {
-        logout();
-      }
-      if (err?.response?.data?.message === "Un-Authorized User") {
-        console.log("--------------------------------------------logotu");
-        logout();
       }
 
       // if (err?.response?.status === 400) {
@@ -106,17 +104,15 @@ export const useGetApi = ({ queryKey, endpoint, enabled = true, params = {}, hea
       if (err?.code === "ERR_NETWORK") {
         ShowToast("Network error, please check your internet.", "error");
       }
-      if (err?.response?.status === 401 || err?.response?.status === 403) {
-        ShowToast("Session expired, please login again.", "error");
-        logout();
-      }
-      if (err?.response?.data?.message === "jwt expired") {
-        ShowToast("Session expired! Please login again.", "error");
-        logout();
-      }
-      if (err?.response?.data?.message === "Un-Authorized User") {
-        ShowToast("Unauthorized access detected!", "error");
-        logout();
+      const isAuthError =
+        err?.response?.status === 401 ||
+        err?.response?.status === 403 ||
+        err?.response?.data?.statusText === "JWT_EXPIRED" ||
+        err?.response?.data?.message === "JWT_EXPIRED" ||
+        err?.response?.data?.message === "Un-Authorized User";
+
+      if (isAuthError) {
+        logout(undefined, { redirect: false, showToast: false, syncWithServer: false });
       }
     },
   });
@@ -159,17 +155,15 @@ export const usePostApi = ({ endpoint, onSuccess, onError }) => {
       if (err?.code === "ERR_NETWORK") {
         ShowToast("Network error, please check your internet.", Severty.ERROR);
       }
-      if (err?.response?.status === 401 || err?.response?.status === 403) {
-        ShowToast("Session expired, please login again.", Severty.ERROR);
-        logout();
-      }
-      if (err?.response?.data?.message === "jwt expired") {
-        ShowToast("Session expired! Please login again.", Severty.ERROR);
-        logout();
-      }
-      if (err?.response?.data?.message === "Un-Authorized User") {
-        ShowToast("Unauthorized access detected!", Severty.ERROR);
-        logout();
+      const isAuthError =
+        err?.response?.status === 401 ||
+        err?.response?.status === 403 ||
+        err?.response?.data?.statusText === "JWT_EXPIRED" ||
+        err?.response?.data?.message === "JWT_EXPIRED" ||
+        err?.response?.data?.message === "Un-Authorized User";
+
+      if (isAuthError) {
+        logout(undefined, { redirect: false, showToast: false, syncWithServer: false });
       }
 
       if (onError) {

@@ -7,41 +7,14 @@ import apiPath from "../../constants/apiPath";
 import CreatePostOption from "../../modals/createPostOption";
 import AppImage from "../AppImage";
 import { resolveAssetUrl } from "../../helper/functions";
+import BrandLogo from "../../assets/images/allLogo/black_white_logo.svg";
 
 const { Sider } = Layout;
 
 function SidebarChevron({ collapsed }) {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="h-[18px] w-[18px]"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
       {collapsed ? <path d="M9 6l6 6-6 6" /> : <path d="M15 6l-6 6 6 6" />}
-    </svg>
-  );
-}
-
-function SidebarLogoMark({ collapsed }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 100 100"
-      className={collapsed ? "h-8 w-8 shrink-0" : "h-9 w-9 shrink-0"}
-      fill="none"
-      stroke="#ffffff"
-      strokeWidth="6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M50 10 L90 90 H10 Z" />
-      <path d="M50 10 V90" />
-      <path d="M10 90 L50 60 L90 90" />
     </svg>
   );
 }
@@ -85,16 +58,34 @@ function Sidenav() {
       trigger={null}
       className="bg-[#0B0B0B] text-white border-none outline-none sticky top-0 h-screen overflow-y-auto shrink-0"
     >
-      <div className="flex items-center justify-between px-[18px] py-4 border-none outline-none">
-        <button type="button" onClick={() => navigate("/")} className="flex min-w-0 items-center gap-3 text-left">
-          <SidebarLogoMark collapsed={collapsed} />
-          {!collapsed && <span className="truncate text-[18px] font-semibold text-white">Black Diary</span>}
-        </button>
+      <div className="flex items-center   justify-between px-[18px] pt-4 pb-2">
+        {/* LEFT SIDE */}
+        {!collapsed && (
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
+            {/* 🔥 BIG LOGO */}
+            <div className="logo-wrapper">
+              <AppImage
+                src={BrandLogo}
+                alt="Black Diary"
+                width={56} // 🔥 BIG SIZE
+                height={56}
+                className="logo-img"
+              />
+            </div>
+
+            {/* 🔥 TEXT */}
+            <span className="logo-text text-[22px] font-semibold leading-none">Black Diary</span>
+          </div>
+        )}
+
+        {/* RIGHT BUTTON */}
         <button
           type="button"
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           onClick={() => setCollapsed(!collapsed)}
-          className="flex h-10 w-10 min-w-[40px] items-center justify-center rounded-full border border-[rgba(212,175,55,0.24)] bg-[#151515] text-[#D4AF37] shadow-[0_0_14px_rgba(212,175,55,0.08)] transition-colors duration-300 hover:bg-[rgba(212,175,55,0.12)]"
+          className="flex h-7 w-7 items-center justify-center rounded-full 
+               border border-[rgba(212,175,55,0.25)] 
+               bg-[#151515] text-[#D4AF37]
+               hover:bg-[rgba(212,175,55,0.12)] transition"
         >
           <SidebarChevron collapsed={collapsed} />
         </button>

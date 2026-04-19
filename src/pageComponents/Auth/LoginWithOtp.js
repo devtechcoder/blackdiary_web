@@ -10,6 +10,10 @@ import Loader from "../../components/Loader";
 import { maskEmail, maskPhone } from "../../helper/functions";
 import { useAuthContext } from "../../context/AuthContext";
 import sideLogo from "../../assets/images/brand/login-logo.png";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../../redux/slices/appSlice";
+import { setAuthState } from "../../redux/slices/authSlice";
+import { getPostLoginRedirectPath } from "../../utils/authRedirect";
 const LoginWithOtp = () => {
   const { setIsLoggedIn, setUserProfile } = useAuthContext();
   const [otp, setOtp] = useState("");
@@ -21,6 +25,7 @@ const LoginWithOtp = () => {
   const navigate = useNavigate();
   const { id: userId } = useParams();
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const {
     data,
@@ -97,8 +102,12 @@ const LoginWithOtp = () => {
           localStorage.setItem("userProfile", JSON.stringify(data.data.user));
 
           setUserProfile(data.data.user);
+          dispatch(setToken(data.data.token));
+          dispatch(setUser(data.data.user));
+          dispatch(setAuthState({ user: data.data.user }));
           ShowToast(data.message, Severty.SUCCESS);
-          setTimeout(() => navigate("/"), 200);
+          const redirectTo = getPostLoginRedirectPath();
+          setTimeout(() => navigate(redirectTo), 200);
         } else {
           ShowToast(data.message, Severty.ERROR);
         }

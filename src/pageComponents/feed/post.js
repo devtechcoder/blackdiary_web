@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import AppImage from "../../components/AppImage";
 import { stripHtml } from "../../helper/functions";
 import { Severty, ShowToast } from "../../helper/toast";
+import useProtectedAction from "../../hooks/useProtectedAction";
 
 const PostSkeleton = () => (
   <div className="mx-auto w-full max-w-[54rem] animate-pulse overflow-hidden rounded-[28px] border border-[rgba(255,215,0,0.1)] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-4 sm:p-5">
@@ -87,6 +88,10 @@ const PostCard = ({ post, index, likeType = "post" }) => {
   };
 
   const followButtonClass = "flex shrink-0 items-center justify-center rounded-full bg-[#d4af37] px-3 py-1.5 text-xs font-semibold text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f2cb57] sm:px-4 sm:py-2 sm:text-sm";
+  const protectedFollowAction = useProtectedAction({
+    actionKey: `follow:${post?.author?._id || post?._id || "default"}`,
+    execute: handleFollowToggle,
+  });
 
   return (
     <article className="group mx-auto w-full max-w-[54rem] overflow-hidden rounded-[30px] border border-[rgba(255,215,0,0.14)] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-[1px] shadow-[0_20px_60px_rgba(0,0,0,0.28)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
@@ -108,7 +113,7 @@ const PostCard = ({ post, index, likeType = "post" }) => {
             </button>
 
             {!post?.is_own_post && post?.author?._id && showFollowButton ? (
-              <button type="button" onClick={handleFollowToggle} disabled={followLoading} className={followButtonClass}>
+              <button type="button" onClick={protectedFollowAction} disabled={followLoading} className={followButtonClass}>
                 {followLoading ? "Please..." : "Follow"}
               </button>
             ) : null}

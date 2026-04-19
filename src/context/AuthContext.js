@@ -8,6 +8,8 @@ import axios from "axios";
 import apiPath from "../constants/apiPath";
 import { useDispatch } from "react-redux";
 import { setToken, setUser, logout as resetAppAuth } from "../redux/slices/appSlice";
+import { clearAuthState, hydrateAuthState, setAuthState } from "../redux/slices/authSlice";
+import { clearPendingAuthAction, closeAuthModal } from "../redux/slices/modalSlice";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -33,6 +35,20 @@ export const AuthProvider = ({ children }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [refreshProfile, setRefreshProfile] = useState(false);
   const [isMobile, setIsMobile] = useState(hasWindow ? window.innerWidth < 768 : false);
+
+  const clearAuthSession = () => {
+    if (!hasWindow) return;
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("userProfile");
+    setIsLoggedIn(false);
+    setSession({ token: null });
+    setUserProfile(null);
+    dispatch(resetAppAuth());
+    dispatch(clearAuthState());
+    dispatch(clearPendingAuthAction());
+    dispatch(closeAuthModal());
+  };
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < 768);
@@ -65,21 +81,24 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("userProfile", JSON.stringify(result));
         dispatch(setToken(token));
         dispatch(setUser(result));
+        dispatch(setAuthState({ user: result }));
       }
     } catch (error) {
       console.log(error);
       const statusCode = error?.response?.status;
       const message = error?.response?.data?.message;
-      const isUnauthorized = statusCode === 401 || message === "Un-Authorized User";
+      const statusText = error?.response?.data?.statusText;
+      const isUnauthorized =
+        statusCode === 401 ||
+        statusCode === 403 ||
+        message === "Un-Authorized User" ||
+        message === "jwt expired" ||
+        message === "JWT_EXPIRED" ||
+        statusText === "JWT_EXPIRED";
 
       // Only clear session for explicit auth failures.
       if (isUnauthorized) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userProfile");
-        setIsLoggedIn(false);
-        setSession({ token: null });
-        setUserProfile(null);
-        dispatch(resetAppAuth());
+        clearAuthSession();
       }
     }
   };
@@ -102,6 +121,7 @@ export const AuthProvider = ({ children }) => {
     setUserProfile(user || null);
     dispatch(setToken(token));
     if (user) dispatch(setUser(user));
+    dispatch(hydrateAuthState({ isAuthenticated: true, user: user || null }));
 
     // Revalidate profile in background and refresh local user data.
     fetchUser();
@@ -113,9 +133,13 @@ export const AuthProvider = ({ children }) => {
     return <Navigate to="/login" />;
   };
 
-  const handleLogout = (navigate) => {
+  const handleLogout = (navigateOrOptions, maybeOptions = {}) => {
+    const isNavigateFn = typeof navigateOrOptions === "function";
+    const navigate = isNavigateFn ? navigateOrOptions : maybeOptions.navigate;
+    const options = isNavigateFn ? maybeOptions : navigateOrOptions || {};
+    const { redirect = true, showToast = true, syncWithServer = true } = options;
     const token = localStorage.getItem("token");
-    if (hasWindow && token) {
+    if (hasWindow && syncWithServer && token) {
       fetch(`${apiPath.baseURL}/app/auth/logout`, {
         method: "POST",
         headers: {
@@ -126,17 +150,14 @@ export const AuthProvider = ({ children }) => {
       }).catch(() => {});
     }
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("userProfile");
-    setIsLoggedIn(false);
-    setSession({ token: null });
-    setUserProfile(null);
-    dispatch(resetAppAuth());
-    ShowToast("Logout Successfully", Severty.SUCCESS);
+    clearAuthSession();
+    if (showToast) {
+      ShowToast("Logout Successfully", Severty.SUCCESS);
+    }
 
-    if (typeof navigate === "function") {
+    if (redirect && typeof navigate === "function") {
       navigate("/login-diary");
-    } else if (hasWindow) {
+    } else if (redirect && hasWindow) {
       window.location.href = "/login-diary";
     }
   };
@@ -156,7 +177,7 @@ export const AuthProvider = ({ children }) => {
         setUserProfile,
         refreshUser,
         login,
-        logout: (navigate) => handleLogout(navigate),
+        logout: handleLogout,
         isDarkTheme,
         isMobile,
       }}

@@ -1,4 +1,4 @@
-import black_white_logo from "../assets/images/brand/favicon.png";
+import black_white_logo from "../assets/images/brand/favicon.svg";
 
 const createSEOEntry = ({ title, description, keywords, url }) => ({
   primary: {
@@ -265,7 +265,6 @@ export const SEO = {
     },
   },
 
-
   viewAllSubCategoryPage: createSEOEntry({
     title: "Browse Shayari Categories - Black Diary",
     description: "Black Diary par sabhi Shayari categories aur sub-categories browse karein aur apne mood ke hisaab se content explore karein.",
@@ -489,7 +488,6 @@ export const SEO = {
     keywords: "followers list, following list, black diary social connections, poet followers",
     url: "https://blackdiary.vercel.app/view-follow",
   }),
-
 };
 
 export const DEFAULT_SEO = SEO.common;

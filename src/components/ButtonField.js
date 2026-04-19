@@ -1,27 +1,28 @@
+"use client";
+
 import { Col, Form, Input, Select, InputNumber, Checkbox } from "antd";
 import PhoneInput from "react-phone-input-2";
 import { useAppContext } from "../context/AppContext";
 import lang from "../helper/langHelper";
-import { FaHeart, FaComment, FaShareAlt, FaCopy } from "react-icons/fa";
+import { FaHeart, FaComment, FaShareAlt, FaCopy, FaCheck } from "react-icons/fa";
 import { message, Modal } from "antd";
 import useRequest from "../hooks/useRequest";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import apiPath from "../constants/apiPath";
 import { Severty, ShowToast } from "../helper/toast";
 import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { stripHtml } from "../helper/functions";
 import CommentModal from "./CommentModal";
+import ViewIconLogo from "../assets/images/brand/view-logo-icon.svg";
+import AppImage from "./AppImage";
+import useProtectedAction from "../hooks/useProtectedAction";
 
 export const ViewActionIcon = () => {
   const { language } = useAppContext();
   return (
     <div className="cursor-pointer bg-[#D4AF37] p-3 rounded-full shadow-[0_0_14px_rgba(212,175,55,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFD700]">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" stroke="black" strokeWidth="6">
-        <path d="M50 10 L90 90 H10 Z" />
-        <path d="M50 10 V90" />
-        <path d="M10 90 L50 60 L90 90" />
-      </svg>
+      <AppImage src={ViewIconLogo} alt="View" width={20} height={20} />
     </div>
   );
 };
@@ -32,9 +33,19 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
   const [isLiked, setIsLiked] = useState(item?.is_liked || false);
   const [totalLikes, setTotalLikes] = useState(item?.total_likes || 0);
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const { request } = useRequest();
   const [searchParams] = useSearchParams();
   const type = typeOverride || searchParams.get("type");
+  const copyResetTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyResetTimerRef.current) {
+        clearTimeout(copyResetTimerRef.current);
+      }
+    };
+  }, []);
 
   const onLike = (value) => {
     const payload = {
@@ -71,6 +82,14 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
     }
   };
   const isDiaryVariant = variant === "diary";
+  const protectedLikeAction = useProtectedAction({
+    actionKey: `like:${item?._id || item?.diary_id || "default"}`,
+    execute: onLike,
+  });
+  const protectedCommentAction = useProtectedAction({
+    actionKey: `comment:${item?._id || item?.diary_id || "default"}`,
+    execute: () => setIsCommentModalVisible(true),
+  });
 
   const actionButtonClass = isDiaryVariant
     ? `group flex ${compact ? "h-9" : "h-10"} w-full items-center justify-center gap-2 rounded-full border border-[rgba(255,215,0,0.12)] bg-[rgba(255,255,255,0.03)] ${compact ? "px-2 text-[11px]" : "px-2 text-[12px]"} font-medium text-[#c4c4c4] transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(255,215,0,0.26)] hover:bg-[rgba(255,255,255,0.06)] hover:text-[#fff0bf] sm:w-auto sm:justify-start sm:${compact ? "px-2.5" : "px-3"}`
@@ -84,13 +103,13 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
         <button
           type="button"
           className={`${actionButtonClass} ${isLiked ? (isDiaryVariant ? "border-[rgba(255,215,0,0.34)] bg-[rgba(255,215,0,0.08)] text-[#ffe38a]" : "text-green-400") : ""}`}
-          onClick={onLike}
+          onClick={protectedLikeAction}
           disabled={loading}
         >
           <FaHeart /> <span className={labelClassName}>Like</span>
           {showLikeCount && totalLikes > 0 ? <span className="text-[11px] font-semibold text-[#ffe7a4]">{totalLikes}</span> : null}
         </button>
-        <button type="button" className={actionButtonClass} onClick={() => setIsCommentModalVisible(true)}>
+        <button type="button" className={actionButtonClass} onClick={protectedCommentAction}>
           <FaComment /> <span className={labelClassName}>Comment</span>
         </button>
         <button
@@ -119,18 +138,31 @@ export const LikeShareActionIcon = ({ item, variant = "default", showMeta = true
         <button
           type="button"
           className={actionButtonClass}
-          onClick={() => {
-            // Strip HTML using a dummy div
+          onClick={async () => {
             const tempElement = document.createElement("div");
             tempElement.innerHTML = item?.content || "";
             const plainText = tempElement.textContent || tempElement.innerText || "";
 
-            // Copy to clipboard
-            navigator.clipboard.writeText(plainText);
-            message.success("Copied to clipboard!");
+            try {
+              await navigator.clipboard.writeText(plainText);
+              setIsCopied(true);
+              message.success("Copied to clipboard!");
+
+              if (copyResetTimerRef.current) {
+                clearTimeout(copyResetTimerRef.current);
+              }
+
+              copyResetTimerRef.current = setTimeout(() => {
+                setIsCopied(false);
+              }, 1500);
+            } catch (error) {
+              message.error("Failed to copy text");
+              console.error("Copy failed:", error);
+            }
           }}
+          title={isCopied ? "Copied" : "Copy"}
         >
-          <FaCopy /> <span className={labelClassName}>Copy</span>
+          {isCopied ? <FaCheck /> : <FaCopy />} <span className={labelClassName}>{isCopied ? "Copied" : "Copy"}</span>
         </button>
       </div>
 

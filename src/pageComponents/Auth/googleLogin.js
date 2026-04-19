@@ -7,11 +7,16 @@ import useRequest from "../../hooks/useRequest";
 import { useNavigate } from "react-router";
 import apiPath from "../../constants/apiPath";
 import { Severty, ShowToast } from "../../helper/toast";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../../redux/slices/appSlice";
+import { setAuthState } from "../../redux/slices/authSlice";
+import { getPostLoginRedirectPath } from "../../utils/authRedirect";
 
 const GoogleLogin = ({ className = "w-full border border-gray-600 rounded-full py-2 flex items-center justify-center gap-3 hover:bg-neutral-800" }) => {
   const { setIsLoggedIn, setUserProfile } = useAuthContext();
   const { request } = useRequest();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const handleGoogleLogin = async () => {
@@ -41,8 +46,12 @@ const GoogleLogin = ({ className = "w-full border border-gray-600 rounded-full p
             localStorage.setItem("userProfile", JSON.stringify(data.data.user));
 
             setUserProfile(data.data.user);
+            dispatch(setToken(data.data.token));
+            dispatch(setUser(data.data.user));
+            dispatch(setAuthState({ user: data.data.user }));
             ShowToast(data.message, Severty.SUCCESS);
-            setTimeout(() => navigate("/"), 200);
+            const redirectTo = getPostLoginRedirectPath();
+            setTimeout(() => navigate(redirectTo), 200);
           } else {
             ShowToast(data.message, Severty.ERROR);
           }
