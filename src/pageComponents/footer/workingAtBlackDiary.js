@@ -44,23 +44,25 @@ const openPositions = [
 const WorkingAtBlackDiary = () => {
   return (
     <>
-      <PublicLayout>
-        <div className="bg-white text-gray-800 py-12 px-4">
-          <div className="max-w-4xl mx-auto">
+      <PublicLayout contentClassName="p-0 text-white bg-[#0d0d0d] flex flex-col flex-1 overflow-x-hidden" containerClassName="flex flex-col flex-1 w-full max-w-none">
+        <div className="relative isolate w-full overflow-hidden bg-[linear-gradient(180deg,#1a120b_0%,#0b0806_42%,#050302_100%)] px-4 py-12 text-white">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(255,173,66,0.14),transparent_26%),radial-gradient(circle_at_10%_40%,rgba(255,132,31,0.12),transparent_18%),radial-gradient(circle_at_90%_38%,rgba(255,132,31,0.12),transparent_18%),radial-gradient(circle_at_bottom,rgba(255,175,71,0.1),transparent_24%)]" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(rgba(255,188,84,0.75)_0.7px,transparent_0.7px)] [background-size:20px_20px]" />
+          <div className="relative mx-auto w-full max-w-6xl">
             {/* Header */}
             <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Shape the Future of Expression</h1>
-              <p className="text-lg text-gray-600">Join us at Black Diary and be part of a team that's passionate about words, technology, and community.</p>
+              <h1 className="poetic-heading text-4xl font-bold text-[#F1C56A] mb-3 md:text-5xl">Shape the Future of Expression</h1>
+              <p className="text-lg text-[#D0D0D0]">Join us at Black Diary and be part of a team that's passionate about words, technology, and community.</p>
             </div>
 
             {/* Our Values Section */}
             <section className="mb-16">
-              <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">Our Core Values</h2>
-              <div className="grid md:grid-cols-2 gap-8">
+              <h2 className="text-3xl font-bold text-center text-[#F6E7C8] mb-10">Our Core Values</h2>
+              <div className="grid gap-8 md:grid-cols-2">
                 {values.map((value, index) => (
-                  <div key={index} className="bg-gray-50 p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold text-indigo-600 mb-2">{value.title}</h3>
-                    <p className="text-gray-700">{value.description}</p>
+                  <div key={index} className="rounded-[24px] border border-[rgba(212,175,55,0.16)] bg-[rgba(255,255,255,0.03)] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl">
+                    <h3 className="mb-2 text-xl font-semibold text-[#F1C56A]">{value.title}</h3>
+                    <p className="text-[#D0D0D0]">{value.description}</p>
                   </div>
                 ))}
               </div>
@@ -68,18 +70,18 @@ const WorkingAtBlackDiary = () => {
 
             {/* Open Positions Section */}
             <section>
-              <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">Open Positions</h2>
-              <div className="bg-gray-50 border border-gray-200 rounded-lg">
-                <div className="divide-y divide-gray-200">
+              <h2 className="text-3xl font-bold text-center text-[#F6E7C8] mb-10">Open Positions</h2>
+              <div className="overflow-hidden rounded-[24px] border border-[rgba(212,175,55,0.16)] bg-[rgba(255,255,255,0.03)] shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl">
+                <div className="divide-y divide-[rgba(212,175,55,0.12)]">
                   {openPositions.map((position, index) => (
-                    <div key={index} className="p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-gray-100">
+                    <div key={index} className="flex flex-col items-start justify-between p-6 transition-colors duration-300 hover:bg-[rgba(255,255,255,0.03)] sm:flex-row sm:items-center">
                       <div>
-                        <h3 className="text-xl font-semibold text-gray-900">{position.title}</h3>
-                        <p className="text-gray-600 mt-1">
+                        <h3 className="text-xl font-semibold text-[#F6E7C8]">{position.title}</h3>
+                        <p className="mt-1 text-[#D0D0D0]">
                           {position.department} &middot; {position.location}
                         </p>
                       </div>
-                      <Link to="#" className="mt-4 sm:mt-0 inline-block bg-indigo-600 text-white font-semibold px-5 py-2 rounded-full hover:bg-indigo-700 transition-colors duration-300 text-sm">
+                      <Link to="#" className="mt-4 inline-block rounded-full bg-[#D4AF37] px-5 py-2 text-sm font-semibold text-[#090909] transition-colors duration-300 hover:bg-[#E1C04A] sm:mt-0">
                         Apply Now
                       </Link>
                     </div>

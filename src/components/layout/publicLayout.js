@@ -5,7 +5,7 @@ import Footer from "./Footer";
 
 const { Content } = Layout;
 
-function PublicLayout({ children }) {
+function PublicLayout({ children, contentClassName = "p-4 text-white bg-[#0d0d0d] flex flex-col flex-1", containerClassName = "bd-container flex flex-col flex-1" }) {
   const hasWindow = typeof window !== "undefined";
   const [isMobile, setIsMobile] = useState(hasWindow ? window.innerWidth < 768 : false);
 
@@ -22,9 +22,9 @@ function PublicLayout({ children }) {
   return (
     <Layout className="layout-dashboard min-h-screen bg-[#0d0d0d]">
       <PublicHeader isMobile={isMobile} />
-      <Layout className="flex flex-col flex-1 bg-[#0d0d0d]">
-        <Content className="p-4 text-white bg-[#0d0d0d] flex flex-col flex-1">
-          <div className="bd-container flex flex-col flex-1">
+      <Layout className="flex flex-col flex-1 bg-[#0d0d0d] overflow-x-hidden">
+        <Content className={contentClassName}>
+          <div className={containerClassName}>
             <div className="flex-1">{children}</div>
             <Footer />
           </div>

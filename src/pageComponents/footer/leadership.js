@@ -1,19 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import PublicLayout from "../../components/layout/publicLayout";
 import { useRequest } from "../../hooks/useReduxRequest";
 import apiPath from "../../constants/apiPath";
-import Prouser from "../../assets/images/user.png";
-import { useSelector } from "react-redux";
-import AppImage from "../../components/AppImage";
+import TeamCard from "./TeamCard";
 
 const Leadership = () => {
   const [list, setList] = useState([]);
   const [pagination] = useState({ current: 1, pageSize: 10 });
-  const headingData = useSelector((state) => state.masterData.allPageHeadings?.find((item) => ["leadership", "our_leadership", "user_leadership"].includes(item.type)));
 
-  const { response: data, loading } = useRequest(`${apiPath.getLeadershipList}?page=${pagination ? pagination.current : 1}&pageSize=${pagination ? pagination.pageSize : 10}`);
+  const { response: data, loading } = useRequest(`${apiPath.getLeadershipList}?page=${pagination.current}&pageSize=${pagination.pageSize}`);
 
   useEffect(() => {
     if (data?.status) {
@@ -21,57 +19,69 @@ const Leadership = () => {
     }
   }, [data]);
 
+  const teamMembers = list.slice(0, 4);
+
   return (
     <>
-      <PublicLayout>
-        <section className="min-h-screen bg-[#0B0B0B] py-12">
-          <div className="bd-container px-4">
-            <div className="mb-14 text-center">
-              <h1 className="poetic-heading text-[36px] font-semibold text-[#D4AF37]">{headingData?.title || "Our Leadership"}</h1>
-              <p className="mt-2 text-[14px] text-[#9ca3af]">{headingData?.sub_title || "The passionate team bringing poetry to the world."}</p>
+      <PublicLayout contentClassName="p-0 text-white bg-[#0d0d0d] flex flex-col flex-1 overflow-x-hidden" containerClassName="flex flex-col flex-1 w-full max-w-none">
+        <LazyMotion features={domAnimation}>
+          <section className="relative isolate w-full overflow-hidden bg-[linear-gradient(180deg,#1a120b_0%,#0b0806_42%,#050302_100%)] px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(255,173,66,0.16),transparent_26%),radial-gradient(circle_at_10%_40%,rgba(255,132,31,0.16),transparent_18%),radial-gradient(circle_at_90%_38%,rgba(255,132,31,0.16),transparent_18%),radial-gradient(circle_at_bottom,rgba(255,175,71,0.12),transparent_24%)]" />
+            <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(rgba(255,188,84,0.8)_0.7px,transparent_0.7px)] [background-size:20px_20px]" />
+            <div className="pointer-events-none absolute inset-y-0 left-8 w-px bg-[linear-gradient(180deg,transparent,rgba(212,175,55,0.32),transparent)]" />
+            <div className="pointer-events-none absolute inset-y-0 right-8 w-px bg-[linear-gradient(180deg,transparent,rgba(212,175,55,0.32),transparent)]" />
+            <m.div
+              animate={{ y: [0, -10, 0], opacity: [0.14, 0.26, 0.14] }}
+              transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+              className="pointer-events-none absolute left-[8%] top-[14%] h-28 w-28 rounded-full bg-[rgba(255,164,63,0.12)] blur-3xl"
+            />
+            <m.div
+              animate={{ y: [0, 14, 0], opacity: [0.1, 0.22, 0.1] }}
+              transition={{ duration: 12, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1.2 }}
+              className="pointer-events-none absolute right-[10%] top-[22%] h-36 w-36 rounded-full bg-[rgba(255,164,63,0.08)] blur-3xl"
+            />
+            <m.div
+              animate={{ x: [0, 12, 0], opacity: [0.12, 0.2, 0.12] }}
+              transition={{ duration: 11, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.7 }}
+              className="pointer-events-none absolute bottom-[10%] left-[18%] h-24 w-24 rounded-full bg-[rgba(255,164,63,0.08)] blur-3xl"
+            />
+
+            <div className="relative mx-auto flex max-w-[1600px] flex-col items-center">
+              <div className="mx-auto max-w-3xl text-center">
+                <h1 className="poetic-heading text-3xl font-semibold text-[#F1C56A] sm:text-4xl lg:text-5xl">
+                  Our Leadership
+                </h1>
+                <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-[#CFC3B0] sm:mt-3 sm:text-[15px]">
+                  The passionate team dedicated to bringing poetry to the world.
+                </p>
+              </div>
+
+              <div className="mt-5 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:items-start">
+                {loading
+                  ? Array.from({ length: 4 }).map((_, index) => (
+                      <div
+                        key={index}
+                        className="relative overflow-hidden rounded-[26px] border border-[rgba(212,175,55,0.16)] bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.015))] p-4 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl sm:p-5"
+                      >
+                        <div className="mx-auto h-24 w-24 rounded-full border border-[rgba(212,175,55,0.2)] bg-[rgba(255,255,255,0.04)] sm:h-28 sm:w-28" />
+                        <div className="mx-auto mt-4 h-6 w-32 rounded-full bg-[rgba(255,255,255,0.06)] sm:mt-5 sm:w-40" />
+                        <div className="mx-auto mt-2 h-3.5 w-24 rounded-full bg-[rgba(255,255,255,0.05)] sm:w-28" />
+                        <div className="mx-auto mt-3 h-3.5 w-full rounded-full bg-[rgba(255,255,255,0.05)]" />
+                        <div className="mx-auto mt-2 h-3.5 w-[92%] rounded-full bg-[rgba(255,255,255,0.05)]" />
+                        <div className="mx-auto mt-2 h-3.5 w-[82%] rounded-full bg-[rgba(255,255,255,0.05)]" />
+                      </div>
+                    ))
+                  : teamMembers.map((member, index) => <TeamCard key={member?._id || index} member={member} index={index} />)}
+              </div>
+
+              {!loading && !teamMembers.length ? (
+                <div className="mt-8 rounded-[28px] border border-[rgba(212,175,55,0.16)] bg-[rgba(255,255,255,0.03)] px-6 py-12 text-center text-[#B9B9B9] backdrop-blur-xl">
+                  No leadership data available right now.
+                </div>
+              ) : null}
             </div>
-
-            <div
-              className="grid gap-7"
-              style={{
-                gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-              }}
-            >
-              {loading
-                ? Array.from({ length: 6 }).map((_, index) => (
-                    <div key={index} className="animate-pulse rounded-[18px] border border-[rgba(212,175,55,0.25)] bg-[#161616] p-6">
-                      <div className="mx-auto mb-4 h-[90px] w-[90px] rounded-full bg-[#232323]" />
-                      <div className="mx-auto mb-3 h-5 w-36 rounded bg-[#232323]" />
-                      <div className="mx-auto mb-4 h-4 w-28 rounded bg-[#232323]" />
-                      <div className="mx-auto mb-2 h-3 w-full rounded bg-[#232323]" />
-                      <div className="mx-auto h-3 w-4/5 rounded bg-[#232323]" />
-                    </div>
-                  ))
-                : !!list?.length &&
-                  list?.map((leader, index) => (
-                    <article
-                      key={leader?._id || index}
-                      className="rounded-[18px] border border-[rgba(212,175,55,0.25)] bg-[#161616] p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_25px_rgba(212,175,55,0.25)]"
-                    >
-                      <AppImage
-                        src={leader?.image || Prouser}
-                        alt={leader?.name || "Leader"}
-                        width={90}
-                        height={90}
-                        className="mx-auto h-[90px] w-[90px] rounded-full border-[3px] border-[#D4AF37] object-cover"
-                      />
-
-                      <h3 className="mt-[10px] text-[18px] font-semibold text-white">{leader?.name || ""}</h3>
-                      <p className="text-[13px] text-[#D4AF37]">{leader?.designation || ""}</p>
-
-                      <p className="mt-[6px] text-[13px] leading-relaxed text-[#9ca3af]" dangerouslySetInnerHTML={{ __html: leader?.description || "" }} />
-                    </article>
-                  ))}
-
-              {!loading && !list?.length && <div className="text-center text-[#9ca3af]">No leadership data available right now.</div>}
-            </div>
-          </div>
-        </section>
+          </section>
+        </LazyMotion>
       </PublicLayout>
     </>
   );

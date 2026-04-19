@@ -1026,6 +1026,82 @@ a:hover {
   }
 }
 
+/* Contact page: keep phone input visually aligned with the other fields */
+.contact-us-form .contact-us-phone {
+  width: 100%;
+}
+
+.contact-us-form .contact-us-phone .form-control {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 56px !important;
+  line-height: 56px !important;
+  padding-left: 96px !important;
+  padding-right: 16px !important;
+  border: 1px solid rgba(212, 175, 55, 0.22) !important;
+  border-left: 0 !important;
+  border-radius: 0 18px 18px 0 !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #f3ebdd !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+.contact-us-form .contact-us-phone .form-control::placeholder {
+  color: #8e8e8e !important;
+}
+
+.contact-us-form .contact-us-phone .form-control:focus {
+  border-color: rgba(212, 175, 55, 0.55) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: none !important;
+}
+
+.contact-us-form .contact-us-phone .flag-dropdown {
+  width: 88px !important;
+  border: 1px solid rgba(212, 175, 55, 0.22) !important;
+  border-right: 0 !important;
+  border-radius: 18px 0 0 18px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.contact-us-form .contact-us-phone .selected-flag {
+  width: 100% !important;
+  height: 56px !important;
+  padding: 0 12px !important;
+  background: transparent !important;
+  border-radius: 18px 0 0 18px !important;
+}
+
+.contact-us-form .contact-us-phone .selected-flag:hover,
+.contact-us-form .contact-us-phone .selected-flag:focus {
+  background: transparent !important;
+}
+
+.contact-us-form .contact-us-phone:focus-within .form-control,
+.contact-us-form .contact-us-phone:focus-within .flag-dropdown {
+  border-color: rgba(212, 175, 55, 0.55) !important;
+}
+
+.contact-us-form .contact-us-phone .arrow {
+  border-top-color: #8e8e8e !important;
+}
+
+.contact-us-form .contact-us-phone .country-list {
+  background-color: #120c08 !important;
+  border: 1px solid rgba(212, 175, 55, 0.18) !important;
+  color: #e5e5e5 !important;
+}
+
+.contact-us-form .contact-us-phone .country-list .country:hover,
+.contact-us-form .contact-us-phone .country-list .country.highlight {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.contact-us-form .contact-us-phone .country-list .dial-code {
+  color: #f1c56a !important;
+}
+
 input#password {
   /* --tw-bg-opacity: black !important; */
   background: black;

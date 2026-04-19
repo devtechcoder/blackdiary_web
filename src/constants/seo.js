@@ -406,9 +406,9 @@ export const SEO = {
   }),
 
   contactUsPage: createSEOEntry({
-    title: "Contact Us - Black Diary",
-    description: "Black Diary team se contact karein aur support, feedback ya business queries bhejein.",
-    keywords: "contact black diary, support black diary, feedback, contact us",
+    title: "Contact Black Diary Support Team",
+    description: "Reach the Black Diary support team for feedback, partnership requests, bug reports, and general enquiries.",
+    keywords: "black diary contact, black diary support, feedback, partnership enquiries, business queries, contact us",
     url: "https://blackdiary.vercel.app/contact-us",
   }),
 

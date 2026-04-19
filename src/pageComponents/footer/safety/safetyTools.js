@@ -44,45 +44,64 @@ const SafetyTools = () => {
 
   return (
     <>
-      <PublicLayout>
-        <div className="bg-white text-gray-800 py-12 px-4">
-          <div className="max-w-4xl mx-auto">
+      <PublicLayout contentClassName="p-0 text-white bg-[#0d0d0d] flex flex-col flex-1 overflow-x-hidden" containerClassName="flex flex-col flex-1 w-full max-w-none">
+        <section className="relative isolate w-full overflow-hidden bg-[linear-gradient(180deg,#1a120b_0%,#0b0806_42%,#050302_100%)] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(255,173,66,0.14),transparent_26%),radial-gradient(circle_at_10%_40%,rgba(255,132,31,0.12),transparent_18%),radial-gradient(circle_at_90%_38%,rgba(255,132,31,0.12),transparent_18%),radial-gradient(circle_at_bottom,rgba(255,175,71,0.1),transparent_24%)]" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(rgba(255,188,84,0.75)_0.7px,transparent_0.7px)] [background-size:20px_20px]" />
+
+          <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center">
             {/* Header */}
-            <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">{headingData?.title || ""}</h1>
-              <p className="text-lg text-gray-600">{headingData?.sub_title || ""}</p>
+            <div className="max-w-3xl text-center">
+              <h1 className="poetic-heading text-3xl font-semibold text-[#F1C56A] sm:text-4xl lg:text-5xl">{headingData?.title || ""}</h1>
+              <p className="mx-auto mt-3 max-w-3xl text-sm leading-6 text-[#CFC3B0] sm:text-[15px]">{headingData?.sub_title || ""}</p>
             </div>
 
             {/* Tools Grid */}
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="mt-10 grid w-full gap-8 md:grid-cols-2 lg:mt-12">
               {loading
                 ? Array.from({ length: 4 }).map((_, index) => (
-                    <div key={index} className="bg-gray-50 p-6 rounded-lg border border-gray-200 animate-pulse">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="h-10 w-10 rounded-full bg-gray-200" />
-                        <div className="h-6 w-40 rounded bg-gray-200" />
+                    <div
+                      key={index}
+                      className="rounded-[30px] border border-[rgba(212,175,55,0.16)] bg-[rgba(255,255,255,0.03)] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl"
+                    >
+                      <div className="mb-4 flex items-center gap-4">
+                        <div className="h-11 w-11 rounded-full bg-[rgba(255,255,255,0.08)]" />
+                        <div className="h-6 w-40 rounded bg-[rgba(255,255,255,0.08)]" />
                       </div>
-                      <div className="h-4 w-full rounded bg-gray-200 mb-2" />
-                      <div className="h-4 w-5/6 rounded bg-gray-200 mb-6" />
-                      <div className="h-4 w-28 rounded bg-gray-200" />
+                      <div className="mb-2 h-4 w-full rounded bg-[rgba(255,255,255,0.08)]" />
+                      <div className="mb-6 h-4 w-5/6 rounded bg-[rgba(255,255,255,0.06)]" />
+                      <div className="h-4 w-28 rounded bg-[rgba(255,255,255,0.08)]" />
                     </div>
                   ))
                 : tools.map((tool, index) => (
-                    <div key={index} className="bg-gray-50 p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                      <div className="flex items-center gap-4 mb-4">
-                        {tool.icon}
-                        <h3 className="text-xl font-semibold text-gray-900">{tool.title}</h3>
+                    <div
+                      key={index}
+                      className="group rounded-[30px] border border-[rgba(212,175,55,0.16)] bg-[rgba(255,255,255,0.03)] p-6 text-[#D7D7D7] shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 hover:border-[rgba(212,175,55,0.28)]"
+                    >
+                      <div className="mb-4 flex items-center gap-4">
+                        <div className="rounded-2xl border border-[rgba(212,175,55,0.14)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-3">
+                          {tool.icon}
+                        </div>
+                        <h3 className="text-xl font-semibold text-[#F6E7C8]">{tool.title}</h3>
                       </div>
-                      <p className="text-gray-700 mb-4">{tool.description}</p>
-                      <Link to={tool.link} className="font-semibold text-indigo-600 hover:text-indigo-800">
-                        {tool.linkText} &rarr;
+                      <p className="mb-5 text-sm leading-7 text-[#D0D0D0] sm:text-[15px]">{tool.description}</p>
+                      <Link
+                        to={tool.link}
+                        className="inline-flex items-center gap-1 font-semibold text-[#F1C56A] transition-colors duration-300 hover:text-[#FFD97A]"
+                      >
+                        {tool.linkText}
+                        <span className="transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
                       </Link>
                     </div>
                   ))}
-              {!loading && tools.length === 0 && <div className="md:col-span-2 text-center text-gray-500">No safety tools available right now.</div>}
+              {!loading && tools.length === 0 && (
+                <div className="md:col-span-2 rounded-[24px] border border-[rgba(212,175,55,0.16)] bg-[rgba(255,255,255,0.03)] px-6 py-10 text-center text-[#CFC3B0] shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-xl">
+                  No safety tools available right now.
+                </div>
+              )}
             </div>
           </div>
-        </div>
+        </section>
       </PublicLayout>
     </>
   );
